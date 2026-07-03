@@ -2,6 +2,8 @@
 
 Secure, automated Git synchronization system for managing multiple GitHub repositories and HuggingFace Spaces. Built for the [Omni Medical Suite](https://github.com/DrAbdulmalek/omni-medical-suite) ecosystem.
 
+> For a simpler one-command sync without TUI or token management, see [sync-github](https://github.com/DrAbdulmalek/sync-github).
+
 ## Features
 
 - **17-command TUI dashboard** — push, pull, bidirectional sync, clone, dry-run, watch
