@@ -15,19 +15,20 @@ show_menu() {
     echo -e " ${GREEN}5.${NC}  ${BOLD}Sync Single Repo${NC}         ${DIM}-- one repo${NC}"
     echo -e " ${GREEN}6.${NC}  ${BOLD}Sync Custom Message${NC}      ${DIM}-- custom commit msg${NC}"
     echo -e " ${GREEN}7.${NC}  ${BOLD}Clone All Missing${NC}        ${DIM}-- clone repos not on disk${NC}"
-    echo -e " ${GREEN}8.${NC}  ${BOLD}Dry-Run Push${NC}             ${DIM}-- preview without pushing${NC}"
+    echo -e " ${GREEN}8.${NC}  ${BOLD}Simple Sync (no config)${NC}  ${DIM}-- zero-config batch (from sync-github)${NC}"
+    echo -e " ${GREEN}9.${NC}  ${BOLD}Dry-Run Push${NC}             ${DIM}-- preview without pushing${NC}"
     echo ""
-    echo -e " ${CYAN}9.${NC}  ${BOLD}Monitor (Polling)${NC}        ${DIM}-- every 5 min${NC}"
-    echo -e " ${CYAN}10.${NC} ${BOLD}Watch (Real-time)${NC}       ${DIM}-- inotifywait${NC}"
-    echo -e " ${CYAN}11.${NC} ${BOLD}Enable systemd Service${NC}   ${DIM}-- auto-sync daemon${NC}"
+    echo -e " ${CYAN}10.${NC} ${BOLD}Monitor (Polling)${NC}        ${DIM}-- every 5 min${NC}"
+    echo -e " ${CYAN}11.${NC} ${BOLD}Watch (Real-time)${NC}       ${DIM}-- inotifywait${NC}"
+    echo -e " ${CYAN}12.${NC} ${BOLD}Enable systemd Service${NC}   ${DIM}-- auto-sync daemon${NC}"
     echo ""
-    echo -e " ${MAGENTA}12.${NC} ${BOLD}Open All in PyCharm${NC}    ${DIM}-- launch PyCharm${NC}"
-    echo -e " ${MAGENTA}13.${NC} ${BOLD}Setup Git Hooks${NC}        ${DIM}-- auto-push${NC}"
-    echo -e " ${MAGENTA}14.${NC} ${BOLD}Refresh Repos List${NC}     ${DIM}-- fetch from API${NC}"
+    echo -e " ${MAGENTA}13.${NC} ${BOLD}Open All in PyCharm${NC}    ${DIM}-- launch PyCharm${NC}"
+    echo -e " ${MAGENTA}14.${NC} ${BOLD}Setup Git Hooks${NC}        ${DIM}-- auto-push${NC}"
+    echo -e " ${MAGENTA}15.${NC} ${BOLD}Refresh Repos List${NC}     ${DIM}-- fetch from API${NC}"
     echo ""
-    echo -e " ${YELLOW}15.${NC} ${BOLD}Edit Repos List${NC}         ${DIM}-- repos.txt${NC}"
-    echo -e " ${YELLOW}16.${NC} ${BOLD}Edit Settings${NC}           ${DIM}-- settings.env${NC}"
-    echo -e " ${YELLOW}17.${NC} ${BOLD}View Logs${NC}               ${DIM}-- sync logs${NC}"
+    echo -e " ${YELLOW}16.${NC} ${BOLD}Edit Repos List${NC}         ${DIM}-- repos.txt${NC}"
+    echo -e " ${YELLOW}17.${NC} ${BOLD}Edit Settings${NC}           ${DIM}-- settings.env${NC}"
+    echo -e " ${YELLOW}18.${NC} ${BOLD}View Logs${NC}               ${DIM}-- sync logs${NC}"
     echo -e " ${RED}0.${NC}  ${BOLD}Exit${NC}"
     echo -e "${BOLD}${CYAN}$(printf '=%.0s' {1..65})${NC}"; echo ""
 }
@@ -76,7 +77,7 @@ for s in json.load(sys.stdin):
 }
 
 while true; do
-    show_menu; read -rp "  Choice [0-17]: " choice
+    show_menu; read -rp "  Choice [0-18]: " choice
     case "$choice" in
         1) show_dashboard; press_enter ;;
         2) echo ""; "$SYNC_DIR/sync-scripts/sync-push.sh"; press_enter ;;
@@ -106,6 +107,10 @@ while true; do
                 fi
             done < "$CONFIG_FILE"; echo ""; press_enter ;;
         8)
+            echo ""; read -rp "  Sync directory [\$HOME/GitHub]: " sync_dir
+            "$SYNC_DIR/sync-scripts/simple-sync.sh" "${sync_dir:-$HOME/GitHub}"
+            press_enter ;;
+        9)
             echo -e "\n${BOLD}${YELLOW}Dry-Run: preview without pushing...${NC}\n"
             DRY_RUN=true; source "$SYNC_DIR/config/lib-common.sh"
             total=0; has_changes=0
@@ -126,9 +131,9 @@ while true; do
                 fi
             done < "$CONFIG_FILE"
             echo -e "\n  ${YELLOW}$has_changes/$total repos have changes${NC}"; press_enter ;;
-        9) echo ""; "$SYNC_DIR/sync-scripts/monitor-changes.sh" ;;
-        10) echo ""; "$SYNC_DIR/sync-scripts/sync-watch.sh" ;;
-        11)
+        10) echo ""; "$SYNC_DIR/sync-scripts/monitor-changes.sh" ;;
+        11) echo ""; "$SYNC_DIR/sync-scripts/sync-watch.sh" ;;
+        12)
             echo -e "\n${BOLD}${CYAN}Enabling git-sync-watch systemd service...${NC}"
             mkdir -p "$HOME/.config/systemd/user"
             cat > "$HOME/.config/systemd/user/git-sync-watch.service" << SYSEOF
@@ -155,12 +160,12 @@ SYSEOF
             echo -e "  Logs:   ${CYAN}journalctl --user -u git-sync-watch -f${NC}"
             echo -e "  Stop:   ${CYAN}systemctl --user stop git-sync-watch${NC}"
             press_enter ;;
-        12) echo ""; "$SYNC_DIR/sync-scripts/open-pycharm.sh"; press_enter ;;
-        13) echo ""; "$SYNC_DIR/sync-scripts/setup-pycharm-hooks.sh"; press_enter ;;
-        14) refresh_repos; press_enter ;;
-        15) ${EDITOR:-nano} "$CONFIG_FILE" ;;
-        16) ${EDITOR:-nano} "$SETTINGS_FILE" ;;
-        17) view_logs ;;
+        13) echo ""; "$SYNC_DIR/sync-scripts/open-pycharm.sh"; press_enter ;;
+        14) echo ""; "$SYNC_DIR/sync-scripts/setup-pycharm-hooks.sh"; press_enter ;;
+        15) refresh_repos; press_enter ;;
+        16) ${EDITOR:-nano} "$CONFIG_FILE" ;;
+        17) ${EDITOR:-nano} "$SETTINGS_FILE" ;;
+        18) view_logs ;;
         0|q|Q) echo -e "\n${GREEN}Bye!${NC}\n"; exit 0 ;;
         *) echo -e "\n${RED}Invalid!${NC}"; sleep 1 ;;
     esac
