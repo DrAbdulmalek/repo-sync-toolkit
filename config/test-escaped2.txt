@@ -1,0 +1,2 @@
+#!/bin/bash
+SYNC_DIR="${SYNC_DIR:-$HOME/github-sync-system}"
