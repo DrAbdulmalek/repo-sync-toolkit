@@ -42,8 +42,8 @@ It exists to prevent:
 
 | Repo | Role | Status | Latest tag |
 |------|------|--------|------------|
-| `OmniFile_Processor` | Legacy — superseded by omni-medical-suite | README deprecated, GitHub archive flag pending | (none) |
-| `sync-github` | Legacy — superseded by repo-sync-toolkit | README archived, GitHub archive flag pending | (none) |
+| `OmniFile_Processor` | Legacy — superseded by omni-medical-suite | README deprecated + GitHub archive flag enabled (2026-07-31) + `ARCHIVAL_STATUS.md` confirms | (none) |
+| `sync-github` | Legacy — superseded by repo-sync-toolkit | README archived + GitHub archive flag enabled (2026-07-31) + `ARCHIVAL_STATUS.md` confirms | (none) |
 
 ---
 
@@ -146,12 +146,14 @@ It exists to prevent:
 | Gap | Repo | Status |
 |-----|------|--------|
 | `smart_tagger.py` contains medical classification logic | intelli-file-manager | tracked in separate PR — do not compete |
-| `mobile/main.py` + `buildozer.spec` at root (Kivy/Android) | intelli-file-manager | decision needed: quarantine as experimental |
-| README badges claim v1.1.0 but latest tag is v1.2.0 | omni-medical-suite | to be fixed in cleanup PR |
-| README claims v2.2.0 but no v2.2.0 tag exists | intelli-file-manager | to be fixed in cleanup PR |
-| README says "Archived" but GitHub archive flag is off | sync-github | to be normalized in archival PR |
-| README says "LEGACY (Deprecated)" but GitHub archive flag is off | OmniFile_Processor | to be normalized in archival PR |
-| `training/` directory in feeder repo | telegram-tools | OK as optional helper; document boundary |
+| `mobile/main.py` + `buildozer.spec` at root (Kivy/Android) | intelli-file-manager | quarantined as experimental (PR #3) |
+| README badges claim v1.1.0 but latest tag is v1.2.0 | omni-medical-suite | fixed (PR #4) |
+| README claims v2.2.0 but no v2.2.0 tag exists | intelli-file-manager | fixed: marked Unreleased / 2.2.0.dev0 (PR #2) |
+| README says "Archived" but GitHub archive flag is off | sync-github | fixed: GitHub archive flag enabled + ARCHIVAL_STATUS.md (PR #8a) |
+| README says "LEGACY (Deprecated)" but GitHub archive flag is off | OmniFile_Processor | fixed: GitHub archive flag enabled + ARCHIVAL_STATUS.md (PR #8b) |
+| `training/` directory in feeder repo | telegram-tools | clarified as optional convenience in README (PR #5) |
+| Observability + notes foundation | intelli-file-manager | added SQLite + JSONL observability (PR #6) |
+| Pre-commit secret scanner | repo-sync-toolkit | added scan_secrets.py + SECURITY.md (PR #7) |
 
 ---
 
