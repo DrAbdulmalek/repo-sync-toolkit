@@ -1,6 +1,32 @@
-config/settings.env
-logs/*.log.gz
+# Compiled
 __pycache__/
 *.pyc
+*.pyo
 .venv/
+venv/
+
+# Secrets — NEVER commit
 .env
+.env.*
+config/settings.env
+config/secrets.*
+*.session
+*.session-journal
+
+# Logs (keep .gitkeep, ignore actual logs)
+logs/*.log
+logs/*.log.gz
+logs/*.jsonl
+
+# Local IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Token manager local cache (if any future feature adds one)
+token-cache.*

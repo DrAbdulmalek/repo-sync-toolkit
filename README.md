@@ -76,6 +76,11 @@ Securely manage API tokens without storing them in the repository:
 | Display | Masked by default (`ghp_XXXX...XXXX`) |
 | Validation | Prefix + length check before saving |
 | Repo isolation | `settings.env` is gitignored — only template committed |
+| Pre-commit scan | `scan_secrets.py` blocks commits containing tokens / private keys |
+| Audit log | `logs/audit.log` records every push/force-push decision (no secret values) |
+
+See [`SECURITY.md`](SECURITY.md) for the full threat model, defense
+layers, hardening checklist, and pre-commit hook installation.
 
 ## Dashboard Commands
 
