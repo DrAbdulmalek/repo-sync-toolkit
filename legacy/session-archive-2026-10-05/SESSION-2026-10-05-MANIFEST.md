@@ -1,0 +1,23 @@
+# أرشفة جلسة 2026-10-05 — خط عمل OCR (OCR-PKG-AUDIT-MATCHING-VIEW + السجل الجنائي)
+
+> **مكان الإيواء**: كان الهدف الأصلي `workspace-scripts-archive` لكنه **مؤرشف read-only على GitHub** (مثل `sync-github`)، فأُويت هذه الملفات هنا في `legacy/session-archive-2026-10-05/` وفق دلالة مجلد `legacy/` القائمة.
+
+بتاريخ 2026-10-05، وبأمر المالك «احفظ كل خطوة مجراة في GitHub»، أُضيفت الملفات التالية:
+
+| الملف | الوصف |
+|---|---|
+| `WORKLOG-snapshot.md` | تحديث كامل لسجل العمل المشترك (1587 سطرًا) — يشمل مداخل يوم 2026-10-05: DOCS09-LEGAL-ALGORITHM-STUDY، CONT-02، CONT-03، ALGOS-DOCS09، OCR-PKG-AUDIT-MATCHING-VIEW |
+| `create_pr_matching_view.py` | سكربت فتح PR #15 في ocr-core (عرض مطابقة غير تدميري) — يقرأ التوكن من `.secrets/gh_token` بلا طباعة |
+| `create_pr_session_log.py` | سكربت فتح PR #16 في ocr-core (سجل الجلسة الجنائي) — نفس نمط الأمن |
+
+## سياق الجلسة (خلاصة)
+
+- جردة حزمة «تحسينات OCR» مقترحة خارجيًا (8 عناصر): 7/8 موجودة بنسخ أقوى في ocr-core؛ الشواهد في `ocr-core/docs/enhancement-package-audit.md` (PR #15).
+- المُنفَّذ فعليًا: `ocr-core` PR #15 (commit 583ebf2، CI أخضر) + PR #16 (سجل الجلسة الجنائي، commit 3ccb74c).
+- تشخيص «الاختفاء»: بيئة التنفيذ تُمسح بين الجلسات (RESET #2/#5/#6/#7/#9 موثقة في WORKLOG-snapshot.md)؛ الدرس المعتمد: الدفع الفوري لكل مخرج.
+- إحالة الواجهة: `DrAbdulmalek/channel-ops-dashboard` (commits c3efb34 + 88a099a) هي النسخة الحية المعتمدة — أوسع من النسخة المحلية الباقية.
+- توكن نص المحادثة المكشوف: يبقى على المالك إبطاله يدويًا من github.com/settings/tokens.
+
+## نمط الأمن المعتمد (كالسابق)
+
+لا توكنات داخل أي ملف؛ السكربتات تقرأ من ملف محلي بصلاحيات 600 وتنظّف remote URL بعد الدفع؛ فحص أنماط `ghp_`/`github_pat_` على كل ملف قبل الدفع — نظيف.
