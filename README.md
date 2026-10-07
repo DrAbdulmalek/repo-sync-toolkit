@@ -2,7 +2,7 @@
 
 Secure, automated Git synchronization system for managing multiple GitHub repositories and HuggingFace Spaces. Built for the [Omni Medical Suite](https://github.com/DrAbdulmalek/omni-medical-suite) ecosystem.
 
-> For a simpler one-command sync without TUI or token management, see [sync-github](https://github.com/DrAbdulmalek/sync-github).
+> **This is the official unified sync tool for the ecosystem** (decision: portfolio review 2026-09-18, see [`ECOSYSTEM_STATE.md`](ECOSYSTEM_STATE.md)). The simpler one-command tool [sync-github](https://github.com/DrAbdulmalek/sync-github) is **archived** — its role is covered here via the sync scripts (`sync-scripts/`).
 
 ## Features
 
@@ -64,7 +64,8 @@ Securely manage API tokens without storing them in the repository:
 ./token-manager.py remove github
 ```
 
-**Supported tokens:** `github`, `github_vscode`, `hf`, `telegram_api_id`, `telegram_api_hash`, `deepseek`, `groq`, `openrouter`, `openai`, `zai`, `cursor`
+**Supported tokens:** `github`,
+ `github_vscode`, `hf`, `telegram_api_id`, `telegram_api_hash`, `deepseek`, `groq`, `openrouter`, `openai`, `zai`, `cursor`
 
 ### Security Model
 
@@ -113,7 +114,8 @@ repo-sync-toolkit/
 ├── README.md
 ├── config/
 │   ├── lib-common.sh        # Shared library (auth, sync, dashboard)
-│   ├── repos.txt            # Repo list (auto-fetched from APIs)
+│   ├── re
+pos.txt            # Repo list (auto-fetched from APIs)
 │   ├── settings.env.example # Settings template (safe to commit)
 │   └── settings.env         # Real settings (GITIGNORED)
 ├── sync-scripts/
