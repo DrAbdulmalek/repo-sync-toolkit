@@ -56,16 +56,67 @@ setup_auth() {
     [[ "$remote_url" == *"github.com"* ]] || return 0
     case "$AUTH_METHOD" in
         token)
+            # No `2>/dev/null` here: swallowing stderr hid real auth failures and
+            # let pushes fail later with a confusing error.
             if command -v gh >/dev/null 2>&1; then
-                gh auth setup-git >/dev/null 2>&1 || log WARN "GitHub CLI auth setup failed; configure a credential helper."
-            else
-                log WARN "Configure Git Credential Manager, GitHub CLI, or SSH; tokens are never saved in remote URLs."
-            fi ;;
+                if ! gh_err="$(gh auth setup-git 2>&1)"; then
+                    log ERROR "gh auth setup-git failed (output redacted). Run: gh auth login"
+                    unset gh_err
+                    return 1
+                fi
+                unset gh_err
+                return 0
+            fi
+            if [[ -n "$(git -C "$repo_path" config --get credential.helper 2>/dev/null)" ]]; then
+                return 0
+            fi
+            log ERROR "AUTH_METHOD=token but no GitHub CLI and no credential.helper. Configure 'gh auth login', Git Credential Manager, or SSH. Tokens are never written into remote URLs."
+            return 1 ;;
         ssh) return 0 ;;
         store)
-            log WARN "credential.helper=store stores credentials in plaintext; prefer Git Credential Manager or SSH."
-            git -C "$repo_path" config credential.helper store 2>/dev/null ;;
+            log WARN "credential.helper=store keeps credentials in PLAINTEXT (~/.git-credentials); prefer Git Credential Manager or SSH."
+            git -C "$repo_path" config credential.helper store || {
+                log ERROR "could not set credential.helper=store"; return 1; } ;;
+        *)
+            log ERROR "Unknown AUTH_METHOD='$AUTH_METHOD' (expected token|ssh|store)"
+            return 1 ;;
     esac
+}
+
+# يرفض أي عنوان يحتوي بيانات اعتماد — ولا يطبع العنوان نفسه
+url_has_credentials() {
+    local url="$1"
+    [[ -z "$url" ]] && return 1
+    [[ "$url" != *"://"* ]] && return 1          # scp-like: git@host:owner/repo.git
+    [[ "$url" =~ ^[a-zA-Z][a-zA-Z0-9+.-]*://[^/@:]+:[^/@]*@ ]] && return 0
+    [[ "$url" =~ ^[a-zA-Z][a-zA-Z0-9+.-]*://[^/@]+@ ]] && return 0   # username-only userinfo
+    return 1
+}
+
+# يفحص origin قبل أي fetch/push، وينظّفه إن كان ملوّثًا (fail-closed)
+ensure_clean_remote() {
+    local repo_path="$1" url clean rc
+    url="$(git -C "$repo_path" remote get-url origin 2>/dev/null)" || {
+        log ERROR "no origin remote in $repo_path"; return 1; }
+    if ! url_has_credentials "$url"; then return 0; fi
+    log WARN "origin embeds credentials (URL redacted); scrubbing"
+    cleanup_auth "$repo_path"
+    url="$(git -C "$repo_path" remote get-url origin 2>/dev/null)" || return 1
+    if url_has_credentials "$url"; then
+        log ERROR "origin still embeds credentials — refusing to continue"
+        return 1
+    fi
+    return 0
+}
+
+# يتحقق من أن عنوانًا واردًا من repos.txt نظيف قبل الاستنساخ
+assert_clean_url() {
+    local url="$1" name="${2:-repo}"
+    if url_has_credentials "$url"; then
+        log ERROR "$name: refusing URL with embedded credentials (value redacted)"
+        return 1
+    fi
+    return 0
 }
 
 cleanup_auth() {
@@ -98,6 +149,7 @@ _do_pull() {
     if [[ -n "$has_changes" ]]; then
         git -C "$local_path" stash push -m "auto-stash $(date +%Y%m%d_%H%M%S)" 2>>"$CURRENT_LOG"; stashed=true
     fi
+    ensure_clean_remote "$local_path" || return 1
     git -C "$local_path" fetch origin "$branch" 2>>"$CURRENT_LOG"
     if [[ "$PULL_REBASE" == "true" ]]; then
         git -C "$local_path" pull --rebase origin "$branch" 2>>"$CURRENT_LOG"
@@ -122,6 +174,7 @@ _do_push() {
         git -C "$local_path" add -A 2>>"$CURRENT_LOG"
         git -C "$local_path" commit -m "$msg" 2>>"$CURRENT_LOG"
     fi
+    ensure_clean_remote "$local_path" || return 1
     git -C "$local_path" push origin "$branch" 2>>"$CURRENT_LOG"
 }
 
@@ -185,6 +238,7 @@ show_dashboard() {
         if [[ ! -d "$local_path" ]]; then
             ((err_count++)); printf "  ${RED}MISS%-4s${NC} %-35s %s\n" "" "$name" "(not cloned)"; continue
         fi
+        assert_clean_url "$github_url" "$repo_name" || { echo -e "${RED}REJECTED${NC}"; return 1; }
         if [[ ! -d "$local_path/.git" ]]; then
             ((err_count++)); printf "  ${YELLOW}NOGIT%-3s${NC} %-35s %s\n" "" "$name" "(not git)"; continue
         fi

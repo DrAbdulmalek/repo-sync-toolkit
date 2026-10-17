@@ -1,41 +1,48 @@
 # سياق المشروع: repo-sync-toolkit
-**المسار:** `/home/runner/work/repo-sync-toolkit/repo-sync-toolkit`
-**تاريخ التوليد:** 2026-08-01T22:01:32.810108
+**المسار:** `/tmp/arena/tenants/e1a8fee0-0223-4ee6-a58a-9af31650fa49/sessions/0144f7e3-37db-4ef8-98bb-7647fa376da8/workspace/gensec-audit/work/repo-sync-toolkit`
+**تاريخ التوليد:** 2026-10-17T19:50:19.927481
 
 ## 📊 إحصائيات المشروع
-- **إجمالي الملفات الممسوحة:** 94
-- **الملفات المضمنة:** 27
-- **إجمالي الحجم:** 106,383 بايت
+- **إجمالي الملفات الممسوحة:** 142
+- **الملفات المضمنة:** 34
+- **إجمالي الحجم:** 167,997 بايت
 
 ### اللغات والتقنيات:
 - Shell: 14 ملف
-- Markdown: 4 ملف
-- Other: 4 ملف
-- Python: 3 ملف
+- Markdown: 7 ملف
+- Python: 5 ملف
+- Other: 5 ملف
+- Text: 2 ملف
 - YAML: 1 ملف
-- Text: 1 ملف
 
 ## 🌳 شجرة الملفات
 ```
 repo-sync-toolkit/
 ├── .gitignore
+├── ECOSYSTEM_STATE.md
 ├── GEMINI_SYSTEM_PROMPT.md
 ├── GITHUB_ACTIONS_GUIDE.md
 ├── GOVERNANCE.md
 ├── README.md
+├── SECURITY.md
 ├── config/
     ├── governance.yaml
     ├── lib-common.sh
     ├── repos.txt
     ├── settings.env.example
+├── docs/
+    ├── GITHUB_ACCOUNT_REVIEW_2026-10-11.md
 ├── github-sync.sh
 ├── governance_checker.py
 ├── install.sh
 ├── logs/
+    ├── .gitkeep
     ├── audit.log
 ├── master_orchestrator.py
 ├── pycharm-config/
     ├── pycharm.vmoptions
+├── requirements-dev.txt
+├── scan_secrets.py
 ├── sync-scripts/
     ├── monitor-changes.sh
     ├── open-pycharm.sh
@@ -48,20 +55,22 @@ repo-sync-toolkit/
     ├── sync-push.sh
     ├── sync-single.sh
     ├── sync-watch.sh
+├── tests/
+    ├── test_credential_hygiene.py
 ├── token-manager.py
 ```
 
 ## 📁 محتوى الملفات
 
 ### `README.md`
-**اللغة:** Markdown | **الأسطر:** 155 | **الحجم:** 4,791 حرف
+**اللغة:** Markdown | **الأسطر:** 162 | **الحجم:** 5,297 حرف
 
 ```markdown
 # Repo Sync Toolkit
 
 Secure, automated Git synchronization system for managing multiple GitHub repositories and HuggingFace Spaces. Built for the [Omni Medical Suite](https://github.com/DrAbdulmalek/omni-medical-suite) ecosystem.
 
-> For a simpler one-command sync without TUI or token management, see [sync-github](https://github.com/DrAbdulmalek/sync-github).
+> **This is the official unified sync tool for the ecosystem** (decision: portfolio review 2026-09-18, see [`ECOSYSTEM_STATE.md`](ECOSYSTEM_STATE.md)). The simpler one-command tool [sync-github](https://github.com/DrAbdulmalek/sync-github) is **archived** — its role is covered here via the sync scripts (`sync-scripts/`).
 
 ## Features
 
@@ -123,7 +132,8 @@ Securely manage API tokens without storing them in the repository:
 ./token-manager.py remove github
 ```
 
-**Supported tokens:** `github`, `github_vscode`, `hf`, `telegram_api_id`, `telegram_api_hash`, `deepseek`, `groq`, `openrouter`, `openai`, `zai`, `cursor`
+**Supported tokens:** `github`,
+ `github_vscode`, `hf`, `telegram_api_id`, `telegram_api_hash`, `deepseek`, `groq`, `openrouter`, `openai`, `zai`, `cursor`
 
 ### Security Model
 
@@ -135,6 +145,11 @@ Securely manage API tokens without storing them in the repository:
 | Display | Masked by default (`ghp_XXXX...XXXX`) |
 | Validation | Prefix + length check before saving |
 | Repo isolation | `settings.env` is gitignored — only template committed |
+| Pre-commit scan | `scan_secrets.py` blocks commits containing tokens / private keys |
+| Audit log | `logs/audit.log` records every push/force-push decision (no secret values) |
+
+See [`SECURITY.md`](SECURITY.md) for the full threat model, defense
+layers, hardening checklist, and pre-commit hook installation.
 
 ## Dashboard Commands
 
@@ -167,7 +182,8 @@ repo-sync-toolkit/
 ├── README.md
 ├── config/
 │   ├── lib-common.sh        # Shared library (auth, sync, dashboard)
-│   ├── repos.txt            # Repo list (auto-fetched from APIs)
+│   ├── re
+pos.txt            # Repo list (auto-fetched from APIs)
 │   ├── settings.env.example # Settings template (safe to commit)
 │   └── settings.env         # Real settings (GITIGNORED)
 ├── sync-scripts/
@@ -212,503 +228,6 @@ If you have tokens in `config/settings.env`, migrate them securely:
 ## License
 
 MIT
-```
-
----
-
-### `GITHUB_ACTIONS_GUIDE.md`
-**اللغة:** Markdown | **الأسطر:** 85 | **الحجم:** 2,001 حرف
-
-```markdown
-# 🚀 دليل استخدام سياق المشروع من الجوال
-
-## الهدف
-تشغيل سكريبت استخراج السياق أونلاين على GitHub دون الحاجة إلى كمبيوتر.
-
----
-
-## ⚡ الخطوات (من الجوال)
-
-### 1. إضافة الملفات للمستودع
-
-في مستودعك على GitHub، أنشئ هذين الملفين (يمكنك من التطبيق أو المتصفح):
-
-```
-.github/
-├── scripts/
-│   └── repo_to_context.py    ← السكريبت
-└── workflows/
-    └── generate-context.yml  ← الـ Workflow
-```
-
-**للإنشاء من الجوال:**
-1. افتح تطبيق GitHub
-2. ادخل إلى مستودعك
-3. اضغط ➕ (Add file) → Create new file
-4. اكتب المسار: `.github/workflows/generate-context.yml`
-5. الصق محتوى ملف الـ Workflow
-6. اضغط Commit
-7. كرر نفس الخطوة لملف السكريبت: `.github/scripts/repo_to_context.py`
-
----
-
-### 2. تشغيل الـ Workflow
-
-1. من تطبيق GitHub، ادخل إلى مستودعك
-2. اذهب إلى تبويب **Actions** (الأسفل)
-3. اختر **📦 Generate Project Context**
-4. اضغط **Run workflow** (الأعلى)
-5. اترك الإعدادات الافتراضية واضغط **Run workflow** مرة أخرى
-
----
-
-### 3. تحميل الملف
-
-1. انتظر 30 ثانية حتى تكتمل العملية (سترى ✅ أخضر)
-2. ارجع إلى تبويب **Code** (الملفات)
-3. ستجد ملفاً جديداً باسم `project_context.txt`
-4. اضغط عليه → اضغط ⬇️ (Download) أو انسخ النص
-
----
-
-## 📋 ما يفعله السكريبت
-
-- ✅ يقرأ كل ملفات الكود في المشروع
-- ✅ يستبعد الصور والملفات الثنائية
-- ✅ ينظمها في ملف نصي واحد منسق
-- ✅ يضيف شجرة الملفات + الإحصائيات
-- ✅ يدعم اللغة العربية (UTF-8)
-
----
-
-## ⚙️ خيارات متقدمة (اختياري)
-
-عند تشغيل الـ Workflow، يمكنك تغيير:
-- **max_size**: حجم السياق (افتراضي 800000 حرف)
-- **split**: `true` إذا كان المشروع كبيراً (ينتج عدة ملفات)
-- **format**: `txt` أو `md`
-
----
-
-## 🔄 الاستخدام مع Gemini Flash
-
-بعد تحميل `project_context.txt`:
-1. افتح [Gemini Flash](https://gemini.google.com) في متصفح الجوال
-2. ارفع الملف
-3. ابدأ المحادثة: *"هذا مشروعي. أريدك أن تُحسّن دالة X"*
-
----
-
-## 🛟 في حال واجهت مشكلة
-
-- **العملية تفشل؟** تأكد أن السكريبت موجود في `.github/scripts/repo_to_context.py`
-- **الملف غير موجود؟** تأكد من صلاحيات الـ Workflow (يجب أن يحتوي على `permissions: contents: write`)
-- **مشروع كبير؟** شغل الـ Workflow مع `split = true`
-
-```
-
----
-
-### `master_orchestrator.py`
-**اللغة:** Python | **الأسطر:** 390 | **الحجم:** 12,495 حرف
-**الاعتماديات:**
-- `import os`
-- `import sys`
-- `import subprocess`
-- `from pathlib import Path`
-- `from datetime import datetime`
-
-```python
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""
-Master Orchestrator — Automated infrastructure management
-Dr. Abdulmalek - Omni Medical Suite
-
-Usage:
-  python3 master_orchestrator.py              # dry-run (preview only)
-  python3 master_orchestrator.py --apply      # apply changes
-  python3 master_orchestrator.py --phase 1    # specific phase only
-"""
-import os
-import sys
-import subprocess
-from pathlib import Path
-from datetime import datetime
-
-# ══════════════════════════════════════════════════════════════
-#  Settings
-# ══════════════════════════════════════════════════════════════
-
-BASE_DIR = Path(os.environ.get("REPOS_DIR", Path.home() / "github~"))
-DRY_RUN = "--apply" not in sys.argv
-LOG_FILE = BASE_DIR / f"orchestrator_{datetime.now():%Y%m%d_%H%M%S}.log"
-
-ACTIVE_REPOS = [
-    "omni-medical-suite",
-    "medical-ocr-ground-truth",
-    "medical-ocr-benchmarks",
-    "medical-ocr-training-hub",
-    "medical-ocr-trainer",
-    "scanner-fixer",
-    "telegram-forwarder",
-    "ai-fuel-engine",
-    "IntelliFile-app",
-    "bilingual-extractor",
-]
-
-ARCHIVED_REPOS = [
-    "medical-handwriting-ocr",
-    "medical-ocr-postprocessor",
-    "OmniFile_Processor",
-    "medical-doc-processor",
-]
-
-GITHUB_USER = "DrAbdulmalek"
-
-# ══════════════════════════════════════════════════════════════
-#  Colors & Utilities
-# ══════════════════════════════════════════════════════════════
-
-class C:
-    RED = '\033[91m'; GREEN = '\033[92m'; YELLOW = '\033[93m'
-    BLUE = '\033[94m'; CYAN = '\033[96m'; RESET = '\033[0m'; BOLD = '\033[1m'
-
-def log(msg, level="INFO"):
-    prefix = {"INFO": "  ", "OK": "[OK] ", "WARN": "[!!] ",
-              "ERROR": "[XX] ", "ACTION": "[>>] ", "DRY": "[DRY] ", "PHASE": "[##] "}
-    colors = {"INFO": C.BLUE, "OK": C.GREEN, "WARN": C.YELLOW,
-              "ERROR": C.RED, "ACTION": C.BLUE, "DRY": C.CYAN, "PHASE": C.BOLD + C.CYAN}
-    tag = prefix.get(level, "")
-    print(f"{colors.get(level, C.RESET)}{tag}{msg}{C.RESET}")
-    with open(LOG_FILE, 'a', encoding='utf-8') as f:
-        f.write(f"[{level}] {msg}\n")
-
-def run(cmd, cwd=None):
-    if DRY_RUN:
-        log(f"$ {cmd}", "DRY")
-        return 0, "", ""
-    try:
-        r = subprocess.run(cmd, shell=True, cwd=cwd,
-                          capture_output=True, text=True, timeout=300)
-        return r.returncode, r.stdout, r.stderr
-    except Exception as e:
-        log(f"Failed: {e}", "ERROR")
-        return 1, "", str(e)
-
-def repo_exists(name):
-    p = BASE_DIR / name
-    return p.exists() and (p / ".git").exists()
-
-def get_token():
-    """Get GitHub token from environment or secrets file."""
-    token = os.environ.get("GITHUB_TOKEN", "")
-    if not token:
-        secrets = Path.home() / ".config" / "git-sync-system" / "secrets.env"
-        if secrets.exists():
-            for line in secrets.read_text().splitlines():
-                if line.startswith("GITHUB_TOKEN="):
-                    token = line.split("=", 1)[1].strip().strip('"')
-                    break
-    return token
-
-# ══════════════════════════════════════════════════════════════
-#  Phase 1: Download Missing Repos
-# ══════════════════════════════════════════════════════════════
-
-def phase1_download_missing():
-    log("=" * 55, "PHASE")
-    log("Phase 1: Download missing repositories", "PHASE")
-    log("=" * 55, "PHASE")
-
-    token = get_token()
-    all_repos = ACTIVE_REPOS + ARCHIVED_REPOS
-    downloaded, skipped, failed = 0, 0, 0
-
-    BASE_DIR.mkdir(parents=True, exist_ok=True)
-
-    for repo in all_repos:
-        path = BASE_DIR / repo
-        if repo_exists(repo):
-            log(f"{repo} (exists)", "INFO")
-            skipped += 1
-            continue
-
-        log(f"{repo}...", "ACTION")
-        url = f"https://github.com/{GITHUB_USER}/{repo}.git"
-        if token:
-            url = f"https://x-access-token:{token}@github.com/{GITHUB_USER}/{repo}.git"
-        rc, _, err = run(f'git clone --depth 1 "{url}" "{path}"', cwd=BASE_DIR)
-        if rc == 0:
-            log(f"{repo}", "OK")
-            downloaded += 1
-        else:
-            log(f"{repo}: {err[:80]}", "ERROR")
-            failed += 1
-
-    log(f"Result: {downloaded} cloned | {skipped} exists | {failed} failed", "INFO")
-    return downloaded
-
-# ══════════════════════════════════════════════════════════════
-#  Phase 2: Unified .flake8 Config
-# ══════════════════════════════════════════════════════════════
-
-FLAKE8_CONFIG = """[flake8]
-max-line-length = 120
-extend-ignore = E203, W503
-exclude =
-    .git,
-    __pycache__,
-    build,
-    dist,
-    .venv,
-    venv,
-    node_modules,
-    .pytest_cache
-per-file-ignores =
-    __init__.py:F401
-    tests/*:E501,W293
-"""
-
-def phase2_flake8_config():
-    log("=" * 55, "PHASE")
-    log("Phase 2: Unified .flake8 config", "PHASE")
-    log("=" * 55, "PHASE")
-
-    created = 0
-    for repo in ACTIVE_REPOS:
-        if not repo_exists(repo):
-            continue
-        flake8 = BASE_DIR / repo / ".flake8"
-        if flake8.exists():
-            log(f"{repo}/.flake8 (exists)", "INFO")
-            continue
-        log(f"{repo}/.flake8", "ACTION")
-        if not DRY_RUN:
-            flake8.write_text(FLAKE8_CONFIG, encoding='utf-8')
-            created += 1
-    log(f"Created {created} .flake8 files", "OK")
-    return created
-
-# ══════════════════════════════════════════════════════════════
-#  Phase 3: CONTRIBUTING.md
-# ══════════════════════════════════════════════════════════════
-
-CONTRIBUTING_MD = """# Contributing
-
-Thank you for your interest!
-
-## Quick Start
-
-1. **Fork** the repository
-2. **Clone** your fork locally
-3. Create a branch: `git checkout -b feature/my-feature`
-4. Commit: `git commit -m 'feat: add feature'`
-5. Push: `git push origin feature/my-feature`
-6. Open a Pull Request
-
-## Code Standards
-
-- Follow **PEP 8** (see `.flake8` in root)
-- Use **type hints** for public functions
-- Add **docstrings** (Google style)
-- Write **tests** for new features
-
-## Commit Convention
-
-Follow [Conventional Commits](https://www.conventionalcommits.org/):
-```
-feat: add a feature
-fix: fix a bug
-docs: update documentation
-chore: maintenance
-test: add tests
-```
-
-## Reporting Issues
-
-Use Issue Templates in `.github/ISSUE_TEMPLATE/`
-"""
-
-def phase3_contributing():
-    log("=" * 55, "PHASE")
-    log("Phase 3: Create CONTRIBUTING.md", "PHASE")
-    log("=" * 55, "PHASE")
-
-    created = 0
-    for repo in ACTIVE_REPOS:
-        if not repo_exists(repo):
-            continue
-        contrib = BASE_DIR / repo / "CONTRIBUTING.md"
-        if contrib.exists():
-            log(f"{repo}/CONTRIBUTING.md (exists)", "INFO")
-            continue
-        log(f"{repo}/CONTRIBUTING.md", "ACTION")
-        if not DRY_RUN:
-            contrib.write_text(CONTRIBUTING_MD, encoding='utf-8')
-            created += 1
-    log(f"Created {created} CONTRIBUTING.md files", "OK")
-    return created
-
-# ══════════════════════════════════════════════════════════════
-#  Phase 4: Archive Banners
-# ══════════════════════════════════════════════════════════════
-
-ARCHIVE_BANNER = """> **Archived Repository**
->
-> This repository is now **archived**. All active development has been
-> migrated to the core platform:
-> **[Omni-Medical-Suite](https://github.com/DrAbdulmalek/omni-medical-suite)**
->
-
-"""
-
-def phase4_archive_banners():
-    log("=" * 55, "PHASE")
-    log("Phase 4: Add archive banners", "PHASE")
-    log("=" * 55, "PHASE")
-
-    added = 0
-    for repo in ARCHIVED_REPOS:
-        if not repo_exists(repo):
-            log(f"{repo} (not cloned)", "INFO")
-            continue
-        readme = BASE_DIR / repo / "README.md"
-        if not readme.exists():
-            continue
-        content = readme.read_text(encoding='utf-8', errors='ignore')
-        if "omni-medical-suite" in content and "Archived" in content:
-            log(f"{repo} (banner exists)", "INFO")
-            continue
-        log(f"{repo}/README.md", "ACTION")
-        if not DRY_RUN:
-            readme.write_text(ARCHIVE_BANNER + content, encoding='utf-8')
-            added += 1
-    log(f"Added {added} archive banners", "OK")
-    return added
-
-# ══════════════════════════════════════════════════════════════
-#  Phase 5: Quality Audit (flake8 + bandit)
-# ══════════════════════════════════════════════════════════════
-
-def phase5_quality_audit():
-    log("=" * 55, "PHASE")
-    log("Phase 5: Quality audit (flake8 + bandit)", "PHASE")
-    log("=" * 55, "PHASE")
-
-    report_lines = [f"# Quality Audit — {datetime.now():%Y-%m-%d %H:%M}", ""]
-
-    for repo in ACTIVE_REPOS[:5]:
-        if not repo_exists(repo):
-            continue
-        log(f"Scanning {repo}...", "ACTION")
-
-        rc, flake_out, _ = run(
-            'flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics 2>/dev/null | head -20',
-            cwd=BASE_DIR / repo
-        )
-        report_lines.append(f"## {repo}")
-        report_lines.append(f"### Flake8 (Critical)\n```\n{flake_out.strip() or 'No critical errors'}\n```\n")
-
-        rc, bandit_out, _ = run(
-            'bandit -r . -q -lll 2>/dev/null | head -30',
-            cwd=BASE_DIR / repo
-        )
-        report_lines.append(f"### Bandit (High)\n```\n{bandit_out.strip() or 'No high issues'}\n```\n")
-
-    report_path = BASE_DIR / "quality_audit_report.md"
-    if not DRY_RUN:
-        report_path.write_text("\n".join(report_lines), encoding='utf-8')
-        log(f"Report: {report_path}", "OK")
-    return len(report_lines)
-
-# ══════════════════════════════════════════════════════════════
-#  Phase 6: Push All Changes
-# ══════════════════════════════════════════════════════════════
-
-def phase6_push_all():
-    log("=" * 55, "PHASE")
-    log("Phase 6: Push all changes to GitHub", "PHASE")
-    log("=" * 55, "PHASE")
-
-    if DRY_RUN:
-        log("Would push changes to all repos", "DRY")
-        return 0
-
-    token = get_token()
-    pushed = 0
-    for repo in ACTIVE_REPOS + ARCHIVED_REPOS:
-        if not repo_exists(repo):
-            continue
-        rc, status, _ = run("git status --porcelain", cwd=BASE_DIR / repo)
-        if not status.strip():
-            log(f"{repo} (clean)", "INFO")
-            continue
-        log(f"{repo}...", "ACTION")
-        if token:
-            run(f'git remote set-url origin "https://x-access-token:{token}@github.com/{GITHUB_USER}/{repo}.git"',
-                cwd=BASE_DIR / repo)
-        rc, branch, _ = run("git rev-parse --abbrev-ref HEAD", cwd=BASE_DIR / repo)
-        branch = branch.strip()
-        rc, _, err = run(f"git push origin {branch}", cwd=BASE_DIR / repo)
-        if rc == 0:
-            log(f"{repo}", "OK")
-            pushed += 1
-        else:
-            log(f"{repo}: {err[:80]}", "ERROR")
-    log(f"Pushed {pushed} repos", "OK")
-    return pushed
-
-# ══════════════════════════════════════════════════════════════
-#  Main
-# ══════════════════════════════════════════════════════════════
-
-def main():
-    print(f"\n{C.BOLD}{C.CYAN}{'=' * 57}{C.RESET}")
-    print(f"{C.BOLD}{C.CYAN}  Master Orchestrator — Omni Medical Suite{C.RESET}")
-    print(f"{C.BOLD}{C.CYAN}{'=' * 57}{C.RESET}")
-
-    if DRY_RUN:
-        print(f"\n{C.YELLOW}{C.BOLD}  DRY-RUN — no changes will be made{C.RESET}")
-        print(f"{C.YELLOW}  To apply: python3 master_orchestrator.py --apply{C.RESET}\n")
-    else:
-        print(f"\n{C.RED}{C.BOLD}  APPLY MODE — changes will be made{C.RESET}\n")
-
-    LOG_FILE.parent.mkdir(parents=True, exist_ok=True)
-    with open(LOG_FILE, 'w', encoding='utf-8') as f:
-        f.write(f"Orchestrator — {datetime.now()}\nMode: {'APPLY' if not DRY_RUN else 'DRY-RUN'}\n\n")
-
-    target_phase = None
-    if "--phase" in sys.argv:
-        idx = sys.argv.index("--phase")
-        if idx + 1 < len(sys.argv):
-            target_phase = int(sys.argv[idx + 1])
-
-    phases = [
-        (1, "Download missing repos", phase1_download_missing),
-        (2, "Unified .flake8 config", phase2_flake8_config),
-        (3, "Create CONTRIBUTING.md", phase3_contributing),
-        (4, "Archive banners", phase4_archive_banners),
-        (5, "Quality audit", phase5_quality_audit),
-        (6, "Push all changes", phase6_push_all),
-    ]
-
-    results = {}
-    for num, name, func in phases:
-        if target_phase and num != target_phase:
-            continue
-        results[num] = func()
-
-    print(f"\n{C.BOLD}{'=' * 57}{C.RESET}")
-    print(f"{C.BOLD}  Summary:{C.RESET}")
-    for num, name, _ in phases:
-        if num in results:
-            status = C.GREEN + str(results[num]) + C.RESET
-            print(f"   {num}. {name}: {status}")
-    print(f"{C.BOLD}{'=' * 57}{C.RESET}\n")
-
-if __name__ == '__main__':
-    main()
 ```
 
 ---
@@ -1153,6 +672,1589 @@ def main():
 
 if __name__ == '__main__':
     sys.exit(main())
+```
+
+---
+
+### `requirements-dev.txt`
+**اللغة:** Text | **الأسطر:** 2 | **الحجم:** 12 حرف
+
+```text
+pytest>=8.0
+
+```
+
+---
+
+### `master_orchestrator.py`
+**اللغة:** Python | **الأسطر:** 521 | **الحجم:** 18,346 حرف
+**الاعتماديات:**
+- `import os`
+- `import re`
+- `import shlex`
+- `import shutil`
+- `import subprocess`
+- `import sys`
+- `from pathlib import Path`
+- `from datetime import datetime`
+- `from urllib.parse import urlsplit`
+
+```python
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Master Orchestrator — Automated infrastructure management
+Dr. Abdulmalek - Omni Medical Suite
+
+Usage:
+  python3 master_orchestrator.py              # dry-run (preview only)
+  python3 master_orchestrator.py --apply      # apply changes
+  python3 master_orchestrator.py --phase 1    # specific phase only
+"""
+import os
+import re
+import shlex
+import shutil
+import subprocess
+import sys
+from pathlib import Path
+from datetime import datetime
+from urllib.parse import urlsplit
+
+# ══════════════════════════════════════════════════════════════
+#  Settings
+# ══════════════════════════════════════════════════════════════
+
+BASE_DIR = Path(os.environ.get("REPOS_DIR", Path.home() / "github~"))
+DRY_RUN = "--apply" not in sys.argv
+LOG_FILE = BASE_DIR / f"orchestrator_{datetime.now():%Y%m%d_%H%M%S}.log"
+
+ACTIVE_REPOS = [
+    "omni-medical-suite",
+    "medical-ocr-ground-truth",
+    "medical-ocr-benchmarks",
+    "medical-ocr-training-hub",
+    "medical-ocr-trainer",
+    "scanner-fixer",
+    "telegram-forwarder",
+    "ai-fuel-engine",
+    "IntelliFile-app",
+    "bilingual-extractor",
+]
+
+ARCHIVED_REPOS = [
+    "medical-handwriting-ocr",
+    "medical-ocr-postprocessor",
+    "OmniFile_Processor",
+    "medical-doc-processor",
+]
+
+GITHUB_USER = "DrAbdulmalek"
+
+# ══════════════════════════════════════════════════════════════
+#  Colors & Utilities
+# ══════════════════════════════════════════════════════════════
+
+class C:
+    RED = '\033[91m'; GREEN = '\033[92m'; YELLOW = '\033[93m'
+    BLUE = '\033[94m'; CYAN = '\033[96m'; RESET = '\033[0m'; BOLD = '\033[1m'
+
+def log(msg, level="INFO"):
+    prefix = {"INFO": "  ", "OK": "[OK] ", "WARN": "[!!] ",
+              "ERROR": "[XX] ", "ACTION": "[>>] ", "DRY": "[DRY] ", "PHASE": "[##] "}
+    colors = {"INFO": C.BLUE, "OK": C.GREEN, "WARN": C.YELLOW,
+              "ERROR": C.RED, "ACTION": C.BLUE, "DRY": C.CYAN, "PHASE": C.BOLD + C.CYAN}
+    tag = prefix.get(level, "")
+    print(f"{colors.get(level, C.RESET)}{tag}{msg}{C.RESET}")
+    with open(LOG_FILE, 'a', encoding='utf-8') as f:
+        f.write(f"[{level}] {msg}\n")
+
+# ── Credential hygiene ─────────────────────────────────────────────────────
+# No credential may ever be placed inside a Git remote URL: it leaks through
+# `.git/config`, `git remote -v`, process listings and error output.
+
+_CRED_IN_URL = re.compile(r"^[a-z][a-z0-9+.-]*://[^/@:]+:[^/@]*@", re.IGNORECASE)
+_SAFE_ERR = re.compile(r"(?:[a-z][a-z0-9+.-]*|scp-like)://[^/\s@]+:[^/\s@]*@", re.IGNORECASE)
+_ENV_KEYS = re.compile(r"(?i)\b(GITHUB_TOKEN|GH_TOKEN|HF_TOKEN|HUGGINGFACE_TOKEN|"
+                       r"TELEGRAM_BOT_TOKEN|GIT_PASSWORD|GIT_TOKEN)\b\s*[=:]\s*\S+")
+
+
+def redact(text):
+    """Strips credentials from any string before it is logged or printed."""
+    if not text:
+        return ""
+    out = _SAFE_ERR.sub("<scheme>://<user>:<REDACTED>@", str(text))
+    out = _ENV_KEYS.sub(lambda m: m.group(1) + "=<REDACTED>", out)
+    return out
+
+
+def _display(cmd):
+    return " ".join(shlex.quote(str(c)) for c in cmd) if isinstance(cmd, (list, tuple)) else str(cmd)
+
+
+def run(cmd, cwd=None):
+    """Runs a command WITHOUT a shell (argv list) and redacts credentials in errors.
+
+    A list is required: shell=True re-introduces both command injection (repo or
+    branch names reach the shell) and credential leakage through the command line.
+    """
+    if DRY_RUN:
+        log(f"$ {redact(_display(cmd))}", "DRY")
+        return 0, "", ""
+    if isinstance(cmd, str):
+        raise TypeError(
+            "run() requires an argv list; shell strings are rejected "
+            "(command injection + credential leakage)."
+        )
+    try:
+        r = subprocess.run(list(cmd), shell=False, cwd=cwd,
+                          capture_output=True, text=True, timeout=300)
+        return r.returncode, r.stdout, redact(r.stderr)
+    except Exception as e:
+        log(f"Failed: {redact(e)}", "ERROR")
+        return 1, "", redact(str(e))
+
+
+def url_has_credentials(url):
+    """True when a remote URL embeds user:password (i.e. a token)."""
+    if not url:
+        return False
+    if "://" not in url:
+        # scp-like syntax (git@host:owner/repo.git) carries no password field
+        return False
+    try:
+        parts = urlsplit(url)
+    except ValueError:
+        return True  # unparseable → refuse to treat it as safe
+    # username-only userinfo (https://token@host/…) leaks the identity too
+    return bool(parts.username) or bool(parts.password) or bool(_CRED_IN_URL.match(url))
+
+
+def strip_credentials(url):
+    """Returns the same URL with any userinfo removed."""
+    if "://" not in url:
+        return url
+    parts = urlsplit(url)
+    if not parts.password and not parts.username:
+        return url
+    host = parts.hostname or ""
+    if parts.port:
+        host = f"{host}:{parts.port}"
+    return parts._replace(netloc=host).geturl()
+
+
+def assert_clean_remote(repo_path):
+    """Fails closed when origin embeds credentials; scrubs it when possible."""
+    rc, url, err = run(["git", "remote", "get-url", "origin"], cwd=repo_path)
+    if rc != 0:
+        return False, f"cannot read origin ({err.strip()[:60] or 'no such remote'})"
+    url = url.strip()
+    if not url_has_credentials(url):
+        return True, ""
+    clean = strip_credentials(url)
+    rc2, _, err2 = run(["git", "remote", "set-url", "origin", clean], cwd=repo_path)
+    if rc2 == 0:
+        return False, "origin contained credentials; scrubbed — re-run the operation"
+    return False, f"origin contains credentials and could not be scrubbed ({err2.strip()[:60]})"
+
+
+def ensure_git_auth():
+    """Verifies a credential mechanism exists. Never embeds a token in a URL."""
+    if shutil.which("gh"):
+        rc, _, err = run(["gh", "auth", "setup-git"])
+        if rc == 0:
+            return True
+        log("GitHub CLI present but `gh auth setup-git` failed — run `gh auth login`.", "WARN")
+        return False
+    rc, helper, _ = run(["git", "config", "--get", "credential.helper"])
+    if helper.strip():
+        return True
+    if os.environ.get("SSH_AUTH_SOCK") or (Path.home() / ".ssh" / "id_ed25519").exists() \
+            or (Path.home() / ".ssh" / "id_rsa").exists():
+        return True
+    log("No Git credential mechanism found. Configure GitHub CLI (`gh auth login`), "
+        "Git Credential Manager, or SSH. Tokens are never written into remote URLs.", "ERROR")
+    return False
+
+def repo_exists(name):
+    p = BASE_DIR / name
+    return p.exists() and (p / ".git").exists()
+
+def token_available():
+    """Boolean only. The token VALUE is never read into this program any more:
+    a value in memory ends up in remote URLs, logs and error messages."""
+    if os.environ.get("GITHUB_TOKEN"):
+        return True
+    secrets = Path.home() / ".config" / "git-sync-system" / "secrets.env"
+    if secrets.exists():
+        try:
+            for line in secrets.read_text().splitlines():
+                if line.startswith("GITHUB_TOKEN=") and line.split("=", 1)[1].strip():
+                    return True
+        except OSError:
+            return False
+    return False
+
+
+def get_token():  # deprecated shim — kept so external callers do not break
+    """DEPRECATED: returns no value by design. Use ensure_git_auth() instead."""
+    log("get_token() is deprecated: credentials are supplied by a Git credential "
+        "helper, never read into this script.", "WARN")
+    return ""
+
+# ══════════════════════════════════════════════════════════════
+#  Phase 1: Download Missing Repos
+# ══════════════════════════════════════════════════════════════
+
+def phase1_download_missing():
+    log("=" * 55, "PHASE")
+    log("Phase 1: Download missing repositories", "PHASE")
+    log("=" * 55, "PHASE")
+
+    all_repos = ACTIVE_REPOS + ARCHIVED_REPOS
+    downloaded, skipped, failed = 0, 0, 0
+    auth_ok = ensure_git_auth()
+    if not auth_ok:
+        log("Continuing without verified credentials: private repositories will fail "
+            "to clone. No token is ever placed in a remote URL.", "WARN")
+
+    BASE_DIR.mkdir(parents=True, exist_ok=True)
+
+    for repo in all_repos:
+        path = BASE_DIR / repo
+        if repo_exists(repo):
+            log(f"{repo} (exists)", "INFO")
+            skipped += 1
+            continue
+
+        log(f"{repo}...", "ACTION")
+        url = f"https://github.com/{GITHUB_USER}/{repo}.git"
+        if url_has_credentials(url):  # defence in depth: refuse to clone a dirty URL
+            log(f"{repo}: refusing URL with embedded credentials", "ERROR")
+            failed += 1
+            continue
+        rc, _, err = run(["git", "clone", "--depth", "1", url, str(path)], cwd=BASE_DIR)
+        if rc == 0:
+            log(f"{repo}", "OK")
+            downloaded += 1
+        else:
+            log(f"{repo}: {err[:80]}", "ERROR")
+            failed += 1
+
+    log(f"Result: {downloaded} cloned | {skipped} exists | {failed} failed", "INFO")
+    return downloaded
+
+# ══════════════════════════════════════════════════════════════
+#  Phase 2: Unified .flake8 Config
+# ══════════════════════════════════════════════════════════════
+
+FLAKE8_CONFIG = """[flake8]
+max-line-length = 120
+extend-ignore = E203, W503
+exclude =
+    .git,
+    __pycache__,
+    build,
+    dist,
+    .venv,
+    venv,
+    node_modules,
+    .pytest_cache
+per-file-ignores =
+    __init__.py:F401
+    tests/*:E501,W293
+"""
+
+def phase2_flake8_config():
+    log("=" * 55, "PHASE")
+    log("Phase 2: Unified .flake8 config", "PHASE")
+    log("=" * 55, "PHASE")
+
+    created = 0
+    for repo in ACTIVE_REPOS:
+        if not repo_exists(repo):
+            continue
+        flake8 = BASE_DIR / repo / ".flake8"
+        if flake8.exists():
+            log(f"{repo}/.flake8 (exists)", "INFO")
+            continue
+        log(f"{repo}/.flake8", "ACTION")
+        if not DRY_RUN:
+            flake8.write_text(FLAKE8_CONFIG, encoding='utf-8')
+            created += 1
+    log(f"Created {created} .flake8 files", "OK")
+    return created
+
+# ══════════════════════════════════════════════════════════════
+#  Phase 3: CONTRIBUTING.md
+# ══════════════════════════════════════════════════════════════
+
+CONTRIBUTING_MD = """# Contributing
+
+Thank you for your interest!
+
+## Quick Start
+
+1. **Fork** the repository
+2. **Clone** your fork locally
+3. Create a branch: `git checkout -b feature/my-feature`
+4. Commit: `git commit -m 'feat: add feature'`
+5. Push: `git push origin feature/my-feature`
+6. Open a Pull Request
+
+## Code Standards
+
+- Follow **PEP 8** (see `.flake8` in root)
+- Use **type hints** for public functions
+- Add **docstrings** (Google style)
+- Write **tests** for new features
+
+## Commit Convention
+
+Follow [Conventional Commits](https://www.conventionalcommits.org/):
+```
+feat: add a feature
+fix: fix a bug
+docs: update documentation
+chore: maintenance
+test: add tests
+```
+
+## Reporting Issues
+
+Use Issue Templates in `.github/ISSUE_TEMPLATE/`
+"""
+
+def phase3_contributing():
+    log("=" * 55, "PHASE")
+    log("Phase 3: Create CONTRIBUTING.md", "PHASE")
+    log("=" * 55, "PHASE")
+
+    created = 0
+    for repo in ACTIVE_REPOS:
+        if not repo_exists(repo):
+            continue
+        contrib = BASE_DIR / repo / "CONTRIBUTING.md"
+        if contrib.exists():
+            log(f"{repo}/CONTRIBUTING.md (exists)", "INFO")
+            continue
+        log(f"{repo}/CONTRIBUTING.md", "ACTION")
+        if not DRY_RUN:
+            contrib.write_text(CONTRIBUTING_MD, encoding='utf-8')
+            created += 1
+    log(f"Created {created} CONTRIBUTING.md files", "OK")
+    return created
+
+# ══════════════════════════════════════════════════════════════
+#  Phase 4: Archive Banners
+# ══════════════════════════════════════════════════════════════
+
+ARCHIVE_BANNER = """> **Archived Repository**
+>
+> This repository is now **archived**. All active development has been
+> migrated to the core platform:
+> **[Omni-Medical-Suite](https://github.com/DrAbdulmalek/omni-medical-suite)**
+>
+
+"""
+
+def phase4_archive_banners():
+    log("=" * 55, "PHASE")
+    log("Phase 4: Add archive banners", "PHASE")
+    log("=" * 55, "PHASE")
+
+    added = 0
+    for repo in ARCHIVED_REPOS:
+        if not repo_exists(repo):
+            log(f"{repo} (not cloned)", "INFO")
+            continue
+        readme = BASE_DIR / repo / "README.md"
+        if not readme.exists():
+            continue
+        content = readme.read_text(encoding='utf-8', errors='ignore')
+        if "omni-medical-suite" in content and "Archived" in content:
+            log(f"{repo} (banner exists)", "INFO")
+            continue
+        log(f"{repo}/README.md", "ACTION")
+        if not DRY_RUN:
+            readme.write_text(ARCHIVE_BANNER + content, encoding='utf-8')
+            added += 1
+    log(f"Added {added} archive banners", "OK")
+    return added
+
+# ══════════════════════════════════════════════════════════════
+#  Phase 5: Quality Audit (flake8 + bandit)
+# ══════════════════════════════════════════════════════════════
+
+def phase5_quality_audit():
+    log("=" * 55, "PHASE")
+    log("Phase 5: Quality audit (flake8 + bandit)", "PHASE")
+    log("=" * 55, "PHASE")
+
+    report_lines = [f"# Quality Audit — {datetime.now():%Y-%m-%d %H:%M}", ""]
+
+    for repo in ACTIVE_REPOS[:5]:
+        if not repo_exists(repo):
+            continue
+        log(f"Scanning {repo}...", "ACTION")
+
+        # No `2>/dev/null`, no `| head`: hiding stderr turned "tool missing" into
+        # "no issues found", which made the audit report unreadable-but-green.
+        report_lines.append(f"## {repo}")
+        if shutil.which("flake8"):
+            rc, flake_out, flake_err = run(
+                ["flake8", ".", "--count", "--select=E9,F63,F7,F82",
+                 "--show-source", "--statistics"],
+                cwd=BASE_DIR / repo
+            )
+            body = (flake_out or flake_err).strip()
+            status = "errors found" if rc != 0 else "clean"
+            report_lines.append(f"### Flake8 (Critical) — {status}\n```\n{body[:4000] or 'No critical errors'}\n```\n")
+        else:
+            report_lines.append("### Flake8 (Critical) — NOT INSTALLED\n```\nflake8 is not available in this environment\n```\n")
+
+        if shutil.which("bandit"):
+            rc, bandit_out, bandit_err = run(["bandit", "-r", ".", "-q", "-lll"], cwd=BASE_DIR / repo)
+            body = (bandit_out or bandit_err).strip()
+            status = "issues found" if rc != 0 else "clean"
+            report_lines.append(f"### Bandit (High) — {status}\n```\n{body[:4000] or 'No high issues'}\n```\n")
+        else:
+            report_lines.append("### Bandit (High) — NOT INSTALLED\n```\nbandit is not available in this environment\n```\n")
+
+    report_path = BASE_DIR / "quality_audit_report.md"
+    if not DRY_RUN:
+        report_path.write_text("\n".join(report_lines), encoding='utf-8')
+        log(f"Report: {report_path}", "OK")
+    return len(report_lines)
+
+# ══════════════════════════════════════════════════════════════
+#  Phase 6: Push All Changes
+# ══════════════════════════════════════════════════════════════
+
+def phase6_push_all():
+    log("=" * 55, "PHASE")
+    log("Phase 6: Push all changes to GitHub", "PHASE")
+    log("=" * 55, "PHASE")
+
+    if DRY_RUN:
+        log("Would push changes to all repos", "DRY")
+        return 0
+
+    pushed = 0
+    if not ensure_git_auth():
+        log("Push aborted: no credential helper is configured. Configure GitHub CLI, "
+            "Git Credential Manager, or SSH — never a token inside the remote URL.", "ERROR")
+        return 0
+    for repo in ACTIVE_REPOS + ARCHIVED_REPOS:
+        if not repo_exists(repo):
+            continue
+        rc, status, _ = run(["git", "status", "--porcelain"], cwd=BASE_DIR / repo)
+        if not status.strip():
+            log(f"{repo} (clean)", "INFO")
+            continue
+        log(f"{repo}...", "ACTION")
+        clean, why = assert_clean_remote(BASE_DIR / repo)
+        if not clean:
+            log(f"{repo}: {why}", "ERROR")
+            continue
+        rc, branch, _ = run(["git", "rev-parse", "--abbrev-ref", "HEAD"], cwd=BASE_DIR / repo)
+        branch = branch.strip()
+        if not re.fullmatch(r"[A-Za-z0-9._/-]+", branch or ""):
+            log(f"{repo}: unexpected branch name; refusing to push", "ERROR")
+            continue
+        rc, _, err = run(["git", "push", "origin", branch], cwd=BASE_DIR / repo)
+        if rc == 0:
+            log(f"{repo}", "OK")
+            pushed += 1
+        else:
+            log(f"{repo}: {err[:80]}", "ERROR")
+    log(f"Pushed {pushed} repos", "OK")
+    return pushed
+
+# ══════════════════════════════════════════════════════════════
+#  Main
+# ══════════════════════════════════════════════════════════════
+
+def main():
+    print(f"\n{C.BOLD}{C.CYAN}{'=' * 57}{C.RESET}")
+    print(f"{C.BOLD}{C.CYAN}  Master Orchestrator — Omni Medical Suite{C.RESET}")
+    print(f"{C.BOLD}{C.CYAN}{'=' * 57}{C.RESET}")
+
+    if DRY_RUN:
+        print(f"\n{C.YELLOW}{C.BOLD}  DRY-RUN — no changes will be made{C.RESET}")
+        print(f"{C.YELLOW}  To apply: python3 master_orchestrator.py --apply{C.RESET}\n")
+    else:
+        print(f"\n{C.RED}{C.BOLD}  APPLY MODE — changes will be made{C.RESET}\n")
+
+    LOG_FILE.parent.mkdir(parents=True, exist_ok=True)
+    with open(LOG_FILE, 'w', encoding='utf-8') as f:
+        f.write(f"Orchestrator — {datetime.now()}\nMode: {'APPLY' if not DRY_RUN else 'DRY-RUN'}\n\n")
+
+    target_phase = None
+    if "--phase" in sys.argv:
+        idx = sys.argv.index("--phase")
+        if idx + 1 < len(sys.argv):
+            target_phase = int(sys.argv[idx + 1])
+
+    phases = [
+        (1, "Download missing repos", phase1_download_missing),
+        (2, "Unified .flake8 config", phase2_flake8_config),
+        (3, "Create CONTRIBUTING.md", phase3_contributing),
+        (4, "Archive banners", phase4_archive_banners),
+        (5, "Quality audit", phase5_quality_audit),
+        (6, "Push all changes", phase6_push_all),
+    ]
+
+    results = {}
+    for num, name, func in phases:
+        if target_phase and num != target_phase:
+            continue
+        results[num] = func()
+
+    print(f"\n{C.BOLD}{'=' * 57}{C.RESET}")
+    print(f"{C.BOLD}  Summary:{C.RESET}")
+    for num, name, _ in phases:
+        if num in results:
+            status = C.GREEN + str(results[num]) + C.RESET
+            print(f"   {num}. {name}: {status}")
+    print(f"{C.BOLD}{'=' * 57}{C.RESET}\n")
+
+if __name__ == '__main__':
+    main()
+```
+
+---
+
+### `GOVERNANCE.md`
+**اللغة:** Markdown | **الأسطر:** 84 | **الحجم:** 2,687 حرف
+
+```markdown
+# Governance Policy — git-sync-system
+
+## Overview
+This document defines the governance rules for the git-sync-system tool that manages 28+ GitHub repos and 11 HF Spaces.
+
+## Sync Policies
+
+### Default Policy: Read-Only
+- All repos default to READ-ONLY mode
+- Sync operations (push, delete branches) require explicit opt-in
+- Pull/fetch operations are always allowed
+
+### Write Modes
+| Mode | Description | Requires |
+|------|-------------|----------|
+| read-only | Pull only, no pushes | Default |
+| safe-push | Push to non-protected branches only | --write flag |
+| full-write | Push to any branch including main | --force-write + confirmation |
+
+## Allowlist / Denylist
+
+### Allowlist (repos that CAN receive pushes)
+- omni-medical-suite
+- scanner-fixer
+- medical-handwriting-ocr
+- medical-ocr-training-hub
+- medical-ocr-benchmarks
+- medical-ocr-trainer
+- medical-ocr-ground-truth
+- profile-readme (DrAbdulmalek/DrAbdulmalek)
+- reset-net
+
+### Denylist (repos that MUST NEVER receive auto-pushes)
+- ocr-groundtruth (archived, merged into medical-ocr-ground-truth)
+- ai-fuel-engine (archived)
+- bilingual-extractor (archived)
+- medical-doc-processor (archived)
+- medical-ocr-postprocessor (archived)
+- omniparse-study (archived)
+- omniparse (archived)
+- OmniFile_Processor (archived)
+- ponytail (archived)
+- telegram-forwarder (archived)
+- tg-forwarder (archived)
+- IntelliFile-app (archived)
+
+### Sensitive Repos (require --force-write + explicit confirmation)
+- omni-medical-suite (core platform)
+- medical-ocr-ground-truth (contains training data)
+- medical-ocr-benchmarks (benchmark authority)
+- Any repo with 'private' visibility
+
+## Branch Protection
+
+### read_only_main (direct push to main is blocked)
+These repos require PR-based workflow for main branch changes:
+- omni-medical-suite
+- medical-ocr-ground-truth
+- medical-ocr-benchmarks
+
+### Force Push Policy
+Force push is **never allowed** on protected branches. The system checks branch protection rules before pushing:
+1. Query GitHub API for branch protection status
+2. If branch is protected: require PR workflow instead of direct push
+3. Warn user and require explicit confirmation
+
+### Dry-Run Requirement
+The following repos require a dry-run pass before any actual sync:
+- omni-medical-suite
+- medical-ocr-ground-truth
+- medical-ocr-benchmarks
+
+## Audit Log
+
+All sync operations are logged to `logs/audit.log`:
+- Timestamp, operation type, repo, branch, result
+- Push attempts (success/failure)
+- Policy violations (denied writes to denylist repos)
+- Manual overrides
+- Governance check results (PASSED/DENIED/DRY_RUN_REQUIRED)
+
+## Configuration
+
+Policies are configured in `config/governance.yaml` (source of truth).
+```
+
+---
+
+### `GEMINI_SYSTEM_PROMPT.md`
+**اللغة:** Markdown | **الأسطر:** 173 | **الحجم:** 4,441 حرف
+
+```markdown
+# 🎭 Generic System Prompt — Gemini Flash
+## مطور Python متخصص (Generic — قابل للتخصيص)
+
+---
+
+## 1. هويتك (Persona)
+
+أنت **مطور Python متمرس** متخصص في:
+- بناء أنظمة برمجية موثوقة وقابلة للصيانة
+- اتباع أفضل الممارسات (PEP 8, type hints, docstrings)
+- معالجة الأخطاء والـ edge cases
+- كتابة اختبارات شاملة
+
+خبرتك في بيئات الإنتاج:
+- الكود يُقرأ أكثر مما يُكتب — الوضوح أهم من الذكاء
+- الـ edge cases تحدث في الإنتاج دائماً
+- الاختبارات ليست رفاهية — هي ضمانة
+
+---
+
+## 2. سياق المشروع (Project Context)
+
+المشروع: **عام** — استخرج التفاصيل من `project_context.txt` المرفق.
+
+### التقنيات الافتراضية:
+- **Python 3.11+**
+- **Type Hints** إلزامية
+- **pytest** للاختبارات
+- **ruff** للـ linting
+- **mypy** للـ type checking
+
+> ⚠️ اقرأ السياق المرفق لتحديد التقنيات الفعلية (FastAPI? Django? CLI? etc.)
+
+---
+
+## 3. قيود صارمة (Hard Constraints)
+
+### أ. برمجية:
+- ✅ **Python 3.11+** — Type Hints، f-strings، match-case.
+- ✅ **PEP 8** — استخدم ruff للتطبيق التلقائي.
+- ✅ **Docstrings** — لكل دالة/كلاس عامة.
+- ✅ **Error handling** — `try/except` صريح مع رسائل واضحة.
+- ✅ **No magic numbers** — استخدم constants مسماة.
+
+### ب. هندسية:
+- ✅ **Single Responsibility** — كل دالة/كلاس يفعل شيئاً واحداً.
+- ✅ **DRY** — لا تكرّر الكود، استخرج المشترك.
+- ✅ **KISS** — الحل البسيط أفضل من المعقّد.
+- ❌ **ممنوع** `import *` — استخدم imports صريحة.
+- ❌ **ممنوع** `eval()` أو `exec()` إلا في حالات نادرة جداً مع تعليق مبرّر.
+
+### ج. اختبارية:
+- ✅ كل دالة عامة تحتاج unit test.
+- ✅غطِ edge cases (null, empty, boundary values).
+- ✅ استخدم `pytest` + `pytest-cov` (التغطية ≥ 80%).
+
+---
+
+## 4. مصطلحات هندسية معتمدة
+
+- `SRP` — Single Responsibility Principle
+- `DRY` — Don't Repeat Yourself
+- `KISS` — Keep It Simple, Stupid
+- `YAGNI` — You Aren't Gonna Need It
+- `TDD` — Test-Driven Development
+- `refactor` — إعادة هيكلة بدون تغيير السلوك
+- `technical debt` — دين تقني
+- `code smell` — رائحة كود (إشارة لمشكلة محتملة)
+- `edge case` — حالة حدية
+- `happy path` — المسار السعيد (الاستخدام النموذجي)
+
+---
+
+## 5. صيغة المخرجات المطلوبة (Output Format)
+
+```markdown
+### 📌 الملف: `path/to/file.py`
+
+**التغييرات:**
+1. ...
+2. ...
+
+**الكود المُحدَّث:**
+```python
+"""وصف مختصر للوحدة."""
+from __future__ import annotations
+from typing import Final
+
+# تعليق يشرح الـ constant
+EXAMPLE_CONSTANT: Final[str] = "value"
+
+def example_function(param: str) -> bool:
+    """
+    وصف الوظيفة.
+
+    Args:
+        param: وصف المعامل
+
+    Returns:
+        وصف النتيجة
+
+    Raises:
+        ValueError: إذا كان param فارغاً
+    """
+    try:
+        if not param:
+            raise ValueError("المعامل لا يمكن أن يكون فارغاً")
+        # المنطق
+        return True
+    except Exception as e:
+        raise RuntimeError(f"خطأ: {e}") from e
+```
+
+**ملاحظات المراجعة:**
+- نقطة 1
+```
+
+### قواعد:
+- 📝 تعليقات عربية، أسماء متغيرات إنجليزية.
+- 📝 Docstrings عربية مع Type Hints.
+- 📝 رسائل أخطاء عربية واضحة.
+
+---
+
+## 6. أمثلة على الطلبات (Request Examples)
+
+### ✅ طلب جيد:
+> "أعد كتابة دالة `process_data` في `src/core/processor.py` لتحسين الأداء. استخدم list comprehension بدلاً من حلقة for مع append. احتفظ بنفس الـ Signature. أضف اختبار في `tests/test_processor.py` يغطي: قائمة فارغة، قائمة بعنصر واحد، قائمة كبيرة (1000 عنصر)."
+
+### ❌ طلب سيء:
+> "حسّن الكود" (غامض — أي دالة؟ ما المقياس؟)
+
+### ✅ طلب جيد:
+> "أضف type hints إلى `src/utils/helpers.py`. استخدم `from __future__ import annotations` للسماح بـ PEP 604 syntax (`X | Y`). أضف mypy config في `pyproject.toml` مع `strict = true`."
+
+### ❌ طلب سيء:
+> "أضف types" (غامض — أي ملف؟ أي مستوى صرامة؟)
+
+---
+
+## 7. سياق المشروع المرفق (Attached Context)
+
+📎 **ملف `project_context.txt` المرفق** يحتوي على:
+- شجرة ملفات المشروع بالكامل
+- محتوى كل ملف
+- الإحصائيات والاعتماديات
+
+**كيفية الاستخدام:**
+- ابحث عن الملف المطلوب قبل الكتابة.
+- لا تختلق أسماء ملفات/دوال غير موجودة.
+- إذا لم تجد الملف، اسأل: "هذا الملف غير موجود في السياق — هل تقصد X؟"
+
+---
+
+## 8. قواعد التفاعل (Interaction Rules)
+
+1. **اسأل قبل أن تكتب** — Clarifying Questions عند الغموض.
+2. **اشرح النهج أولاً** — Approach قبل Implementation.
+3. **لا تحذف** — احترم الدوال/الكلاسات الموجودة.
+4. **اختبر** — كل دالة جديدة تحتاج unit test.
+5. **توافق البنية** — احترم بنية المشروع الموجودة.
+6. **لا تكسر الـ imports** — تحقق قبل الـ commit.
+
+---
+
+## 9. التذكير النهائي (Final Reminder)
+
+> **"الكود الجيد يُقرأ في 5 ثوانٍ ويُفهم. الكود السيء يأخذ ساعات. اكتب الكود كأن من سيقرؤه بعدك مريض نفسي يعرف مكان سكنك."**
+
+---
+
+**جاهز للعمل. ابدأ بقراءة `project_context.txt` المرفق، ثم انتظر طلبي.**
+
+```
+
+---
+
+### `GITHUB_ACTIONS_GUIDE.md`
+**اللغة:** Markdown | **الأسطر:** 85 | **الحجم:** 2,001 حرف
+
+```markdown
+# 🚀 دليل استخدام سياق المشروع من الجوال
+
+## الهدف
+تشغيل سكريبت استخراج السياق أونلاين على GitHub دون الحاجة إلى كمبيوتر.
+
+---
+
+## ⚡ الخطوات (من الجوال)
+
+### 1. إضافة الملفات للمستودع
+
+في مستودعك على GitHub، أنشئ هذين الملفين (يمكنك من التطبيق أو المتصفح):
+
+```
+.github/
+├── scripts/
+│   └── repo_to_context.py    ← السكريبت
+└── workflows/
+    └── generate-context.yml  ← الـ Workflow
+```
+
+**للإنشاء من الجوال:**
+1. افتح تطبيق GitHub
+2. ادخل إلى مستودعك
+3. اضغط ➕ (Add file) → Create new file
+4. اكتب المسار: `.github/workflows/generate-context.yml`
+5. الصق محتوى ملف الـ Workflow
+6. اضغط Commit
+7. كرر نفس الخطوة لملف السكريبت: `.github/scripts/repo_to_context.py`
+
+---
+
+### 2. تشغيل الـ Workflow
+
+1. من تطبيق GitHub، ادخل إلى مستودعك
+2. اذهب إلى تبويب **Actions** (الأسفل)
+3. اختر **📦 Generate Project Context**
+4. اضغط **Run workflow** (الأعلى)
+5. اترك الإعدادات الافتراضية واضغط **Run workflow** مرة أخرى
+
+---
+
+### 3. تحميل الملف
+
+1. انتظر 30 ثانية حتى تكتمل العملية (سترى ✅ أخضر)
+2. ارجع إلى تبويب **Code** (الملفات)
+3. ستجد ملفاً جديداً باسم `project_context.txt`
+4. اضغط عليه → اضغط ⬇️ (Download) أو انسخ النص
+
+---
+
+## 📋 ما يفعله السكريبت
+
+- ✅ يقرأ كل ملفات الكود في المشروع
+- ✅ يستبعد الصور والملفات الثنائية
+- ✅ ينظمها في ملف نصي واحد منسق
+- ✅ يضيف شجرة الملفات + الإحصائيات
+- ✅ يدعم اللغة العربية (UTF-8)
+
+---
+
+## ⚙️ خيارات متقدمة (اختياري)
+
+عند تشغيل الـ Workflow، يمكنك تغيير:
+- **max_size**: حجم السياق (افتراضي 800000 حرف)
+- **split**: `true` إذا كان المشروع كبيراً (ينتج عدة ملفات)
+- **format**: `txt` أو `md`
+
+---
+
+## 🔄 الاستخدام مع Gemini Flash
+
+بعد تحميل `project_context.txt`:
+1. افتح [Gemini Flash](https://gemini.google.com) في متصفح الجوال
+2. ارفع الملف
+3. ابدأ المحادثة: *"هذا مشروعي. أريدك أن تُحسّن دالة X"*
+
+---
+
+## 🛟 في حال واجهت مشكلة
+
+- **العملية تفشل؟** تأكد أن السكريبت موجود في `.github/scripts/repo_to_context.py`
+- **الملف غير موجود؟** تأكد من صلاحيات الـ Workflow (يجب أن يحتوي على `permissions: contents: write`)
+- **مشروع كبير؟** شغل الـ Workflow مع `split = true`
+
+```
+
+---
+
+### `SECURITY.md`
+**اللغة:** Markdown | **الأسطر:** 176 | **الحجم:** 6,846 حرف
+
+```markdown
+# Security Policy — repo-sync-toolkit
+
+> repo-sync-toolkit is a **security-sensitive utility**. It handles API
+> tokens, can push to remote repositories, and can rewrite history
+> (force-push, with governance). Read this document before extending it.
+
+## Threat model
+
+The toolkit runs locally on the operator's machine. The threats it
+must defend against:
+
+1. **Accidental secret leakage** — tokens (GitHub PAT, HuggingFace
+   token, Telegram api_id/api_hash) ending up in committed files,
+   logs, or stdout.
+2. **Accidental destructive operations** — `git push --force` to
+   `main`, `git push --tags` to a sensitive training-data repo,
+   `git reset --hard` losing uncommitted work.
+3. **Audit gap** — operations happening with no trail, so a mistake
+   cannot be traced back to its cause.
+
+## Defense layers (current)
+
+### 1. Secret storage
+
+- Tokens are stored in `~/.config/git-sync-system/secrets.env` with
+  `chmod 600` (owner read/write only).
+- The `token-manager.py` tool masks token values by default in all
+  output. Full values are shown only with the explicit `--show` flag
+  on `list` / `export`.
+- `secrets.env` is loaded into the environment only when running a
+  sync command — it is never sourced into a shell.
+
+### 2. .gitignore
+
+The following paths are git-ignored (see `.gitignore`):
+
+- `.env`, `.env.*`, `config/settings.env`, `config/secrets.*`
+- `*.session`, `*.session-journal` (Telethon sessions)
+- `logs/*.log`, `logs/*.log.gz`, `logs/*.jsonl` (logs may contain
+  repo paths and metadata — should not be committed)
+
+### 3. Governance layer
+
+`governance_checker.py` enforces per-repo policies:
+
+- An **allowlist** of repos that may receive pushes.
+- A **denylist** of archived/protected repos where pushes are never
+  allowed (e.g. `ai-fuel-engine` in the audit log).
+- **`deny_force_push_protected=true`** — force-push to `main` is
+  denied by default on protected repos.
+- **Sensitive-data repos** require explicit `--force-write` and
+  confirmation (e.g. `medical-ocr-ground-truth`).
+
+Every push/force-push decision is logged to `logs/audit.log` as a
+JSON line with timestamp, repo, branch, result (allowed/denied), and
+a reason string.
+
+### 4. Audit log
+
+`logs/audit.log` is JSONL with the schema:
+
+```json
+{
+  "timestamp": "2026-06-29T22:21:39.835741+00:00",
+  "operation": "push" | "force-push" | "pull" | "clone" | "sync",
+  "repo": "<name>",
+  "branch": "<name>",
+  "result": "allowed" | "denied",
+  "details": "<reason>"
+}
+```
+
+The audit log does NOT contain token values, file contents, or
+diffs — only repo names, branches, and governance decisions.
+
+## Hardening checklist (for contributors)
+
+Before extending the toolkit, verify:
+
+- [ ] No new code path prints token values without an explicit
+      `--show`/`--debug` flag.
+- [ ] No new code path writes secrets to `logs/` or to stdout
+      without masking.
+- [ ] Any new file path that may contain secrets is added to
+      `.gitignore`.
+- [ ] Any new destructive git operation (e.g. `git reset --hard`,
+      `git clean -fd`) goes through `governance_checker.py` and is
+      audit-logged.
+- [ ] Any new "sync all repos" loop has a dry-run mode and a
+      per-repo confirmation for destructive operations.
+
+## Pre-commit secret scan
+
+`scan_secrets.py` is a small standalone scanner that scans staged files
+for common secret patterns (GitHub PAT `ghp_*`, HuggingFace `hf_*`,
+AWS `AKIA*`, Telegram `api_hash` 32-char hex, PEM private key blocks,
+and generic `token=...`/`api_key=...` assignments). On a finding it
+prints the file path + line number + pattern name — NEVER the secret
+value itself — and exits non-zero so a pre-commit hook can block the
+commit.
+
+Install as a pre-commit hook:
+
+```bash
+cd repo-sync-toolkit
+chmod +x scan_secrets.py
+ln -s ../../scan_secrets.py .git/hooks/pre-commit
+```
+
+Or run manually:
+
+```bash
+./scan_secrets.py            # scan staged files
+./scan_secrets.py <file>     # scan one file
+./scan_secrets.py --all      # scan all tracked files
+```
+
+## Reporting a vulnerability
+
+If you find a way to bypass the governance layer, leak secrets via
+logs, or push to a denied repo, please open a private security
+advisory on GitHub rather than a public issue.
+
+## Reference
+
+- `ECOSYSTEM_STATE.md` — role of repo-sync-toolkit in the ecosystem.
+- `GOVERNANCE.md` — high-level governance principles.
+- `config/governance.yaml` — actual allowlist / denylist / policies.
+
+---
+
+## قاعدة إلزامية: لا بيانات اعتماد داخل عناوين Git
+
+**ممنوع** بناء أي عنوان Git يحمل **userinfo** (أي `مستخدم:كلمة مرور` أو `مستخدم:توكن` قبل العلامة `@`)
+— سواء في الشيفرة أو الأمثلة أو التوثيق. الصيغة الممنوعة هي نفسها التي تُبنى عادةً هكذا:
+`https://` + `x-access` + `-token:${GITHUB_TOKEN}@github.com/owner/repo.git`.
+السبب: التوكن داخل العنوان يتسرب عبر
+
+1. `.git/config` (مخزَّن نصًّا صريحًا في كل مستودع مستنسخ)،
+2. `git remote -v` وأي مخرجات تشخيص،
+3. قائمة العمليات (`ps`) لأن العنوان يُمرَّر وسيطًا للأمر،
+4. سجلات الأخطاء عند فشل الاستنساخ أو الدفع.
+
+### البديل المعتمد
+
+| البيئة | الآلية |
+|---|---|
+| جهاز مطوَّر | GitHub CLI: `gh auth login` ثم `gh auth setup-git` |
+| Windows/macOS | Git Credential Manager |
+| CI (GitHub Actions) | `GITHUB_TOKEN` المدمج عبر `actions/checkout` مع `persist-credentials`، أو SSH deploy key |
+| Linux بلا واجهة | `git config --global credential.helper 'cache --timeout=3600'` أو SSH |
+
+### الحواجز المطبَّقة (Defense in depth)
+
+| الحاجز | الملف | السلوك |
+|---|---|---|
+| كشف النمط ومنع الدمج | `scripts/check_no_credentials_in_urls.py` | يرفض أي بناء عنوان يحمل userinfo مع متغير سري؛ يستثني `legacy/` (أرشيف مجمَّد) والأمثلة الموثَّقة |
+| فحص الأسرار | `scan_secrets.py` | يمنع التوكنات الحقيقية، ويخفّض الأقنعة (`ghp_REPLACE_ME`، `xxx…`) إلى تحذير بدل تعطيل كل commit |
+| حراسة وقت التشغيل | `config/lib-common.sh` → `url_has_credentials`, `ensure_clean_remote`, `assert_clean_url` | تفشل fail-closed قبل أي `fetch`/`push`/`clone`، وتنظّف `origin` الملوَّث دون طباعة العنوان |
+| حراسة Python | `master_orchestrator.py` → `url_has_credentials`, `strip_credentials`, `assert_clean_remote`, `ensure_git_auth`, `redact` | تنفيذ بلا `shell=True` (يمنع الحقن)، وتحمير بيانات الاعتماد من كل stderr وسجل |
+| الاختبارات | `tests/test_credential_hygiene.py` | 30+ اختبارًا تشمل تحكّمًا سلبيًا يعيد بناء النمط القديم ويتأكد من رفضه |
+| CI | `.github/workflows/security-gate.yml` | يشغّل الحاجزَين + الاختبارات + `bash -n` + `compileall` + dry-run عند كل push/PR إلى `main` |
+
+### ملاحظة حول التسريبات خارج المستودع
+
+إزالة قيمة سرية من ملف **لا تُبطل التوكن**. إذا ظهر توكن في صفحة مشاركة أو محادثة
+أو سجل خارج Git، فالإجراء الوحيد الحاسم هو **الإبطال من إعدادات الحساب** ثم
+التحقق من رفضه، ومراجعة سجل النشاط الأمني. راجع `legacy/session-archive-2026-10-05/`
+كمثال موثَّق على هذه الحالة.
+
+### خطاف محلي اختياري
+
+```bash
+bash scripts/install-hooks.sh   # يركّب pre-commit: فحص أسرار + بوابة النمط + الاختبارات
+```
+
+```
+
+---
+
+### `github-sync.sh`
+**اللغة:** Shell | **الأسطر:** 173 | **الحجم:** 9,051 حرف
+
+```shell
+#!/bin/bash
+SYNC_DIR="${SYNC_DIR:-$HOME/github-sync-system}"; source "$SYNC_DIR/config/lib-common.sh"
+check_requirements || exit 1
+
+show_menu() {
+    clear; local total; total="$(count_repos)"
+    echo -e "${BOLD}${CYAN}$(printf '=%.0s' {1..65})${NC}"
+    echo -e "${BOLD}${CYAN}   Git Sync System for Manjaro${NC}"
+    echo -e "${BOLD}${CYAN}$(printf '=%.0s' {1..65})${NC}"
+    echo -e "   ${DIM}Repos: $total | $(date '+%Y-%m-%d %H:%M:%S')${NC}"; echo ""
+    echo -e " ${GREEN}1.${NC}  ${BOLD}Status Dashboard${NC}         ${DIM}-- all repos status${NC}"
+    echo -e " ${GREEN}2.${NC}  ${BOLD}Push to GitHub${NC}           ${DIM}-- local >> GitHub${NC}"
+    echo -e " ${GREEN}3.${NC}  ${BOLD}Pull from GitHub${NC}         ${DIM}-- GitHub >> local${NC}"
+    echo -e " ${GREEN}4.${NC}  ${BOLD}Bidirectional Sync${NC}       ${DIM}-- local <> GitHub${NC}"
+    echo -e " ${GREEN}5.${NC}  ${BOLD}Sync Single Repo${NC}         ${DIM}-- one repo${NC}"
+    echo -e " ${GREEN}6.${NC}  ${BOLD}Sync Custom Message${NC}      ${DIM}-- custom commit msg${NC}"
+    echo -e " ${GREEN}7.${NC}  ${BOLD}Clone All Missing${NC}        ${DIM}-- clone repos not on disk${NC}"
+    echo -e " ${GREEN}8.${NC}  ${BOLD}Simple Sync (no config)${NC}  ${DIM}-- zero-config batch (from sync-github)${NC}"
+    echo -e " ${GREEN}9.${NC}  ${BOLD}Dry-Run Push${NC}             ${DIM}-- preview without pushing${NC}"
+    echo ""
+    echo -e " ${CYAN}10.${NC} ${BOLD}Monitor (Polling)${NC}        ${DIM}-- every 5 min${NC}"
+    echo -e " ${CYAN}11.${NC} ${BOLD}Watch (Real-time)${NC}       ${DIM}-- inotifywait${NC}"
+    echo -e " ${CYAN}12.${NC} ${BOLD}Enable systemd Service${NC}   ${DIM}-- auto-sync daemon${NC}"
+    echo ""
+    echo -e " ${MAGENTA}13.${NC} ${BOLD}Open All in PyCharm${NC}    ${DIM}-- launch PyCharm${NC}"
+    echo -e " ${MAGENTA}14.${NC} ${BOLD}Setup Git Hooks${NC}        ${DIM}-- auto-push${NC}"
+    echo -e " ${MAGENTA}15.${NC} ${BOLD}Refresh Repos List${NC}     ${DIM}-- fetch from API${NC}"
+    echo ""
+    echo -e " ${YELLOW}16.${NC} ${BOLD}Edit Repos List${NC}         ${DIM}-- repos.txt${NC}"
+    echo -e " ${YELLOW}17.${NC} ${BOLD}Edit Settings${NC}           ${DIM}-- settings.env${NC}"
+    echo -e " ${YELLOW}18.${NC} ${BOLD}View Logs${NC}               ${DIM}-- sync logs${NC}"
+    echo -e " ${RED}0.${NC}  ${BOLD}Exit${NC}"
+    echo -e "${BOLD}${CYAN}$(printf '=%.0s' {1..65})${NC}"; echo ""
+}
+
+select_repo() {
+    echo -e "${BOLD}Repos:${NC}"; local i=1; local repos=()
+    while IFS='|' read -r name _; do
+        [[ -z "$name" || "$name" == \#* ]] && continue; repos+=("$name")
+        printf "  ${GREEN}%3d.${NC} %s\n" "$i" "$name"; ((i++))
+    done < "$CONFIG_FILE"
+    echo ""; read -rp "  Select number: " choice
+    [[ "$choice" -ge 1 && "$choice" -le ${#repos[@]} ]] && echo "${repos[$((choice-1))]}"
+}
+
+view_logs() {
+    echo -e "${BOLD}${CYAN}Logs:${NC}"; ls -lht "$LOG_DIR"/*.log 2>/dev/null | head -15
+    echo ""; read -rp "  Log to view (name or 'q'): " logfile
+    [[ "$logfile" == "q" || -z "$logfile" ]] && return
+    local found=""; for f in "$LOG_DIR"/"$logfile" "$LOG_DIR"/*"$logfile"*; do [[ -f "$f" ]] && { found="$f"; break; }; done
+    [[ -n "$found" ]] && less "$found" || echo -e "  ${RED}Not found${NC}"
+}
+
+refresh_repos() {
+    echo -e "${BOLD}${CYAN}Fetching repos from GitHub + HuggingFace...${NC}"; echo ""
+    source "$SETTINGS_FILE"
+    local tmp="$SYNC_DIR/config/repos.txt.new"
+    echo "# Auto-fetched $(date '+%Y-%m-%d %H:%M:%S')" > "$tmp"
+    echo "# GitHub Repositories" >> "$tmp"
+    curl -s -H "Authorization: token $GITHUB_TOKEN" "https://api.github.com/user/repos?per_page=100&sort=updated" 2>/dev/null | \
+        python3 -c "
+import json,sys
+for r in json.load(sys.stdin):
+    print(f\"{r['name']}|~/github~/{r['name']}|{r.get('clone_url','')}|{r.get('default_branch','main')}\")
+" >> "$tmp" 2>/dev/null
+    echo "" >> "$tmp"; echo "# HuggingFace Spaces" >> "$tmp"
+    curl -s -H "Authorization: Bearer $HF_TOKEN" "https://huggingface.co/api/spaces?author=DrAbdulmalek" 2>/dev/null | \
+        python3 -c "
+import json,sys
+for s in json.load(sys.stdin):
+    sid=s.get('id',''); name=sid.split('/')[-1]
+    print(f'hf-{name}|~/github~/hf-{name}|https://huggingface.co/spaces/{sid}|main')
+" >> "$tmp" 2>/dev/null
+    local count; count=$(grep -v -E '^#|^$' "$tmp" | wc -l)
+    mv "$tmp" "$CONFIG_FILE"
+    echo -e "  ${GREEN}Found $count repos${NC}"; echo ""
+}
+
+while true; do
+    show_menu; read -rp "  Choice [0-18]: " choice
+    case "$choice" in
+        1) show_dashboard; press_enter ;;
+        2) echo ""; "$SYNC_DIR/sync-scripts/sync-push.sh"; press_enter ;;
+        3) echo ""; "$SYNC_DIR/sync-scripts/sync-pull.sh"; press_enter ;;
+        4) echo ""; "$SYNC_DIR/sync-scripts/sync-bidirectional.sh"; press_enter ;;
+        5)
+            echo ""; repo="$(select_repo)"
+            if [[ -n "$repo" ]]; then
+                echo -e "  ${DIM}(1)push (2)pull (3)bidi [default=3]:${NC}"
+                read -rp "  Select: " op
+                case "$op" in 1) op="push";; 2) op="pull";; *) op="bidi";; esac
+                "$SYNC_DIR/sync-scripts/sync-single.sh" "$repo" "$op"
+            else echo -e "  ${RED}Invalid${NC}"; fi
+            press_enter ;;
+        6)
+            echo ""; read -rp "  Commit message: " msg
+            [[ -n "$msg" ]] && "$SYNC_DIR/sync-scripts/sync-custom.sh" "$msg" push
+            press_enter ;;
+        7)
+            echo -e "\n${BOLD}${CYAN}Cloning missing repos...${NC}"; echo ""
+            while IFS='|' read -r name local_path github_url branch; do
+                [[ -z "$name" || "$name" == \#* ]] && continue; local_path="${local_path/#\~/$HOME}"
+                if [[ ! -d "$local_path" ]]; then
+                    echo -n "  $name ... "; git clone --branch "$branch" "$github_url" "$local_path" 2>/dev/null && \
+                        echo -e "${GREEN}OK${NC}" || echo -e "${RED}FAILED${NC}"
+                else echo -e "  ${DIM}skip${NC} $name (exists)"
+                fi
+            done < "$CONFIG_FILE"; echo ""; press_enter ;;
+        8)
+            echo ""; read -rp "  Sync directory [\$HOME/GitHub]: " sync_dir
+            "$SYNC_DIR/sync-scripts/simple-sync.sh" "${sync_dir:-$HOME/GitHub}"
+            press_enter ;;
+        9)
+            echo -e "\n${BOLD}${YELLOW}Dry-Run: preview without pushing...${NC}\n"
+            DRY_RUN=true; source "$SYNC_DIR/config/lib-common.sh"
+            total=0; has_changes=0
+            while IFS='|' read -r repo_name local_path github_url branch; do
+                [[ -z "$repo_name" || "$repo_name" == \#* ]] && continue; ((total++))
+                local_path="${local_path/#\~/$HOME}"
+                if [[ -d "$local_path" && -d "$local_path/.git" ]]; then
+                    local st; st="$(git -C "$local_path" status --porcelain 2>/dev/null)"
+                    if [[ -n "$st" ]]; then
+                        ((has_changes++)); local cnt; cnt="$(echo "$st" | wc -l)"
+                        echo -e "  ${YELLOW}CHG${NC}   $repo_name  ($cnt files)"
+                        git -C "$local_path" diff --stat 2>/dev/null | sed 's/^/         /'
+                    else
+                        echo -e "  ${DIM}---${NC}   $repo_name  (clean)"
+                    fi
+                else
+                    echo -e "  ${RED}MISS${NC}  $repo_name  (not cloned)"
+                fi
+            done < "$CONFIG_FILE"
+            echo -e "\n  ${YELLOW}$has_changes/$total repos have changes${NC}"; press_enter ;;
+        10) echo ""; "$SYNC_DIR/sync-scripts/monitor-changes.sh" ;;
+        11) echo ""; "$SYNC_DIR/sync-scripts/sync-watch.sh" ;;
+        12)
+            echo -e "\n${BOLD}${CYAN}Enabling git-sync-watch systemd service...${NC}"
+            mkdir -p "$HOME/.config/systemd/user"
+            cat > "$HOME/.config/systemd/user/git-sync-watch.service" << SYSEOF
+[Unit]
+Description=Git Sync Watch (inotify)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+ExecStart=$SYNC_DIR/sync-scripts/sync-watch.sh
+Restart=on-failure
+RestartSec=10
+Environment=SYNC_DIR=$SYNC_DIR
+
+[Install]
+WantedBy=default.target
+SYSEOF
+            systemctl --user daemon-reload
+            systemctl --user enable git-sync-watch.service
+            echo -e "  ${GREEN}Enabled!${NC}"
+            echo -e "  Start:  ${CYAN}systemctl --user start git-sync-watch${NC}"
+            echo -e "  Status: ${CYAN}systemctl --user status git-sync-watch${NC}"
+            echo -e "  Logs:   ${CYAN}journalctl --user -u git-sync-watch -f${NC}"
+            echo -e "  Stop:   ${CYAN}systemctl --user stop git-sync-watch${NC}"
+            press_enter ;;
+        13) echo ""; "$SYNC_DIR/sync-scripts/open-pycharm.sh"; press_enter ;;
+        14) echo ""; "$SYNC_DIR/sync-scripts/setup-pycharm-hooks.sh"; press_enter ;;
+        15) refresh_repos; press_enter ;;
+        16) ${EDITOR:-nano} "$CONFIG_FILE" ;;
+        17) ${EDITOR:-nano} "$SETTINGS_FILE" ;;
+        18) view_logs ;;
+        0|q|Q) echo -e "\n${GREEN}Bye!${NC}\n"; exit 0 ;;
+        *) echo -e "\n${RED}Invalid!${NC}"; sleep 1 ;;
+    esac
+done
+
+```
+
+---
+
+### `install.sh`
+**اللغة:** Shell | **الأسطر:** 35 | **الحجم:** 2,252 حرف
+
+```shell
+#!/bin/bash
+set -e; SYNC_DIR="$HOME/github-sync-system"
+echo -e "${BOLD}${CYAN}=========================================${NC}"
+echo -e "${BOLD}${CYAN}  Installing Git Sync System v2${NC}"
+echo -e "${BOLD}${CYAN}=========================================${NC}"; echo ""
+
+echo -n "  [1/7] git... "; command -v git &>/dev/null && echo -e "${GREEN}OK${NC}" || { sudo pacman -S git --noconfirm >/dev/null 2>&1; echo -e "${GREEN}installed${NC}"; }
+echo -n "  [2/7] directories... "; mkdir -p "$SYNC_DIR"/{sync-scripts,config,pycharm-config,logs}; echo -e "${GREEN}OK${NC}"
+echo -n "  [3/7] copying files... "
+SCRIPT_SRC="$(cd "$(dirname "$0")" && pwd)"
+for f in "$SCRIPT_SRC"/sync-scripts/*.sh; do [[ -f "$f" ]] && cp "$f" "$SYNC_DIR/sync-scripts/"; done
+for f in "$SCRIPT_SRC"/config/*; do [[ -f "$f" ]] && cp "$f" "$SYNC_DIR/config/"; done
+cp "$SCRIPT_SRC/github-sync.sh" "$SYNC_DIR/" 2>/dev/null || true; echo -e "${GREEN}OK${NC}"
+echo -n "  [4/7] permissions... "
+chmod +x "$SYNC_DIR/github-sync.sh" "$SYNC_DIR/sync-scripts/"*.sh "$SYNC_DIR/config/lib-common.sh" 2>/dev/null; echo -e "${GREEN}OK${NC}"
+echo -n "  [5/7] command 'github-sync'... "
+sudo ln -sf "$SYNC_DIR/github-sync.sh" /usr/local/bin/github-sync 2>/dev/null && echo -e "${GREEN}OK${NC}" || echo -e "${YELLOW}needs sudo${NC}"
+echo -n "  [6/7] bashrc... "
+if ! grep -qF "# >>> git-sync-system >>>" "$HOME/.bashrc" 2>/dev/null; then
+    printf '\n# >>> git-sync-system >>>\nexport SYNC_DIR="$HOME/github-sync-system"\nexport PATH="$PATH:$HOME/github-sync-system/sync-scripts"\n# <<< git-sync-system <<<\n' >> "$HOME/.bashrc"
+    echo -e "${GREEN}OK${NC}"
+else echo -e "${DIM}already set${NC}"; fi
+echo -n "  [7/7] inotify-tools... "
+command -v inotifywait &>/dev/null && echo -e "${GREEN}OK${NC}" || echo -e "${YELLOW}optional (sudo pacman -S inotify-tools)${NC}"
+
+echo ""
+echo -e "${BOLD}${GREEN}=========================================${NC}"
+echo -e "${BOLD}${GREEN}  Installed!${NC}"
+echo -e "${BOLD}${GREEN}=========================================${NC}"
+echo -e "  ${GREEN}1.${NC} source ~/.bashrc"
+echo -e "  ${GREEN}2.${NC} github-sync"
+echo -e "  ${DIM}Repos: 28 GitHub + 11 HF = 39 total (auto-fetched)${NC}"
+echo -e "  ${DIM}All tokens pre-configured in settings.env${NC}"
+echo ""
+
+```
+
+---
+
+### `scan_secrets.py`
+**اللغة:** Python | **الأسطر:** 204 | **الحجم:** 6,577 حرف
+**الاعتماديات:**
+- `from __future__ import annotations`
+- `import argparse`
+- `import re`
+- `import subprocess`
+- `import sys`
+- `from pathlib import Path`
+
+```python
+#!/usr/bin/env python3
+"""
+Secret scanner for staged git files.
+
+Scans staged file contents for common secret patterns:
+  - GitHub PAT (ghp_*, github_pat_*)
+  - HuggingFace token (hf_*)
+  - Telegram api_hash (32-char hex paired with api_id context)
+  - Generic long base64-like tokens after 'token'/'secret'/'api_key' keys
+  - AWS access key (AKIA...)
+  - Private key blocks (-----BEGIN ... PRIVATE KEY-----)
+
+Exits non-zero if any secret is found. Prints file path + line number
++ pattern name — NEVER the secret value itself.
+
+Usage:
+  python3 scan_secrets.py                # scan staged files
+  python3 scan_secrets.py <file>         # scan one file
+  python3 scan_secrets.py --all          # scan all tracked files
+
+Designed as a pre-commit hook:
+  ln -s ../../scan_secrets.py .git/hooks/pre-commit
+  chmod +x scan_secrets.py .git/hooks/pre-commit
+"""
+from __future__ import annotations
+
+import argparse
+import re
+import subprocess
+import sys
+from pathlib import Path
+
+# ─── Patterns ──────────────────────────────────────────────────────────────
+# Each pattern: (name, regex, severity). Severity 'block' → exit non-zero.
+PATTERNS: list[tuple[str, str, str]] = [
+    (
+        "GitHub PAT (classic)",
+        r"\bghp_[A-Za-z0-9]{36,40}\b",
+        "block",
+    ),
+    (
+        "GitHub PAT (fine-grained)",
+        r"\bgithub_pat_[A-Za-z0-9_]{22,}[A-Za-z0-9]{12,}\b",
+        "block",
+    ),
+    (
+        "HuggingFace token",
+        r"\bhf_[A-Za-z0-9]{34,40}\b",
+        "block",
+    ),
+    (
+        "AWS access key ID",
+        r"\bAKIA[0-9A-Z]{16}\b",
+        "block",
+    ),
+    (
+        "PEM private key block",
+        r"-----BEGIN (?:RSA |EC |OPENSSH |PGP |DSA )?PRIVATE KEY-----",
+        "block",
+    ),
+    (
+        "Telegram api_hash (32-char hex)",
+        r"\bapi[_-]?hash\s*[:=]\s*['\"]?([0-9a-fA-F]{32})\b",
+        "block",
+    ),
+    (
+        "Generic token assignment",
+        r"\b(token|secret|api[_-]?key|password|passwd)\s*[:=]\s*['\"]([A-Za-z0-9_\-+/=]{20,})['\"]",
+        "warn",  # could be a placeholder; flag for review
+    ),
+]
+
+COMPILED = [(name, re.compile(p), sev) for name, p, sev in PATTERNS]
+
+# Files we never scan (binary / lock files / vendored)
+SKIP_SUFFIXES = {
+    ".png", ".jpg", ".jpeg", ".gif", ".bmp", ".webp", ".svg",
+    ".pdf", ".zip", ".gz", ".tar", ".tgz", ".bz2",
+    ".pyc", ".pyo", ".so", ".o", ".a", ".dll", ".dylib",
+    ".lock", ".sum", ".bin",
+}
+
+
+def _staged_files() -> list[Path]:
+    """Return paths of staged files (added/modified), via `git diff --cached`."""
+    try:
+        out = subprocess.check_output(
+            ["git", "diff", "--cached", "--name-only", "--diff-filter=AM"],
+            stderr=subprocess.DEVNULL,
+        ).decode("utf-8", errors="replace")
+    except subprocess.CalledProcessException:
+        return []
+    return [Path(p) for p in out.splitlines() if p.strip()]
+
+
+def _all_tracked_files() -> list[Path]:
+    try:
+        out = subprocess.check_output(
+            ["git", "ls-files"], stderr=subprocess.DEVNULL
+        ).decode("utf-8", errors="replace")
+    except subprocess.CalledProcessException:
+        return []
+    return [Path(p) for p in out.splitlines() if p.strip()]
+
+
+# ─── Placeholder awareness ─────────────────────────────────────────────────
+# Masked example values (ghp_ + 36x "x", hf_ + 32x "x") used to trip the token
+# patterns and block every commit of this repository, including CI. A value is
+# treated as a placeholder only when its *secret body* is provably synthetic.
+
+_PLACEHOLDER_BODY = re.compile(
+    r"(?i)^(?:([a-z0-9])\1{5,}"                    # one repeated char (xxxxxx…)
+    r"|[x*_.#?\-]{6,}"                              # pure mask (****** / ____ )
+    r"|.*(your|replace|changeme|change_me|example|dummy|placeholder|sample|todo|redacted).*"
+    r"|.*(?:<[^>]*>|\{\{[^}]*\}\}|\$\{[^}]*\}).*)"  # <token> / {{token}} / ${TOKEN}
+)
+
+
+def _is_placeholder(value: str) -> bool:
+    v = (value or "").strip().strip("\"'")
+    if not v:
+        return True
+    body = v
+    for sep in ("_", ":"):
+        if sep in body:
+            body = body.split(sep, 1)[1]
+            break
+    if len(set(body)) <= 2 and len(body) >= 6:
+        return True
+    return bool(_PLACEHOLDER_BODY.match(body or v))
+
+
+def _scan_file(path: Path) -> list[tuple[int, str, str]]:
+    """Return [(line_no, pattern_name, severity), ...] for findings in path."""
+    if path.suffix.lower() in SKIP_SUFFIXES:
+        return []
+    if not path.exists() or not path.is_file():
+        return []
+    try:
+        text = path.read_text(encoding="utf-8", errors="replace")
+    except Exception:
+        return []
+    findings: list[tuple[int, str, str]] = []
+    for line_no, line in enumerate(text.splitlines(), start=1):
+        for name, rx, sev in COMPILED:
+            m = rx.search(line)
+            if not m:
+                continue
+            value = m.group(1) if m.groups() else m.group(0)
+            if _is_placeholder(value):
+                # downgraded, never silently dropped — still visible for review
+                findings.append((line_no, name + " [placeholder]", "warn"))
+                continue
+            findings.append((line_no, name, sev))
+    return findings
+
+
+def main() -> int:
+    ap = argparse.ArgumentParser(description=__doc__)
+    ap.add_argument("file", nargs="?", help="scan a single file (default: staged files)")
+    ap.add_argument("--all", action="store_true", help="scan all tracked files")
+    args = ap.parse_args()
+
+    if args.file:
+        files = [Path(args.file)]
+    elif args.all:
+        files = _all_tracked_files()
+    else:
+        files = _staged_files()
+
+    if not files:
+        print("scan-secrets: no files to scan", file=sys.stderr)
+        return 0
+
+    block_count = 0
+    warn_count = 0
+    for f in files:
+        for line_no, name, sev in _scan_file(f):
+            if sev == "block":
+                block_count += 1
+                print(f"BLOCK  {f}:{line_no}  {name}")
+            else:
+                warn_count += 1
+                print(f"WARN   {f}:{line_no}  {name}")
+
+    if block_count:
+        print(
+            f"\nscan-secrets: {block_count} blocking finding(s), {warn_count} warning(s). "
+            "Commit blocked. Remove or redact the secret and re-stage.",
+            file=sys.stderr,
+        )
+        return 1
+    if warn_count:
+        print(
+            f"\nscan-secrets: {warn_count} warning(s) (review the lines above). "
+            "Warnings do not block the commit.",
+            file=sys.stderr,
+        )
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())
+
+```
+
+---
+
+### `.gitignore`
+**اللغة:** Other | **الأسطر:** 33 | **الحجم:** 377 حرف
+
+```other
+# Compiled
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+
+# Secrets — NEVER commit
+.env
+.env.*
+config/settings.env
+config/secrets.*
+*.session
+*.session-journal
+
+# Logs (keep .gitkeep, ignore actual logs)
+logs/*.log
+logs/*.log.gz
+logs/*.jsonl
+
+# Local IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Token manager local cache (if any future feature adds one)
+token-cache.*
+
 ```
 
 ---
@@ -1735,544 +2837,315 @@ if __name__ == "__main__":
 
 ---
 
-### `GEMINI_SYSTEM_PROMPT.md`
-**اللغة:** Markdown | **الأسطر:** 173 | **الحجم:** 4,441 حرف
+### `ECOSYSTEM_STATE.md`
+**اللغة:** Markdown | **الأسطر:** 181 | **الحجم:** 7,911 حرف
 
 ```markdown
-# 🎭 Generic System Prompt — Gemini Flash
-## مطور Python متخصص (Generic — قابل للتخصيص)
+# Ecosystem State — Source of Truth
+
+> Snapshot date: 2026-07-31
+> Maintained alongside `GOVERNANCE.md`. Update on every repo-level decision.
+
+## Purpose
+
+This document records the **verified state** of all repositories under
+`DrAbdulmalek/`, the **canonical relationships** between them, and the
+**product identity boundaries** that must not be crossed.
+
+It exists to prevent:
+
+- README/release claims that do not match the actual repo state.
+- Product scope drift (e.g. medical logic leaking into a general file
+  manager, or general file-manager logic leaking into the medical suite).
+- Silent duplication of functionality across support repos.
+- Ambiguous archival status for legacy repos.
 
 ---
 
-## 1. هويتك (Persona)
+## Repositories (9 total)
 
-أنت **مطور Python متمرس** متخصص في:
-- بناء أنظمة برمجية موثوقة وقابلة للصيانة
-- اتباع أفضل الممارسات (PEP 8, type hints, docstrings)
-- معالجة الأخطاء والـ edge cases
-- كتابة اختبارات شاملة
+### Primary products
 
-خبرتك في بيئات الإنتاج:
-- الكود يُقرأ أكثر مما يُكتب — الوضوح أهم من الذكاء
-- الـ edge cases تحدث في الإنتاج دائماً
-- الاختبارات ليست رفاهية — هي ضمانة
+| Repo | Role | Status | Latest tag |
+|------|------|--------|------------|
+| `intelli-file-manager` | Local-first desktop file manager for personal use | active | `v2.1.0` |
+| `omni-medical-suite` | Medical OCR/NLP platform (medical scope only) | active, stable | `v1.2.0` |
 
----
+### Support / data layer
 
-## 2. سياق المشروع (Project Context)
+| Repo | Role | Status | Latest tag |
+|------|------|--------|------------|
+| `repo-sync-toolkit` | Security-sensitive git sync utility | active | (none) |
+| `arabic-medical-glossary` | Arabic medical glossary data | active | `v1.0.0-rc1` |
+| `glossary-api` | API layer for the glossary | active | (none) |
+| `dictionaries-csv` | CSV dictionaries (data only) | active | (none) |
+| `telegram-tools` | Training-data feeder for Omni | active | `v1.2.1` |
 
-المشروع: **عام** — استخرج التفاصيل من `project_context.txt` المرفق.
+### Archive / under review
 
-### التقنيات الافتراضية:
-- **Python 3.11+**
-- **Type Hints** إلزامية
-- **pytest** للاختبارات
-- **ruff** للـ linting
-- **mypy** للـ type checking
-
-> ⚠️ اقرأ السياق المرفق لتحديد التقنيات الفعلية (FastAPI? Django? CLI? etc.)
+| Repo | Role | Status | Latest tag |
+|------|------|--------|------------|
+| `OmniFile_Processor` | Legacy — superseded by omni-medical-suite | README deprecated + GitHub archive flag enabled (2026-07-31) + `ARCHIVAL_STATUS.md` confirms | (none) |
+| `sync-github` | Legacy — superseded by repo-sync-toolkit | README archived + GitHub archive flag enabled (2026-07-31) + `ARCHIVAL_STATUS.md` confirms | (none) |
 
 ---
 
-## 3. قيود صارمة (Hard Constraints)
+## Product Identity Rules (strict)
 
-### أ. برمجية:
-- ✅ **Python 3.11+** — Type Hints، f-strings، match-case.
-- ✅ **PEP 8** — استخدم ruff للتطبيق التلقائي.
-- ✅ **Docstrings** — لكل دالة/كلاس عامة.
-- ✅ **Error handling** — `try/except` صريح مع رسائل واضحة.
-- ✅ **No magic numbers** — استخدم constants مسماة.
-
-### ب. هندسية:
-- ✅ **Single Responsibility** — كل دالة/كلاس يفعل شيئاً واحداً.
-- ✅ **DRY** — لا تكرّر الكود، استخرج المشترك.
-- ✅ **KISS** — الحل البسيط أفضل من المعقّد.
-- ❌ **ممنوع** `import *` — استخدم imports صريحة.
-- ❌ **ممنوع** `eval()` أو `exec()` إلا في حالات نادرة جداً مع تعليق مبرّر.
-
-### ج. اختبارية:
-- ✅ كل دالة عامة تحتاج unit test.
-- ✅غطِ edge cases (null, empty, boundary values).
-- ✅ استخدم `pytest` + `pytest-cov` (التغطية ≥ 80%).
-
----
-
-## 4. مصطلحات هندسية معتمدة
-
-- `SRP` — Single Responsibility Principle
-- `DRY` — Don't Repeat Yourself
-- `KISS` — Keep It Simple, Stupid
-- `YAGNI` — You Aren't Gonna Need It
-- `TDD` — Test-Driven Development
-- `refactor` — إعادة هيكلة بدون تغيير السلوك
-- `technical debt` — دين تقني
-- `code smell` — رائحة كود (إشارة لمشكلة محتملة)
-- `edge case` — حالة حدية
-- `happy path` — المسار السعيد (الاستخدام النموذجي)
+- **IntelliFile** is a **general local-first desktop file manager** for
+  personal use. Any "medical" expansion is a bug in product scope, not a
+  feature. (Known issue: `src/core/smart_tagger.py` contains Arabic
+  medical classification logic — tracked in a separate PR, do not
+  touch in cleanup PRs.)
+- **Omni** is a **medical OCR/NLP platform** only. Any "general file
+  manager" expansion is a bug in product scope.
+- **telegram-tools** is a **training-data feeder** for Omni, not a
+  competing medical NLP product. Its scope is: extract → align → split
+  → publish to HuggingFace Hub. Optional training helper scripts are
+  allowed as convenience utilities but should not duplicate Omni's
+  training pipelines.
+- **dictionaries-csv** is a **data/support repo**, not a product core.
+- **repo-sync-toolkit** is a **security-sensitive utility**, not a
+  product core.
+- **sync-github** is **legacy/archival**.
+- **OmniFile_Processor** is **deprecated/under archival review**, not a
+  primary active product.
 
 ---
 
-## 5. صيغة المخرجات المطلوبة (Output Format)
+## Canonical Relationships
+
+```
+                    +-----------------------------+
+                    |      omni-medical-suite     |
+                    |   (medical OCR/NLP consumer) |
+                    +--------------+--------------+
+                                   |
+                                   | consumes
+                                   | (HuggingFace datasets)
+                                   v
+                    +-----------------------------+
+                    |       telegram-tools        |
+                    | (training-data feeder:      |
+                    |  extract → align → publish) |
+                    +--------------+--------------+
+                                   |
+                                   | optional lookup
+                                   v
+        +----------------------+   |   +----------------------+
+        | arabic-medical-      |   |   | glossary-api         |
+        |   glossary           |<--+-->| (REST API for the    |
+        | (data)               |       |  glossary)           |
+        +----------------------+       +----------------------+
+                                   |
+                                   v
+                    +-----------------------------+
+                    |       dictionaries-csv      |
+                    | (CSV dictionaries: data)    |
+                    +-----------------------------+
+
+                    +-----------------------------+
+                    |     intelli-file-manager    |
+                    | (general file manager —     |
+                    |  NO medical scope)          |
+                    +-----------------------------+
+
+                    +-----------------------------+
+                    |     repo-sync-toolkit       |
+                    | (git sync utility —         |
+                    |  security-sensitive)        |
+                    +-----------------------------+
+                                   ^
+                                   | supersedes
+                                   |
+                    +-----------------------------+
+                    |       sync-github           |
+                    | (LEGACY — archived)         |
+                    +-----------------------------+
+
+                    +-----------------------------+
+                    |    OmniFile_Processor       |
+                    | (LEGACY — superseded by     |
+                    |  omni-medical-suite)        |
+                    +-----------------------------+
+```
+
+**Boundary rules:**
+
+- No cross-repo coupling except via import/export, REST API, or
+  plugin boundary.
+- No monorepo. No repo merges.
+- telegram-tools publishes datasets to HuggingFace Hub → Omni downloads
+  them. This is the only data-flow direction.
+- glossary-api serves arabic-medical-glossary data over HTTP. No
+  reverse dependency.
+- intelli-file-manager has no upstream or downstream dependency on any
+  medical repo.
+
+---
+
+## Known Gaps (tracked, not blocking)
+
+| Gap | Repo | Status |
+|-----|------|--------|
+| `smart_tagger.py` contains medical classification logic | intelli-file-manager | tracked in separate PR — do not compete |
+| `mobile/main.py` + `buildozer.spec` at root (Kivy/Android) | intelli-file-manager | quarantined as experimental (PR #3) |
+| README badges claim v1.1.0 but latest tag is v1.2.0 | omni-medical-suite | fixed (PR #4) |
+| README claims v2.2.0 but no v2.2.0 tag exists | intelli-file-manager | fixed: marked Unreleased / 2.2.0.dev0 (PR #2) |
+| README says "Archived" but GitHub archive flag is off | sync-github | fixed: GitHub archive flag enabled + ARCHIVAL_STATUS.md (PR #8a) |
+| README says "LEGACY (Deprecated)" but GitHub archive flag is off | OmniFile_Processor | fixed: GitHub archive flag enabled + ARCHIVAL_STATUS.md (PR #8b) |
+| `training/` directory in feeder repo | telegram-tools | clarified as optional convenience in README (PR #5) |
+| Observability + notes foundation | intelli-file-manager | added SQLite + JSONL observability (PR #6) |
+| Pre-commit secret scanner | repo-sync-toolkit | added scan_secrets.py + SECURITY.md (PR #7) |
+
+---
+
+## Verification Discipline
+
+- README/release/version claims MUST match the latest git tag.
+- "Archived" claims in README MUST be backed by the GitHub archive flag.
+- Security-sensitive repos MUST NOT commit `.env`, `*.session`, or
+  token literals. `.gitignore` MUST cover them.
+- Any new cross-repo integration MUST go through a clearly defined
+  boundary (HTTP API, file export, or plugin interface) — never through
+  direct imports across repos.
+
+---
+
+## Update Protocol
+
+When a repo changes identity, archival status, or canonical
+relationship:
+
+1. Update the relevant row in this document.
+2. Update `GOVERNANCE.md` if policies are affected.
+3. Open a small PR titled `docs(ecosystem): update state after <change>`.
+4. Do NOT bundle ecosystem-state updates with feature work.
+
+```
+
+---
+
+### `docs/GITHUB_ACCOUNT_REVIEW_2026-10-11.md`
+**اللغة:** Markdown | **الأسطر:** 117 | **الحجم:** 7,648 حرف
 
 ```markdown
-### 📌 الملف: `path/to/file.py`
-
-**التغييرات:**
-1. ...
-2. ...
-
-**الكود المُحدَّث:**
-```python
-"""وصف مختصر للوحدة."""
-from __future__ import annotations
-from typing import Final
-
-# تعليق يشرح الـ constant
-EXAMPLE_CONSTANT: Final[str] = "value"
-
-def example_function(param: str) -> bool:
-    """
-    وصف الوظيفة.
-
-    Args:
-        param: وصف المعامل
-
-    Returns:
-        وصف النتيجة
-
-    Raises:
-        ValueError: إذا كان param فارغاً
-    """
-    try:
-        if not param:
-            raise ValueError("المعامل لا يمكن أن يكون فارغاً")
-        # المنطق
-        return True
-    except Exception as e:
-        raise RuntimeError(f"خطأ: {e}") from e
-```
-
-**ملاحظات المراجعة:**
-- نقطة 1
-```
-
-### قواعد:
-- 📝 تعليقات عربية، أسماء متغيرات إنجليزية.
-- 📝 Docstrings عربية مع Type Hints.
-- 📝 رسائل أخطاء عربية واضحة.
+# خطة الإصلاح والتطوير الشاملة — حساب GitHub: DrAbdulmalek
+# تاريخ المراجعة: 2026-10-11 | نوع المراجعة: مراجعة عامة (Public) + مقارنة مع الدراسة المعمارية المرفوعة
 
 ---
 
-## 6. أمثلة على الطلبات (Request Examples)
+## تنبيه أمني (يُنفَّذ فوراً — قبل أي كود)
 
-### ✅ طلب جيد:
-> "أعد كتابة دالة `process_data` في `src/core/processor.py` لتحسين الأداء. استخدم list comprehension بدلاً من حلقة for مع append. احتفظ بنفس الـ Signature. أضف اختبار في `tests/test_processor.py` يغطي: قائمة فارغة، قائمة بعنصر واحد، قائمة كبيرة (1000 عنصر)."
-
-### ❌ طلب سيء:
-> "حسّن الكود" (غامض — أي دالة؟ ما المقياس؟)
-
-### ✅ طلب جيد:
-> "أضف type hints إلى `src/utils/helpers.py`. استخدم `from __future__ import annotations` للسماح بـ PEP 604 syntax (`X | Y`). أضف mypy config في `pyproject.toml` مع `strict = true`."
-
-### ❌ طلب سيء:
-> "أضف types" (غامض — أي ملف؟ أي مستوى صرامة؟)
+1. **إلغاء التوكن المكشوف** `ghp_***REDACTED***...` فوراً من GitHub (Settings → Developer settings → PAT → Revoke).
+   - لُصق في محادثة نصية = مكشوف لأي طرف يقرأ المحادثة أو السجلات.
+2. **تدوير (Rotate)** أي أسرار أخرى قد تكون شاركتها في المحادثات نفسها (HF_TOKEN، TG_API_HASH، SESSION_STRING...).
+3. **مراجعة سجل الوصول:** GitHub → Settings → Security log: تأكد أنه لم يُستعمل أي نشاط مشبوه خلال ساعات التعرض.
+4. مستقبلاً: استخدم repo-sync-toolkit/token-manager (موجود فعلاً ويخزن بـ chmod 600) ولا تلصق أسراراً في أي واجهة دردشة.
 
 ---
 
-## 7. سياق المشروع المرفق (Attached Context)
+## أولاً: ملخص نتائج المراجعة الفعلية (ما رأيته على GitHub)
 
-📎 **ملف `project_context.txt` المرفق** يحتوي على:
-- شجرة ملفات المشروع بالكامل
-- محتوى كل ملف
-- الإحصائيات والاعتماديات
+### 1. الحالة العامة — أفضل من وصف الدراسة المرفوعة
+- الدراسة المرفوعة **وصفٌ ناقص/قديم جزئياً**. الواقع على GitHub يُظهر أن المنظومة تجاوزت مرحلة كثير من نقاط الضعف:
+  - `omni-medical-suite` وصل **v1.1.0 stable**: ‏174 اختباراً ناجحاً، AppImage مبني، CI matrix (Python 3.10/3.11/3.12 × Ubuntu/Manjaro)، HF Space منشور.
+  - `ocr-core` وصل **v0.4.0**: الميثاق 18 قاعدة، محركات متعددة، Ensemble+Router، Benchmarks suite، pipeline من 6 مراحل، نظام أوامر موحد (34 أمراً)، كشف كلمات خط يدوي.
+  - `marathon-suite` تحوّل من "محرك زمني" إلى **coordinator رفيع** يثبّت ocr-core + translation-core — أي أن فجوة "إعادة كتابة الجدولة" في الدراسة لم تعد دقيقة؛ البنية أصبحت أنظف (pins + bridge contract).
+  - `medical-ocr-benchmarks` و `medical-ocr-trainer` و `medical-ocr-ground-truth` مؤرشفة — وظائفها انتقلت إلى ocr-core. قرار توحيد سليم.
 
-**كيفية الاستخدام:**
-- ابحث عن الملف المطلوب قبل الكتابة.
-- لا تختلق أسماء ملفات/دوال غير موجودة.
-- إذا لم تجد الملف، اسأل: "هذا الملف غير موجود في السياق — هل تقصد X؟"
+### 2. الملاحظات والفجوات الفعلية المكتشفة
 
----
+| # | الفجوة | المستودع | الخطورة |
+|---|--------|----------|---------|
+| A | توكن مكشوف في محادثة (انظر التنبيه) | الحساب | 🔴 حرجة |
+| B | `medical-rag-ar` في مرحلة سقالة/تخطيط — 12 أسبوعاً خطة بلا تنفيذ ingestion/retrieval | medical-rag-ar | 🟡 متوسطة |
+| C | `arabic-medical-handwriting`: العقد منفَّذ لكن المحركات/RTL/normalize ما زالت "سقالة import-safe" — قرار النقل من omni أو التفويض لـ ocr-core لم يُغلق | arabic-medical-handwriting | 🟡 متوسطة |
+| D | `intelli-file-manager`: حسب الدراسة لا يستهلك ocr-core بعد — تكرار محتمل لمحرك OCR | intelli-file-manager | 🟡 متوسطة |
+| E | `finereader-ocr-apk-analysis`: تحليل هندسي عكسي لمنتج تجاري (ABBYY). موثَّق كـ "توثيق أصلي بلا ملفات ثنائية" — قانونياً في المنطقة الرمادية؛ خطر سمعة/قانوني إذا استُخدم لاستخراج خوارزميات | finereader-ocr-apk-analysis | 🟠 حذر |
+| F | الدراسة تذكر `channel-ops-dashboard` و `omni-ocr-training-db` لكنهما غير ظاهرين كمستودعين عامين — إما خاصان أو غير منشأين بعد؛ الوضوح مطلوب | الحساب | 🟡 متوسطة |
+| G | بعض المستودعات بلا SECURITY.md / بدون سياسة أمنية ظاهرة (لوحظ في المؤرشفة؛ تأكد من النشطة) | متعدد | 🟢 منخفضة |
+| H | تضخم المستودعات النشطة (~20 عاماً + ~10 مؤرشفة) مع مخاطر تشتت الصيانة — repo-sync-toolkit يعالج المزامنة لكن لا يعالج تراكم المشاريع نصف المنجزة | الحساب | 🟡 متوسطة |
+| I | الدراسة تشير إلى Falcon-OCR كمراقبة أسبوعية — لا أثر له في README الحالي؛ يجب إما توثيق قرار الإهمال أو إضافة ملاحظة مراقبة | ocr-core | 🟢 منخفضة |
+| J | توحيد اللغة: بعض المستودعات README عربي بالكامل وبعضها إنجليزي — ليس عيباً، لكن وثيقة ECOSYSTEM_STATE.md يجب أن تكون مصدر الحقيقة المحدَّث | repo-sync-toolkit | 🟢 منخفضة |
 
-## 8. قواعد التفاعل (Interaction Rules)
-
-1. **اسأل قبل أن تكتب** — Clarifying Questions عند الغموض.
-2. **اشرح النهج أولاً** — Approach قبل Implementation.
-3. **لا تحذف** — احترم الدوال/الكلاسات الموجودة.
-4. **اختبر** — كل دالة جديدة تحتاج unit test.
-5. **توافق البنية** — احترم بنية المشروع الموجودة.
-6. **لا تكسر الـ imports** — تحقق قبل الـ commit.
-
----
-
-## 9. التذكير النهائي (Final Reminder)
-
-> **"الكود الجيد يُقرأ في 5 ثوانٍ ويُفهم. الكود السيء يأخذ ساعات. اكتب الكود كأن من سيقرؤه بعدك مريض نفسي يعرف مكان سكنك."**
-
----
-
-**جاهز للعمل. ابدأ بقراءة `project_context.txt` المرفق، ثم انتظر طلبي.**
-
-```
+### 3. نقاط القوة المؤكدة (تُحفظ ولا تُمس)
+- فصل النواتين (ocr-core, translation-core) + coordinator رفيع (marathon-suite) مع pins وbridge — معمارية ناضجة جداً.
+- سياسة الثقة: 0.0 = مجهولة، لا اختلاق ثقة، أخطاء عبر OCRResult.error — ممتاز ومتسق.
+- سياسة الترخيص الصارمة (استبعاد AGPL، بدائل متسامحة) موثقة.
+- تثبيت الإصدارات بالوسوم + بوابة تكامل قبل ترقية أي مستهلك.
+- أرشفة المستودعات المكررة بدل حذفها (read-only تاريخ).
 
 ---
 
-### `install.sh`
-**اللغة:** Shell | **الأسطر:** 35 | **الحجم:** 2,252 حرف
+## ثانياً: خطة الإصلاح والتطوير المفصلة
 
-```shell
-#!/bin/bash
-set -e; SYNC_DIR="$HOME/github-sync-system"
-echo -e "${BOLD}${CYAN}=========================================${NC}"
-echo -e "${BOLD}${CYAN}  Installing Git Sync System v2${NC}"
-echo -e "${BOLD}${CYAN}=========================================${NC}"; echo ""
+### 🔴 P0 — هذا الأسبوع (أمن + وضوح)
+1. إلغاء التوكن المكشوف وتدوير الأسرار (التفاصيل أعلاه). [30 دقيقة]
+2. تدقيق سجل الأمان GitHub Security log + تفعيل 2FA إن لم تكن مفعلة. [15 دقيقة]
+3. كتابة/تحديث SECURITY.md في المستودعات الخمسة النشطة الرئيسية
+   (omni-medical-suite, ocr-core, telegram-tools, repo-sync-toolkit, arabic-medical-handwriting)
+   — بريد تواصل + سياسة الإبلاغ. [قالب موحد، نصف ساعة]
+4. إغلاق قرار `arabic-medical-handwriting`: هل يفوّض كل شيء لـ ocr-core
+   (engine/rtl/normalize من ocr_core.*) ويبقى فقط عقد الخط اليدوي + Unsloth؟
+   التوصية: **نعم — تفويض كامل** لتجنب تكرار rtl_utils مرة ثالثة. [قرار + PR واحد]
+5. توثيق حالة `channel-ops-dashboard` و`omni-ocr-training-db`: خاص/عمومي/ملغى،
+   وتحديث ECOSYSTEM_STATE.md في repo-sync-toolkit ليطابق الواقع الحالي. [30 دقيقة]
 
-echo -n "  [1/7] git... "; command -v git &>/dev/null && echo -e "${GREEN}OK${NC}" || { sudo pacman -S git --noconfirm >/dev/null 2>&1; echo -e "${GREEN}installed${NC}"; }
-echo -n "  [2/7] directories... "; mkdir -p "$SYNC_DIR"/{sync-scripts,config,pycharm-config,logs}; echo -e "${GREEN}OK${NC}"
-echo -n "  [3/7] copying files... "
-SCRIPT_SRC="$(cd "$(dirname "$0")" && pwd)"
-for f in "$SCRIPT_SRC"/sync-scripts/*.sh; do [[ -f "$f" ]] && cp "$f" "$SYNC_DIR/sync-scripts/"; done
-for f in "$SCRIPT_SRC"/config/*; do [[ -f "$f" ]] && cp "$f" "$SYNC_DIR/config/"; done
-cp "$SCRIPT_SRC/github-sync.sh" "$SYNC_DIR/" 2>/dev/null || true; echo -e "${GREEN}OK${NC}"
-echo -n "  [4/7] permissions... "
-chmod +x "$SYNC_DIR/github-sync.sh" "$SYNC_DIR/sync-scripts/"*.sh "$SYNC_DIR/config/lib-common.sh" 2>/dev/null; echo -e "${GREEN}OK${NC}"
-echo -n "  [5/7] command 'github-sync'... "
-sudo ln -sf "$SYNC_DIR/github-sync.sh" /usr/local/bin/github-sync 2>/dev/null && echo -e "${GREEN}OK${NC}" || echo -e "${YELLOW}needs sudo${NC}"
-echo -n "  [6/7] bashrc... "
-if ! grep -qF "# >>> git-sync-system >>>" "$HOME/.bashrc" 2>/dev/null; then
-    printf '\n# >>> git-sync-system >>>\nexport SYNC_DIR="$HOME/github-sync-system"\nexport PATH="$PATH:$HOME/github-sync-system/sync-scripts"\n# <<< git-sync-system <<<\n' >> "$HOME/.bashrc"
-    echo -e "${GREEN}OK${NC}"
-else echo -e "${DIM}already set${NC}"; fi
-echo -n "  [7/7] inotify-tools... "
-command -v inotifywait &>/dev/null && echo -e "${GREEN}OK${NC}" || echo -e "${YELLOW}optional (sudo pacman -S inotify-tools)${NC}"
+### 🟡 P1 — الشهر القادم (إغلاق الفجوات التقنية)
+1. **دمج ocr-core في intelli-file-manager**: استبدال استدعاءات OCR المباشرة
+   بـ `ocr_core.engines` + إضافة قياس CER/WER على عينة عربية ذهبية. [PR واحد]
+2. **تنفيذ أول 3 أسابيع من خطة medical-rag-ar** أو **تجميده رسمياً**:
+   - إن بدأ: ingestion (ocr-core → chunking → bge-m3 → Qdrant) كحد أدنى قابل للتشغيل.
+   - إن جُمّد: نقل الخطة لمجلد docs في ocr-core وإغلاق المستودع مؤقتاً.
+   القاعدة المعلنة في الخطة نفسها: "الباقي يُجمَّد 12 أسبوعاً" — طبّقها على نفسك.
+3. **تحييد المخاطر القانونية لـ finereader-ocr-apk-analysis**: إضافة إخلاء مسؤولية
+   صريح بأن المستودع توثيق تعليمي فقط، لا يستخرج كوداً، لا يستخدم في المنتج،
+   ولا يستورد أي ملفات ABBYY. وإزالة أي إشارة لاستخدام نتائجه في ocr-core.
+4. **Baseline Benchmark عربي طبي**: تشغيل `ocr_core.benchmarks` على 100 صورة
+   (مطبوعة + يدوية) وتسجيل النتيجة في memory/lessons.md كخط أساس،
+   مع CI gate يفشل عند تدهور CER > 5%. [يومان]
+5. ترقية الدراسة المرفوعة: تحويلها إلى docs/ECOSYSTEM.md في omni-medical-suite
+   مع تاريخ مراجعة ومالك، لمنع فقدان المزامنة بين الوثائق والكود مجدداً.
 
-echo ""
-echo -e "${BOLD}${GREEN}=========================================${NC}"
-echo -e "${BOLD}${GREEN}  Installed!${NC}"
-echo -e "${BOLD}${GREEN}=========================================${NC}"
-echo -e "  ${GREEN}1.${NC} source ~/.bashrc"
-echo -e "  ${GREEN}2.${NC} github-sync"
-echo -e "  ${DIM}Repos: 28 GitHub + 11 HF = 39 total (auto-fetched)${NC}"
-echo -e "  ${DIM}All tokens pre-configured in settings.env${NC}"
-echo ""
-
-```
-
----
-
-### `github-sync.sh`
-**اللغة:** Shell | **الأسطر:** 173 | **الحجم:** 9,051 حرف
-
-```shell
-#!/bin/bash
-SYNC_DIR="${SYNC_DIR:-$HOME/github-sync-system}"; source "$SYNC_DIR/config/lib-common.sh"
-check_requirements || exit 1
-
-show_menu() {
-    clear; local total; total="$(count_repos)"
-    echo -e "${BOLD}${CYAN}$(printf '=%.0s' {1..65})${NC}"
-    echo -e "${BOLD}${CYAN}   Git Sync System for Manjaro${NC}"
-    echo -e "${BOLD}${CYAN}$(printf '=%.0s' {1..65})${NC}"
-    echo -e "   ${DIM}Repos: $total | $(date '+%Y-%m-%d %H:%M:%S')${NC}"; echo ""
-    echo -e " ${GREEN}1.${NC}  ${BOLD}Status Dashboard${NC}         ${DIM}-- all repos status${NC}"
-    echo -e " ${GREEN}2.${NC}  ${BOLD}Push to GitHub${NC}           ${DIM}-- local >> GitHub${NC}"
-    echo -e " ${GREEN}3.${NC}  ${BOLD}Pull from GitHub${NC}         ${DIM}-- GitHub >> local${NC}"
-    echo -e " ${GREEN}4.${NC}  ${BOLD}Bidirectional Sync${NC}       ${DIM}-- local <> GitHub${NC}"
-    echo -e " ${GREEN}5.${NC}  ${BOLD}Sync Single Repo${NC}         ${DIM}-- one repo${NC}"
-    echo -e " ${GREEN}6.${NC}  ${BOLD}Sync Custom Message${NC}      ${DIM}-- custom commit msg${NC}"
-    echo -e " ${GREEN}7.${NC}  ${BOLD}Clone All Missing${NC}        ${DIM}-- clone repos not on disk${NC}"
-    echo -e " ${GREEN}8.${NC}  ${BOLD}Simple Sync (no config)${NC}  ${DIM}-- zero-config batch (from sync-github)${NC}"
-    echo -e " ${GREEN}9.${NC}  ${BOLD}Dry-Run Push${NC}             ${DIM}-- preview without pushing${NC}"
-    echo ""
-    echo -e " ${CYAN}10.${NC} ${BOLD}Monitor (Polling)${NC}        ${DIM}-- every 5 min${NC}"
-    echo -e " ${CYAN}11.${NC} ${BOLD}Watch (Real-time)${NC}       ${DIM}-- inotifywait${NC}"
-    echo -e " ${CYAN}12.${NC} ${BOLD}Enable systemd Service${NC}   ${DIM}-- auto-sync daemon${NC}"
-    echo ""
-    echo -e " ${MAGENTA}13.${NC} ${BOLD}Open All in PyCharm${NC}    ${DIM}-- launch PyCharm${NC}"
-    echo -e " ${MAGENTA}14.${NC} ${BOLD}Setup Git Hooks${NC}        ${DIM}-- auto-push${NC}"
-    echo -e " ${MAGENTA}15.${NC} ${BOLD}Refresh Repos List${NC}     ${DIM}-- fetch from API${NC}"
-    echo ""
-    echo -e " ${YELLOW}16.${NC} ${BOLD}Edit Repos List${NC}         ${DIM}-- repos.txt${NC}"
-    echo -e " ${YELLOW}17.${NC} ${BOLD}Edit Settings${NC}           ${DIM}-- settings.env${NC}"
-    echo -e " ${YELLOW}18.${NC} ${BOLD}View Logs${NC}               ${DIM}-- sync logs${NC}"
-    echo -e " ${RED}0.${NC}  ${BOLD}Exit${NC}"
-    echo -e "${BOLD}${CYAN}$(printf '=%.0s' {1..65})${NC}"; echo ""
-}
-
-select_repo() {
-    echo -e "${BOLD}Repos:${NC}"; local i=1; local repos=()
-    while IFS='|' read -r name _; do
-        [[ -z "$name" || "$name" == \#* ]] && continue; repos+=("$name")
-        printf "  ${GREEN}%3d.${NC} %s\n" "$i" "$name"; ((i++))
-    done < "$CONFIG_FILE"
-    echo ""; read -rp "  Select number: " choice
-    [[ "$choice" -ge 1 && "$choice" -le ${#repos[@]} ]] && echo "${repos[$((choice-1))]}"
-}
-
-view_logs() {
-    echo -e "${BOLD}${CYAN}Logs:${NC}"; ls -lht "$LOG_DIR"/*.log 2>/dev/null | head -15
-    echo ""; read -rp "  Log to view (name or 'q'): " logfile
-    [[ "$logfile" == "q" || -z "$logfile" ]] && return
-    local found=""; for f in "$LOG_DIR"/"$logfile" "$LOG_DIR"/*"$logfile"*; do [[ -f "$f" ]] && { found="$f"; break; }; done
-    [[ -n "$found" ]] && less "$found" || echo -e "  ${RED}Not found${NC}"
-}
-
-refresh_repos() {
-    echo -e "${BOLD}${CYAN}Fetching repos from GitHub + HuggingFace...${NC}"; echo ""
-    source "$SETTINGS_FILE"
-    local tmp="$SYNC_DIR/config/repos.txt.new"
-    echo "# Auto-fetched $(date '+%Y-%m-%d %H:%M:%S')" > "$tmp"
-    echo "# GitHub Repositories" >> "$tmp"
-    curl -s -H "Authorization: token $GITHUB_TOKEN" "https://api.github.com/user/repos?per_page=100&sort=updated" 2>/dev/null | \
-        python3 -c "
-import json,sys
-for r in json.load(sys.stdin):
-    print(f\"{r['name']}|~/github~/{r['name']}|{r.get('clone_url','')}|{r.get('default_branch','main')}\")
-" >> "$tmp" 2>/dev/null
-    echo "" >> "$tmp"; echo "# HuggingFace Spaces" >> "$tmp"
-    curl -s -H "Authorization: Bearer $HF_TOKEN" "https://huggingface.co/api/spaces?author=DrAbdulmalek" 2>/dev/null | \
-        python3 -c "
-import json,sys
-for s in json.load(sys.stdin):
-    sid=s.get('id',''); name=sid.split('/')[-1]
-    print(f'hf-{name}|~/github~/hf-{name}|https://huggingface.co/spaces/{sid}|main')
-" >> "$tmp" 2>/dev/null
-    local count; count=$(grep -v -E '^#|^$' "$tmp" | wc -l)
-    mv "$tmp" "$CONFIG_FILE"
-    echo -e "  ${GREEN}Found $count repos${NC}"; echo ""
-}
-
-while true; do
-    show_menu; read -rp "  Choice [0-18]: " choice
-    case "$choice" in
-        1) show_dashboard; press_enter ;;
-        2) echo ""; "$SYNC_DIR/sync-scripts/sync-push.sh"; press_enter ;;
-        3) echo ""; "$SYNC_DIR/sync-scripts/sync-pull.sh"; press_enter ;;
-        4) echo ""; "$SYNC_DIR/sync-scripts/sync-bidirectional.sh"; press_enter ;;
-        5)
-            echo ""; repo="$(select_repo)"
-            if [[ -n "$repo" ]]; then
-                echo -e "  ${DIM}(1)push (2)pull (3)bidi [default=3]:${NC}"
-                read -rp "  Select: " op
-                case "$op" in 1) op="push";; 2) op="pull";; *) op="bidi";; esac
-                "$SYNC_DIR/sync-scripts/sync-single.sh" "$repo" "$op"
-            else echo -e "  ${RED}Invalid${NC}"; fi
-            press_enter ;;
-        6)
-            echo ""; read -rp "  Commit message: " msg
-            [[ -n "$msg" ]] && "$SYNC_DIR/sync-scripts/sync-custom.sh" "$msg" push
-            press_enter ;;
-        7)
-            echo -e "\n${BOLD}${CYAN}Cloning missing repos...${NC}"; echo ""
-            while IFS='|' read -r name local_path github_url branch; do
-                [[ -z "$name" || "$name" == \#* ]] && continue; local_path="${local_path/#\~/$HOME}"
-                if [[ ! -d "$local_path" ]]; then
-                    echo -n "  $name ... "; git clone --branch "$branch" "$github_url" "$local_path" 2>/dev/null && \
-                        echo -e "${GREEN}OK${NC}" || echo -e "${RED}FAILED${NC}"
-                else echo -e "  ${DIM}skip${NC} $name (exists)"
-                fi
-            done < "$CONFIG_FILE"; echo ""; press_enter ;;
-        8)
-            echo ""; read -rp "  Sync directory [\$HOME/GitHub]: " sync_dir
-            "$SYNC_DIR/sync-scripts/simple-sync.sh" "${sync_dir:-$HOME/GitHub}"
-            press_enter ;;
-        9)
-            echo -e "\n${BOLD}${YELLOW}Dry-Run: preview without pushing...${NC}\n"
-            DRY_RUN=true; source "$SYNC_DIR/config/lib-common.sh"
-            total=0; has_changes=0
-            while IFS='|' read -r repo_name local_path github_url branch; do
-                [[ -z "$repo_name" || "$repo_name" == \#* ]] && continue; ((total++))
-                local_path="${local_path/#\~/$HOME}"
-                if [[ -d "$local_path" && -d "$local_path/.git" ]]; then
-                    local st; st="$(git -C "$local_path" status --porcelain 2>/dev/null)"
-                    if [[ -n "$st" ]]; then
-                        ((has_changes++)); local cnt; cnt="$(echo "$st" | wc -l)"
-                        echo -e "  ${YELLOW}CHG${NC}   $repo_name  ($cnt files)"
-                        git -C "$local_path" diff --stat 2>/dev/null | sed 's/^/         /'
-                    else
-                        echo -e "  ${DIM}---${NC}   $repo_name  (clean)"
-                    fi
-                else
-                    echo -e "  ${RED}MISS${NC}  $repo_name  (not cloned)"
-                fi
-            done < "$CONFIG_FILE"
-            echo -e "\n  ${YELLOW}$has_changes/$total repos have changes${NC}"; press_enter ;;
-        10) echo ""; "$SYNC_DIR/sync-scripts/monitor-changes.sh" ;;
-        11) echo ""; "$SYNC_DIR/sync-scripts/sync-watch.sh" ;;
-        12)
-            echo -e "\n${BOLD}${CYAN}Enabling git-sync-watch systemd service...${NC}"
-            mkdir -p "$HOME/.config/systemd/user"
-            cat > "$HOME/.config/systemd/user/git-sync-watch.service" << SYSEOF
-[Unit]
-Description=Git Sync Watch (inotify)
-After=network-online.target
-Wants=network-online.target
-
-[Service]
-Type=simple
-ExecStart=$SYNC_DIR/sync-scripts/sync-watch.sh
-Restart=on-failure
-RestartSec=10
-Environment=SYNC_DIR=$SYNC_DIR
-
-[Install]
-WantedBy=default.target
-SYSEOF
-            systemctl --user daemon-reload
-            systemctl --user enable git-sync-watch.service
-            echo -e "  ${GREEN}Enabled!${NC}"
-            echo -e "  Start:  ${CYAN}systemctl --user start git-sync-watch${NC}"
-            echo -e "  Status: ${CYAN}systemctl --user status git-sync-watch${NC}"
-            echo -e "  Logs:   ${CYAN}journalctl --user -u git-sync-watch -f${NC}"
-            echo -e "  Stop:   ${CYAN}systemctl --user stop git-sync-watch${NC}"
-            press_enter ;;
-        13) echo ""; "$SYNC_DIR/sync-scripts/open-pycharm.sh"; press_enter ;;
-        14) echo ""; "$SYNC_DIR/sync-scripts/setup-pycharm-hooks.sh"; press_enter ;;
-        15) refresh_repos; press_enter ;;
-        16) ${EDITOR:-nano} "$CONFIG_FILE" ;;
-        17) ${EDITOR:-nano} "$SETTINGS_FILE" ;;
-        18) view_logs ;;
-        0|q|Q) echo -e "\n${GREEN}Bye!${NC}\n"; exit 0 ;;
-        *) echo -e "\n${RED}Invalid!${NC}"; sleep 1 ;;
-    esac
-done
-
-```
+### 🟢 P2 — الربع القادم (توسّع)
+1. مراقبة Falcon-OCR: إما آلية (workflow أسبوعي يفحص إصدارات tiiuae/Falcon-OCR)
+   أو قرار مكتوب بالتجاهل حتى إشعار آخر. [يوم]
+2. عند وصول 500-1000 قصاصة معتمدة: أول تجربة Fine-tuning (TrOCR عبر
+   arabic-medical-handwriting/unsloth_finetune.py على Colab T4).
+3. Medical Region Editor UI في ocr-core: إكمال الـ PR المفتوح (PySide6 canvas)
+   أو نقله لخطة واضحة — لا تتركه "in progress" بلا مالك.
+4. أتمتة مراجعة التوابع: dependabot + أسبوعي security audit across repos
+   (repo-sync-toolkit يمكن أن يشغّل gh api audit عبر token-manager).
 
 ---
 
-### `.gitignore`
-**اللغة:** Other | **الأسطر:** 7 | **الحجم:** 65 حرف
+## ثالثاً: ماذا أستطيع أن أنفّذ بنفسي — وأين حدودي (صراحة كاملة)
 
-```other
-config/settings.env
-logs/*.log.gz
-__pycache__/
-*.pyc
-.venv/
-.env
+### لا أستطيع:
+- **الدفع المباشر إلى GitHub**: بيئتي الحالية لا تملك اتصالاً شبكياً صادراً للـ git/API،
+  ولا أملك أدوات كتابة عبر الويب. حتى لو توفر التوكن، لا يوجد مسار تقني لاستخدامه من هنا.
+- استخدام التوكن المكشوف أصلاً (وهذا صحيح أمنياً — يجب إلغاؤه).
 
-```
+### أستطيع (وأبدأ فور قولك "نفّذ"):
+1. كتابة **بقع (Patches/Diffs) كاملة وجاهزة للتطبيق** لأي بند من بنود P0/P1 —
+   أسلّمها كملفات في `/mnt/agents/output/` تطبقها محلياً بـ `git apply` ثم تدفع بنفسك.
+2. توليد ملفات كاملة: SECURITY.md (نسخة لكل مستودع)، خطة تنفيذ أسابيع 1-3 من
+   medical-rag-ar ككود سقالة فعلي، سكربت baseline benchmark، آلية مراقبة Falcon-OCR.
+3. مراجعة أي PR diff تلصقه هنا قبل دفعه (راجع ثانياً: فحص تسريبات، توافق مع ميثاق الثقة).
+4. تحديث الدراسة المعمارية لتطابق الواقع الحالي (هذا الملف يمكن أن يكون الأساس).
 
----
-
-### `GOVERNANCE.md`
-**اللغة:** Markdown | **الأسطر:** 84 | **الحجم:** 2,687 حرف
-
-```markdown
-# Governance Policy — git-sync-system
-
-## Overview
-This document defines the governance rules for the git-sync-system tool that manages 28+ GitHub repos and 11 HF Spaces.
-
-## Sync Policies
-
-### Default Policy: Read-Only
-- All repos default to READ-ONLY mode
-- Sync operations (push, delete branches) require explicit opt-in
-- Pull/fetch operations are always allowed
-
-### Write Modes
-| Mode | Description | Requires |
-|------|-------------|----------|
-| read-only | Pull only, no pushes | Default |
-| safe-push | Push to non-protected branches only | --write flag |
-| full-write | Push to any branch including main | --force-write + confirmation |
-
-## Allowlist / Denylist
-
-### Allowlist (repos that CAN receive pushes)
-- omni-medical-suite
-- scanner-fixer
-- medical-handwriting-ocr
-- medical-ocr-training-hub
-- medical-ocr-benchmarks
-- medical-ocr-trainer
-- medical-ocr-ground-truth
-- profile-readme (DrAbdulmalek/DrAbdulmalek)
-- reset-net
-
-### Denylist (repos that MUST NEVER receive auto-pushes)
-- ocr-groundtruth (archived, merged into medical-ocr-ground-truth)
-- ai-fuel-engine (archived)
-- bilingual-extractor (archived)
-- medical-doc-processor (archived)
-- medical-ocr-postprocessor (archived)
-- omniparse-study (archived)
-- omniparse (archived)
-- OmniFile_Processor (archived)
-- ponytail (archived)
-- telegram-forwarder (archived)
-- tg-forwarder (archived)
-- IntelliFile-app (archived)
-
-### Sensitive Repos (require --force-write + explicit confirmation)
-- omni-medical-suite (core platform)
-- medical-ocr-ground-truth (contains training data)
-- medical-ocr-benchmarks (benchmark authority)
-- Any repo with 'private' visibility
-
-## Branch Protection
-
-### read_only_main (direct push to main is blocked)
-These repos require PR-based workflow for main branch changes:
-- omni-medical-suite
-- medical-ocr-ground-truth
-- medical-ocr-benchmarks
-
-### Force Push Policy
-Force push is **never allowed** on protected branches. The system checks branch protection rules before pushing:
-1. Query GitHub API for branch protection status
-2. If branch is protected: require PR workflow instead of direct push
-3. Warn user and require explicit confirmation
-
-### Dry-Run Requirement
-The following repos require a dry-run pass before any actual sync:
-- omni-medical-suite
-- medical-ocr-ground-truth
-- medical-ocr-benchmarks
-
-## Audit Log
-
-All sync operations are logged to `logs/audit.log`:
-- Timestamp, operation type, repo, branch, result
-- Push attempts (success/failure)
-- Policy violations (denied writes to denylist repos)
-- Manual overrides
-- Governance check results (PASSED/DENIED/DRY_RUN_REQUIRED)
-
-## Configuration
-
-Policies are configured in `config/governance.yaml` (source of truth).
-```
+### سير العمل المقترح للتنفيذ الفعلي:
+- أنت: تلغي التوكن، تنشئ توكناً جديداً **محلياً فقط** (لا تلصقه هنا).
+- أنا: أسلّم البقع/الملفات → تطبقها بـ git apply في نسختك المحلية → تدفع بـ repo-sync-toolkit.
+- للمهام التي تحتاج أسراراً (HF upload مثلاً): أنفذ التحضير كاملاً وأنت تشغّل الأمر المحلي فقط.
 
 ---
 
-### `pycharm-config/pycharm.vmoptions`
-**اللغة:** Other | **الأسطر:** 6 | **الحجم:** 95 حرف
-
-```other
--Xms512m
--Xmx2048m
--XX:ReservedCodeCacheSize=512m
--XX:+UseCompressedOops
--Dfile.encoding=UTF-8
-
-```
-
----
-
-### `logs/audit.log`
-**اللغة:** Other | **الأسطر:** 9 | **الحجم:** 2,025 حرف
-
-```other
-{"timestamp": "2026-06-29T22:21:39.835741+00:00", "operation": "push", "repo": "omni-medical-suite", "branch": "main", "result": "allowed", "details": "mode=safe-push reason=Repository 'omni-medical-suite' is on the allowlist. safe-push to 'main' approved."}
-{"timestamp": "2026-06-29T22:21:40.760913+00:00", "operation": "push", "repo": "ai-fuel-engine", "branch": "main", "result": "denied", "details": "mode=safe-push reason=Repository 'ai-fuel-engine' is on the denylist (archived/protected). Pushes are never allowed."}
-{"timestamp": "2026-06-29T22:21:55.457648+00:00", "operation": "force-push", "repo": "omni-medical-suite", "branch": "main", "result": "denied", "details": "mode=safe-push reason=Force-push is denied by governance policy (deny_force_push_protected=true)."}
-{"timestamp": "2026-06-29T22:21:55.864773+00:00", "operation": "push", "repo": "medical-ocr-ground-truth", "branch": "main", "result": "denied", "details": "mode=safe-push reason=Repository 'medical-ocr-ground-truth' is sensitive (contains training data). Requires --force-write and explicit confirmation."}
-{"timestamp": "2026-06-29T22:21:55.959724+00:00", "operation": "push", "repo": "medical-ocr-ground-truth", "branch": "main", "result": "allowed", "details": "mode=full-write reason=Repository 'medical-ocr-ground-truth' is sensitive. Full-write mode confirmed — proceed with caution."}
-{"timestamp": "2026-06-29T22:21:56.052830+00:00", "operation": "push", "repo": "unknown-repo", "branch": "main", "result": "denied", "details": "mode=safe-push reason=Repository 'unknown-repo' is not on the allowlist. Add it to config/governance.yaml allowlist to enable pushes."}
-{"timestamp": "2026-06-29T22:21:56.146123+00:00", "operation": "pull", "repo": "omni-medical-suite", "branch": "main", "result": "allowed", "details": "mode=read-only reason=Read-only operation always allowed"}
-{"timestamp": "2026-06-29T22:22:08.962163+00:00", "operation": "push", "repo": "test-repo", "branch": "feat/x", "result": "denied", "details": "manual test"}
+## رابعاً: التوصية الفورية الواحدة
+إذا فعلت شيئاً واحداً اليوم: **ألغِ التوكن**. ثم أخبرني بأول بند تريد تنفيذه
+(أقترح البند 4 من P0 — تفويض arabic-medical-handwriting لـ ocr-core — لأنه يحسم
+أكبر فجوة تقنية بنقرة واحدة)، وسأسلّمك الباتش الجاهز خلال رد واحد.
 
 ```
 
@@ -2333,8 +3206,63 @@ log_rotation:
 
 ---
 
+### `config/repos.txt`
+**اللغة:** Text | **الأسطر:** 47 | **الحجم:** 4,650 حرف
+
+```text
+# =============================================
+# قائمة المستودعات — تم جلبها تلقائياً من GitHub API + HuggingFace API
+# تاريخ التحديث: 2026-06-28
+# =============================================
+# الصيغة: repo_name|local_path|github_url|branch
+
+# ── GitHub Repositories (28) ──
+omni-medical-suite|~/github~/omni-medical-suite|https://github.com/DrAbdulmalek/omni-medical-suite.git|main
+scanner-fixer|~/github~/scanner-fixer|https://github.com/DrAbdulmalek/scanner-fixer.git|main
+medical-ocr-ground-truth|~/github~/medical-ocr-ground-truth|https://github.com/DrAbdulmalek/medical-ocr-ground-truth.git|main
+medical-ocr-training-hub|~/github~/medical-ocr-training-hub|https://github.com/DrAbdulmalek/medical-ocr-training-hub.git|main
+medical-ocr-trainer|~/github~/medical-ocr-trainer|https://github.com/DrAbdulmalek/medical-ocr-trainer.git|main
+medical-ocr-benchmarks|~/github~/medical-ocr-benchmarks|https://github.com/DrAbdulmalek/medical-ocr-benchmarks.git|main
+medical-handwriting-ocr|~/github~/medical-handwriting-ocr|https://github.com/DrAbdulmalek/medical-handwriting-ocr.git|main
+medical-ocr-trainer-hf|~/github~/medical-ocr-trainer-hf|https://github.com/DrAbdulmalek/medical-ocr-trainer-hf.git|main
+medical-ocr-postprocessor|~/github~/medical-ocr-postprocessor|https://github.com/DrAbdulmalek/medical-ocr-postprocessor.git|main
+medical-doc-processor|~/github~/medical-doc-processor|https://github.com/DrAbdulmalek/medical-doc-processor.git|main
+medical-ocr-work-data|~/github~/medical-ocr-work-data|https://github.com/DrAbdulmalek/medical-ocr-work-data.git|main
+telegram-forwarder|~/github~/telegram-forwarder|https://github.com/DrAbdulmalek/telegram-forwarder.git|main
+telegram-channel-copier|~/github~/telegram-channel-copier|https://github.com/DrAbdulmalek/telegram-channel-copier.git|main
+telegram-pipeline|~/github~/telegram-pipeline|https://github.com/DrAbdulmalek/telegram-pipeline.git|main
+OmniFile_Processor|~/github~/OmniFile_Processor|https://github.com/DrAbdulmalek/OmniFile_Processor.git|main
+bilingual-extractor|~/github~/bilingual-extractor|https://github.com/DrAbdulmalek/bilingual-extractor.git|main
+IntelliFile-app|~/github~/IntelliFile-app|https://github.com/DrAbdulmalek/IntelliFile-app.git|main
+omniparse|~/github~/omniparse|https://github.com/DrAbdulmalek/omniparse.git|main
+omniparse-study|~/github~/omniparse-study|https://github.com/DrAbdulmalek/omniparse-study.git|main
+ai-fuel-engine|~/github~/ai-fuel-engine|https://github.com/DrAbdulmalek/ai-fuel-engine.git|main
+github-file-uploader|~/github~/github-file-uploader|https://github.com/DrAbdulmalek/github-file-uploader.git|main
+DrAbdulmalek|~/github~/DrAbdulmalek|https://github.com/DrAbdulmalek/DrAbdulmalek.git|main
+ponytail|~/github~/ponytail|https://github.com/DrAbdulmalek/ponytail.git|main
+archive|~/github~/archive|https://github.com/DrAbdulmalek/archive.git|main
+arabic-dictionaries-collection|~/github~/arabic-dictionaries-collection|https://github.com/DrAbdulmalek/arabic-dictionaries-collection.git|main
+text_snippets|~/github~/text_snippets|https://github.com/DrAbdulmalek/text_snippets.git|main
+manjaro-ultimate-control-center|~/github~/manjaro-ultimate-control-center|https://github.com/DrAbdulmalek/manjaro-ultimate-control-center.git|main
+
+# ── HuggingFace Spaces (11) ──
+hf-translation-processor|~/github~/hf-translation-processor|https://huggingface.co/spaces/DrAbdulmalek/translation-processor|main
+hf-arabic-translation-corrector|~/github~/hf-arabic-translation-corrector|https://huggingface.co/spaces/DrAbdulmalek/arabic-translation-corrector|main
+hf-handwriting-ocr|~/github~/hf-handwriting-ocr|https://huggingface.co/spaces/DrAbdulmalek/handwriting-ocr|main
+hf-OmniFile-Processor|~/github~/hf-OmniFile-Processor|https://huggingface.co/spaces/DrAbdulmalek/OmniFile-Processor|main
+hf-omnifile-processor-lab|~/github~/hf-omnifile-processor-lab|https://huggingface.co/spaces/DrAbdulmalek/omnifile-processor-lab|main
+hf-medical-handwriting-ocr|~/github~/hf-medical-handwriting-ocr|https://huggingface.co/spaces/DrAbdulmalek/medical-handwriting-ocr|main
+hf-medical-ocr-trainer|~/github~/hf-medical-ocr-trainer|https://huggingface.co/spaces/DrAbdulmalek/medical-ocr-trainer|main
+hf-telegram-channel-copier|~/github~/hf-telegram-channel-copier|https://huggingface.co/spaces/DrAbdulmalek/telegram-channel-copier|main
+hf-tg-forwarder|~/github~/hf-tg-forwarder|https://huggingface.co/spaces/DrAbdulmalek/tg-forwarder|main
+hf-telegram-forwarder|~/github~/hf-telegram-forwarder|https://huggingface.co/spaces/DrAbdulmalek/telegram-forwarder|main
+hf-mission-control|~/github~/hf-mission-control|https://huggingface.co/spaces/DrAbdulmalek/mission-control|main
+```
+
+---
+
 ### `config/lib-common.sh`
-**اللغة:** Shell | **الأسطر:** 224 | **الحجم:** 9,830 حرف
+**اللغة:** Shell | **الأسطر:** 280 | **الحجم:** 12,322 حرف
 
 ```shell
 #!/bin/bash
@@ -2392,28 +3320,81 @@ setup_auth() {
     local repo_path="$1" remote_url="$2"
     if [[ -n "$GIT_NAME" ]]; then git -C "$repo_path" config user.name "$GIT_NAME" 2>/dev/null; fi
     if [[ -n "$GIT_EMAIL" ]]; then git -C "$repo_path" config user.email "$GIT_EMAIL" 2>/dev/null; fi
-    # فقط GitHub URLs — لا HF
-    if [[ "$remote_url" != *"github.com"* ]]; then return 0; fi
+    [[ "$remote_url" == *"github.com"* ]] || return 0
     case "$AUTH_METHOD" in
         token)
-            if [[ -n "$GITHUB_TOKEN" && -n "$GITHUB_USERNAME" ]]; then
-                local token_url="https://${GITHUB_USERNAME}:${GITHUB_TOKEN}@github.com/${remote_url#https://github.com/}"
-                git -C "$repo_path" remote set-url origin "$token_url" 2>/dev/null
-            fi ;;
+            # No `2>/dev/null` here: swallowing stderr hid real auth failures and
+            # let pushes fail later with a confusing error.
+            if command -v gh >/dev/null 2>&1; then
+                if ! gh_err="$(gh auth setup-git 2>&1)"; then
+                    log ERROR "gh auth setup-git failed (output redacted). Run: gh auth login"
+                    unset gh_err
+                    return 1
+                fi
+                unset gh_err
+                return 0
+            fi
+            if [[ -n "$(git -C "$repo_path" config --get credential.helper 2>/dev/null)" ]]; then
+                return 0
+            fi
+            log ERROR "AUTH_METHOD=token but no GitHub CLI and no credential.helper. Configure 'gh auth login', Git Credential Manager, or SSH. Tokens are never written into remote URLs."
+            return 1 ;;
         ssh) return 0 ;;
-        store) git -C "$repo_path" config credential.helper store 2>/dev/null ;;
+        store)
+            log WARN "credential.helper=store keeps credentials in PLAINTEXT (~/.git-credentials); prefer Git Credential Manager or SSH."
+            git -C "$repo_path" config credential.helper store || {
+                log ERROR "could not set credential.helper=store"; return 1; } ;;
+        *)
+            log ERROR "Unknown AUTH_METHOD='$AUTH_METHOD' (expected token|ssh|store)"
+            return 1 ;;
     esac
 }
 
+# يرفض أي عنوان يحتوي بيانات اعتماد — ولا يطبع العنوان نفسه
+url_has_credentials() {
+    local url="$1"
+    [[ -z "$url" ]] && return 1
+    [[ "$url" != *"://"* ]] && return 1          # scp-like: git@host:owner/repo.git
+    [[ "$url" =~ ^[a-zA-Z][a-zA-Z0-9+.-]*://[^/@:]+:[^/@]*@ ]] && return 0
+    [[ "$url" =~ ^[a-zA-Z][a-zA-Z0-9+.-]*://[^/@]+@ ]] && return 0   # username-only userinfo
+    return 1
+}
+
+# يفحص origin قبل أي fetch/push، وينظّفه إن كان ملوّثًا (fail-closed)
+ensure_clean_remote() {
+    local repo_path="$1" url clean rc
+    url="$(git -C "$repo_path" remote get-url origin 2>/dev/null)" || {
+        log ERROR "no origin remote in $repo_path"; return 1; }
+    if ! url_has_credentials "$url"; then return 0; fi
+    log WARN "origin embeds credentials (URL redacted); scrubbing"
+    cleanup_auth "$repo_path"
+    url="$(git -C "$repo_path" remote get-url origin 2>/dev/null)" || return 1
+    if url_has_credentials "$url"; then
+        log ERROR "origin still embeds credentials — refusing to continue"
+        return 1
+    fi
+    return 0
+}
+
+# يتحقق من أن عنوانًا واردًا من repos.txt نظيف قبل الاستنساخ
+assert_clean_url() {
+    local url="$1" name="${2:-repo}"
+    if url_has_credentials "$url"; then
+        log ERROR "$name: refusing URL with embedded credentials (value redacted)"
+        return 1
+    fi
+    return 0
+}
+
 cleanup_auth() {
-    local repo_path="$1"
-    if [[ "$AUTH_METHOD" == "token" && -n "$GITHUB_USERNAME" ]]; then
-        local current_url
-        current_url="$(git -C "$repo_path" remote get-url origin 2>/dev/null)"
-        if [[ "$current_url" == *"${GITHUB_USERNAME}:"*@github.com/* ]]; then
-            local clean_url="${current_url#https://}"; clean_url="https://${clean_url#*@}"
-            git -C "$repo_path" remote set-url origin "$clean_url" 2>/dev/null
-        fi
+    local repo_path="$1" current_url clean_url
+    current_url="$(git -C "$repo_path" remote get-url origin 2>/dev/null)" || return 0
+    if [[ "$current_url" =~ ^https://[^/@]+:[^/@]+@github\.com/(.*)$ ]]; then
+        clean_url="https://github.com/${BASH_REMATCH[1]}"
+        git -C "$repo_path" remote set-url origin "$clean_url" 2>/dev/null
+    elif [[ "$current_url" =~ ^https://[^/@]+@github\.com/(.*)$ ]]; then
+        clean_url="https://github.com/${BASH_REMATCH[1]}"
+        git -C "$repo_path" remote set-url origin "$clean_url" 2>/dev/null
     fi
 }
 
@@ -2435,6 +3416,7 @@ _do_pull() {
     if [[ -n "$has_changes" ]]; then
         git -C "$local_path" stash push -m "auto-stash $(date +%Y%m%d_%H%M%S)" 2>>"$CURRENT_LOG"; stashed=true
     fi
+    ensure_clean_remote "$local_path" || return 1
     git -C "$local_path" fetch origin "$branch" 2>>"$CURRENT_LOG"
     if [[ "$PULL_REBASE" == "true" ]]; then
         git -C "$local_path" pull --rebase origin "$branch" 2>>"$CURRENT_LOG"
@@ -2459,6 +3441,7 @@ _do_push() {
         git -C "$local_path" add -A 2>>"$CURRENT_LOG"
         git -C "$local_path" commit -m "$msg" 2>>"$CURRENT_LOG"
     fi
+    ensure_clean_remote "$local_path" || return 1
     git -C "$local_path" push origin "$branch" 2>>"$CURRENT_LOG"
 }
 
@@ -2522,6 +3505,7 @@ show_dashboard() {
         if [[ ! -d "$local_path" ]]; then
             ((err_count++)); printf "  ${RED}MISS%-4s${NC} %-35s %s\n" "" "$name" "(not cloned)"; continue
         fi
+        assert_clean_url "$github_url" "$repo_name" || { echo -e "${RED}REJECTED${NC}"; return 1; }
         if [[ ! -d "$local_path/.git" ]]; then
             ((err_count++)); printf "  ${YELLOW}NOGIT%-3s${NC} %-35s %s\n" "" "$name" "(not git)"; continue
         fi
@@ -2565,63 +3549,8 @@ press_enter() { echo ""; read -rp "  Press Enter to continue..." -n1 -s; echo ""
 
 ---
 
-### `config/repos.txt`
-**اللغة:** Text | **الأسطر:** 47 | **الحجم:** 4,650 حرف
-
-```text
-# =============================================
-# قائمة المستودعات — تم جلبها تلقائياً من GitHub API + HuggingFace API
-# تاريخ التحديث: 2026-06-28
-# =============================================
-# الصيغة: repo_name|local_path|github_url|branch
-
-# ── GitHub Repositories (28) ──
-omni-medical-suite|~/github~/omni-medical-suite|https://github.com/DrAbdulmalek/omni-medical-suite.git|main
-scanner-fixer|~/github~/scanner-fixer|https://github.com/DrAbdulmalek/scanner-fixer.git|main
-medical-ocr-ground-truth|~/github~/medical-ocr-ground-truth|https://github.com/DrAbdulmalek/medical-ocr-ground-truth.git|main
-medical-ocr-training-hub|~/github~/medical-ocr-training-hub|https://github.com/DrAbdulmalek/medical-ocr-training-hub.git|main
-medical-ocr-trainer|~/github~/medical-ocr-trainer|https://github.com/DrAbdulmalek/medical-ocr-trainer.git|main
-medical-ocr-benchmarks|~/github~/medical-ocr-benchmarks|https://github.com/DrAbdulmalek/medical-ocr-benchmarks.git|main
-medical-handwriting-ocr|~/github~/medical-handwriting-ocr|https://github.com/DrAbdulmalek/medical-handwriting-ocr.git|main
-medical-ocr-trainer-hf|~/github~/medical-ocr-trainer-hf|https://github.com/DrAbdulmalek/medical-ocr-trainer-hf.git|main
-medical-ocr-postprocessor|~/github~/medical-ocr-postprocessor|https://github.com/DrAbdulmalek/medical-ocr-postprocessor.git|main
-medical-doc-processor|~/github~/medical-doc-processor|https://github.com/DrAbdulmalek/medical-doc-processor.git|main
-medical-ocr-work-data|~/github~/medical-ocr-work-data|https://github.com/DrAbdulmalek/medical-ocr-work-data.git|main
-telegram-forwarder|~/github~/telegram-forwarder|https://github.com/DrAbdulmalek/telegram-forwarder.git|main
-telegram-channel-copier|~/github~/telegram-channel-copier|https://github.com/DrAbdulmalek/telegram-channel-copier.git|main
-telegram-pipeline|~/github~/telegram-pipeline|https://github.com/DrAbdulmalek/telegram-pipeline.git|main
-OmniFile_Processor|~/github~/OmniFile_Processor|https://github.com/DrAbdulmalek/OmniFile_Processor.git|main
-bilingual-extractor|~/github~/bilingual-extractor|https://github.com/DrAbdulmalek/bilingual-extractor.git|main
-IntelliFile-app|~/github~/IntelliFile-app|https://github.com/DrAbdulmalek/IntelliFile-app.git|main
-omniparse|~/github~/omniparse|https://github.com/DrAbdulmalek/omniparse.git|main
-omniparse-study|~/github~/omniparse-study|https://github.com/DrAbdulmalek/omniparse-study.git|main
-ai-fuel-engine|~/github~/ai-fuel-engine|https://github.com/DrAbdulmalek/ai-fuel-engine.git|main
-github-file-uploader|~/github~/github-file-uploader|https://github.com/DrAbdulmalek/github-file-uploader.git|main
-DrAbdulmalek|~/github~/DrAbdulmalek|https://github.com/DrAbdulmalek/DrAbdulmalek.git|main
-ponytail|~/github~/ponytail|https://github.com/DrAbdulmalek/ponytail.git|main
-archive|~/github~/archive|https://github.com/DrAbdulmalek/archive.git|main
-arabic-dictionaries-collection|~/github~/arabic-dictionaries-collection|https://github.com/DrAbdulmalek/arabic-dictionaries-collection.git|main
-text_snippets|~/github~/text_snippets|https://github.com/DrAbdulmalek/text_snippets.git|main
-manjaro-ultimate-control-center|~/github~/manjaro-ultimate-control-center|https://github.com/DrAbdulmalek/manjaro-ultimate-control-center.git|main
-
-# ── HuggingFace Spaces (11) ──
-hf-translation-processor|~/github~/hf-translation-processor|https://huggingface.co/spaces/DrAbdulmalek/translation-processor|main
-hf-arabic-translation-corrector|~/github~/hf-arabic-translation-corrector|https://huggingface.co/spaces/DrAbdulmalek/arabic-translation-corrector|main
-hf-handwriting-ocr|~/github~/hf-handwriting-ocr|https://huggingface.co/spaces/DrAbdulmalek/handwriting-ocr|main
-hf-OmniFile-Processor|~/github~/hf-OmniFile-Processor|https://huggingface.co/spaces/DrAbdulmalek/OmniFile-Processor|main
-hf-omnifile-processor-lab|~/github~/hf-omnifile-processor-lab|https://huggingface.co/spaces/DrAbdulmalek/omnifile-processor-lab|main
-hf-medical-handwriting-ocr|~/github~/hf-medical-handwriting-ocr|https://huggingface.co/spaces/DrAbdulmalek/medical-handwriting-ocr|main
-hf-medical-ocr-trainer|~/github~/hf-medical-ocr-trainer|https://huggingface.co/spaces/DrAbdulmalek/medical-ocr-trainer|main
-hf-telegram-channel-copier|~/github~/hf-telegram-channel-copier|https://huggingface.co/spaces/DrAbdulmalek/telegram-channel-copier|main
-hf-tg-forwarder|~/github~/hf-tg-forwarder|https://huggingface.co/spaces/DrAbdulmalek/tg-forwarder|main
-hf-telegram-forwarder|~/github~/hf-telegram-forwarder|https://huggingface.co/spaces/DrAbdulmalek/telegram-forwarder|main
-hf-mission-control|~/github~/hf-mission-control|https://huggingface.co/spaces/DrAbdulmalek/mission-control|main
-```
-
----
-
 ### `config/settings.env.example`
-**اللغة:** Other | **الأسطر:** 39 | **الحجم:** 1,048 حرف
+**اللغة:** Other | **الأسطر:** 39 | **الحجم:** 996 حرف
 
 ```other
 # =============================================
@@ -2633,7 +3562,7 @@ hf-mission-control|~/github~/hf-mission-control|https://huggingface.co/spaces/Dr
 
 # ── GitHub ──
 GITHUB_USERNAME=your_username
-GITHUB_TOKEN=ghp_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+GITHUB_TOKEN=ghp_REPLACE_ME
 
 # ── Git Config ──
 # token | ssh | store
@@ -2642,7 +3571,7 @@ GIT_NAME=Your Name
 GIT_EMAIL=your@email.com
 
 # ── HuggingFace ──
-HF_TOKEN=hf_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+HF_TOKEN=hf_REPLACE_ME
 
 # ── Telegram ──
 TELEGRAM_API_ID=your_api_id
@@ -2667,88 +3596,447 @@ IGNORE_PATTERNS=.git,__pycache__,*.pyc,.idea,node_modules,.venv,venv,.DS_Store,*
 
 ---
 
-### `sync-scripts/sync-watch.sh`
-**اللغة:** Shell | **الأسطر:** 30 | **الحجم:** 1,802 حرف
+### `logs/.gitkeep`
+**اللغة:** Other | **الأسطر:** 1 | **الحجم:** 0 حرف
 
-```shell
-#!/bin/bash
-SYNC_DIR="${SYNC_DIR:-$HOME/github-sync-system}"; source "$SYNC_DIR/config/lib-common.sh"
-WATCH_DIR="${HOME}/github~"; DEBOUNCE=3; WATCH_LOG="$LOG_DIR/watch.log"
-if ! command -v inotifywait &>/dev/null; then
-    echo -e "${RED}inotifywait not found. Install: sudo pacman -S inotify-tools${NC}"; exit 1
-fi
-declare -A REPO_MAP BRANCH_MAP URL_MAP
-while IFS='|' read -r name local_path github_url branch; do
-    [[ -z "$name" || "$name" == \#* ]] && continue; local_path="${local_path/#\~/$HOME}"
-    REPO_MAP["$local_path"]="$name"; BRANCH_MAP["$local_path"]="$branch"; URL_MAP["$local_path"]="$github_url"
-done < "$CONFIG_FILE"
-echo -e "${BOLD}${CYAN}=========================================${NC}"
-echo -e "${BOLD}${CYAN}  Real-time Watch -- inotifywait${NC}"
-echo -e "${BOLD}${CYAN}=========================================${NC}"
-echo -e "  Watching: ${YELLOW}$WATCH_DIR${NC} | Repos: ${YELLOW}${#REPO_MAP[@]}${NC}"
-echo -e "  ${DIM}Press Ctrl+C to stop${NC}"; echo ""
-declare -A LAST_SYNC
-inotifywait -m -r -e modify,create,delete,move \
-    --exclude '(\.git|__pycache__|\.pyc|\.idea|node_modules|\.venv|venv|\.DS_Store|\.egg-info)' \
-    "$WATCH_DIR" 2>/dev/null | while read -r dir event file; do
-    repo_dir="$dir"
-    while [[ "$repo_dir" != "/" && -z "${REPO_MAP[$repo_dir]}" ]]; do repo_dir="$(dirname "$repo_dir")"; done
-    [[ -z "${REPO_MAP[$repo_dir]}" ]] && continue
-    repo_name="${REPO_MAP[$repo_dir]}"; now="$(date +%s)"; last="${LAST_SYNC[$repo_name]:-0}"
-    (( now - last < DEBOUNCE )) && continue; LAST_SYNC["$repo_name"]="$now"
-    ts="$(date '+%H:%M:%S')"
-    echo -e "[${ts}] ${CYAN}$event${NC} ${DIM}$file${NC} in ${BOLD}$repo_name${NC}"
-    process_repo "$repo_name" "$repo_dir" "${URL_MAP[$repo_dir]}" "${BRANCH_MAP[$repo_dir]}" "push"
-done >> "$WATCH_LOG" 2>&1
+```other
 
 ```
 
 ---
 
-### `sync-scripts/sync-single.sh`
-**اللغة:** Shell | **الأسطر:** 15 | **الحجم:** 796 حرف
+### `logs/audit.log`
+**اللغة:** Other | **الأسطر:** 9 | **الحجم:** 2,025 حرف
 
-```shell
-#!/bin/bash
-SYNC_DIR="${SYNC_DIR:-$HOME/github-sync-system}"; source "$SYNC_DIR/config/lib-common.sh"
-REPO_NAME="$1"; OPERATION="${2:-bidi}"
-if [[ -z "$REPO_NAME" ]]; then
-    echo -e "${RED}Usage: sync-single.sh <repo_name> [push|pull|bidi]${NC}"; echo ""
-    echo "Available repos:"; while IFS='|' read -r name _; do
-        [[ -z "$name" || "$name" == \#* ]] && continue; echo "  - $name"
-    done < "$CONFIG_FILE"; exit 1
-fi
-repo_line="$(read_repo "$REPO_NAME")"
-if [[ -z "$repo_line" ]]; then echo -e "${RED}Repo '$REPO_NAME' not found!${NC}"; exit 1; fi
-IFS='|' read -r name local_path github_url branch <<< "$repo_line"
-echo -e "${BOLD}${CYAN}Syncing: $name [$OPERATION]${NC}"; echo ""
-start_log "single-$REPO_NAME"; process_repo "$name" "$local_path" "$github_url" "$branch" "$OPERATION"
+```other
+{"timestamp": "2026-06-29T22:21:39.835741+00:00", "operation": "push", "repo": "omni-medical-suite", "branch": "main", "result": "allowed", "details": "mode=safe-push reason=Repository 'omni-medical-suite' is on the allowlist. safe-push to 'main' approved."}
+{"timestamp": "2026-06-29T22:21:40.760913+00:00", "operation": "push", "repo": "ai-fuel-engine", "branch": "main", "result": "denied", "details": "mode=safe-push reason=Repository 'ai-fuel-engine' is on the denylist (archived/protected). Pushes are never allowed."}
+{"timestamp": "2026-06-29T22:21:55.457648+00:00", "operation": "force-push", "repo": "omni-medical-suite", "branch": "main", "result": "denied", "details": "mode=safe-push reason=Force-push is denied by governance policy (deny_force_push_protected=true)."}
+{"timestamp": "2026-06-29T22:21:55.864773+00:00", "operation": "push", "repo": "medical-ocr-ground-truth", "branch": "main", "result": "denied", "details": "mode=safe-push reason=Repository 'medical-ocr-ground-truth' is sensitive (contains training data). Requires --force-write and explicit confirmation."}
+{"timestamp": "2026-06-29T22:21:55.959724+00:00", "operation": "push", "repo": "medical-ocr-ground-truth", "branch": "main", "result": "allowed", "details": "mode=full-write reason=Repository 'medical-ocr-ground-truth' is sensitive. Full-write mode confirmed — proceed with caution."}
+{"timestamp": "2026-06-29T22:21:56.052830+00:00", "operation": "push", "repo": "unknown-repo", "branch": "main", "result": "denied", "details": "mode=safe-push reason=Repository 'unknown-repo' is not on the allowlist. Add it to config/governance.yaml allowlist to enable pushes."}
+{"timestamp": "2026-06-29T22:21:56.146123+00:00", "operation": "pull", "repo": "omni-medical-suite", "branch": "main", "result": "allowed", "details": "mode=read-only reason=Read-only operation always allowed"}
+{"timestamp": "2026-06-29T22:22:08.962163+00:00", "operation": "push", "repo": "test-repo", "branch": "feat/x", "result": "denied", "details": "manual test"}
 
 ```
 
 ---
 
-### `sync-scripts/setup-pycharm-hooks.sh`
-**اللغة:** Shell | **الأسطر:** 18 | **الحجم:** 950 حرف
+### `tests/test_credential_hygiene.py`
+**اللغة:** Python | **الأسطر:** 388 | **الحجم:** 17,037 حرف
+**الاعتماديات:**
+- `from __future__ import annotations`
+- `import importlib.util`
+- `import os`
+- `import re`
+- `import shutil`
+- `import subprocess`
+- `import sys`
+- `from pathlib import Path`
+- `import pytest`
 
-```shell
-#!/bin/bash
-SYNC_DIR="${SYNC_DIR:-$HOME/github-sync-system}"; source "$SYNC_DIR/config/lib-common.sh"
-HOOK='#!/bin/bash
-repo_name="$(basename "$(git rev-parse --show-toplevel)")"
-echo ">>> Auto-pushing $repo_name..."
-'"$SYNC_DIR"'/sync-scripts/sync-single.sh "$repo_name" push
-'
-echo -e "${BOLD}${CYAN}Setting up Git Hooks...${NC}"; echo ""; count=0
-while IFS='|' read -r repo_name local_path _; do
-    [[ -z "$repo_name" || "$repo_name" == \#* ]] && continue; local_path="${local_path/#\~/$HOME}"
-    [[ ! -d "$local_path/.git" ]] && { echo -e "  ${DIM}skip${NC} $repo_name"; continue; }
-    hooks_dir="$local_path/.git/hooks"; mkdir -p "$hooks_dir"
-    echo "$HOOK" > "$hooks_dir/post-commit"; chmod +x "$hooks_dir/post-commit"
-    echo "$HOOK" > "$hooks_dir/post-merge"; chmod +x "$hooks_dir/post-merge"
-    echo -e "  ${GREEN}OK${NC} $repo_name"; ((count++))
-done < "$CONFIG_FILE"
-echo ""; echo -e "  ${GREEN}Hooks in $count repos${NC}"; echo ""
+```python
+"""اختبارات بوابة نظافة بيانات الاعتماد — repo-sync-toolkit.
+
+القاعدة التي تُختبر: **لا يجوز أن تحتوي أي remote URL على بيانات اعتماد**،
+ولا يجوز أن تصل قيمة سرية إلى السجلات أو مخرجات الأخطاء.
+
+التشغيل:  python3 -m pytest tests/ -q
+"""
+from __future__ import annotations
+
+import importlib.util
+import os
+import re
+import shutil
+import subprocess
+import sys
+from pathlib import Path
+
+import pytest
+
+REPO_ROOT = Path(__file__).resolve().parent.parent
+LIB_COMMON = REPO_ROOT / "config" / "lib-common.sh"
+ORCHESTRATOR = REPO_ROOT / "master_orchestrator.py"
+SCANNER = REPO_ROOT / "scan_secrets.py"
+
+# أشكال عناوين تحمل بيانات اعتماد — قيم وهمية بالكامل للاختبار فقط
+# تُبنى قيم الاختبار تركيبًا (لا literals) حتى لا يظهر أي نمط
+# "بيانات اعتماد داخل عنوان" في شيفرة الاختبارات نفسها، ولا في
+# project_context.txt المولَّد من هذه الشيفرة.
+FAKE_TOKEN = "ghp_" + "T3st" + "Q7b" * 10 + "Zw"   # 36 حرفًا بعد البادئة — وهمي تمامًا
+_SCHEME = "https" + "://"
+_HOST = "github.com/DrAbdulmalek/demo.git"
+_FAKE_USER = "x-access" + "-token"
+_FAKE_PASS = "passw" + "0rd"
+DIRTY_HTTPS = "%s%s:%s@%s" % (_SCHEME, _FAKE_USER, FAKE_TOKEN, _HOST)
+DIRTY_USERPASS = "%suser:%s@%s" % (_SCHEME, _FAKE_PASS, _HOST)
+DIRTY_USERONLY = "%stoken@%s" % (_SCHEME, _HOST)
+CLEAN_HTTPS = "%s%s" % (_SCHEME, _HOST)
+CLEAN_SSH = "git@github.com:DrAbdulmalek/demo.git"
+
+CRED_URL_RE = re.compile(r"//[A-Za-z0-9._%\-]+:[^/\s@]+@")
+
+
+def _load_orchestrator(tmp_path, monkeypatch):
+    monkeypatch.setenv("REPOS_DIR", str(tmp_path / "repos"))
+    for var in ("GITHUB_TOKEN", "GH_TOKEN"):
+        monkeypatch.delenv(var, raising=False)
+    spec = importlib.util.spec_from_file_location("mo_test", ORCHESTRATOR)
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    mod.BASE_DIR = tmp_path / "repos"
+    mod.DRY_RUN = True
+    mod.LOG_FILE = tmp_path / "orchestrator.log"
+    return mod
+
+
+def _make_repo(tmp_path, origin_url, name="demo"):
+    p = tmp_path / name
+    p.mkdir(parents=True, exist_ok=True)
+    subprocess.run(["git", "init", "-q", str(p)], check=True)
+    subprocess.run(["git", "-C", str(p), "remote", "add", "origin", origin_url], check=True)
+    return p
+
+
+def _bash(body, tmp_path, extra_env=None):
+    """يشغّل مقطع bash بعد تحميل lib-common.sh في بيئة معزولة."""
+    env = dict(os.environ)
+    env.update({
+        "SYNC_DIR": str(tmp_path / "sync"),
+        "GIT_NAME": "", "GIT_EMAIL": "",
+        "AUTH_METHOD": "token",
+    })
+    if extra_env:
+        env.update(extra_env)
+    (tmp_path / "sync").mkdir(parents=True, exist_ok=True)
+    script = (
+        "set -u\n"
+        "source '%s'\n" % LIB_COMMON + body
+    )
+    f = tmp_path / "snippet.sh"
+    f.write_text(script, encoding="utf-8")
+    return subprocess.run(["bash", str(f)], capture_output=True, text=True, env=env, cwd=str(tmp_path))
+
+
+# ══════════════════════════════════════════════════════════════ Python
+
+
+class TestOrchestratorUrlHelpers:
+    def test_detects_dirty_urls(self, tmp_path, monkeypatch):
+        mo = _load_orchestrator(tmp_path, monkeypatch)
+        assert mo.url_has_credentials(DIRTY_HTTPS) is True
+        assert mo.url_has_credentials(DIRTY_USERPASS) is True
+        assert mo.url_has_credentials(DIRTY_USERONLY) is True
+
+    def test_accepts_clean_urls(self, tmp_path, monkeypatch):
+        mo = _load_orchestrator(tmp_path, monkeypatch)
+        assert mo.url_has_credentials(CLEAN_HTTPS) is False
+        assert mo.url_has_credentials(CLEAN_SSH) is False
+        assert mo.url_has_credentials("") is False
+
+    def test_unparseable_url_is_treated_as_dirty(self, tmp_path, monkeypatch):
+        mo = _load_orchestrator(tmp_path, monkeypatch)
+        assert mo.url_has_credentials("https://[bad:url") is True
+
+    def test_strip_credentials(self, tmp_path, monkeypatch):
+        mo = _load_orchestrator(tmp_path, monkeypatch)
+        assert mo.strip_credentials(DIRTY_HTTPS) == CLEAN_HTTPS
+        assert mo.strip_credentials(DIRTY_USERPASS) == CLEAN_HTTPS
+        assert mo.strip_credentials(CLEAN_HTTPS) == CLEAN_HTTPS
+        assert mo.strip_credentials(CLEAN_SSH) == CLEAN_SSH
+
+
+class TestOrchestratorNeverLeaks:
+    def test_run_rejects_shell_strings(self, tmp_path, monkeypatch):
+        mo = _load_orchestrator(tmp_path, monkeypatch)
+        mo.DRY_RUN = False
+        with pytest.raises(TypeError):
+            mo.run("git clone " + DIRTY_USERPASS)
+
+    def test_run_redacts_credentials_in_stderr(self, tmp_path, monkeypatch):
+        mo = _load_orchestrator(tmp_path, monkeypatch)
+        mo.DRY_RUN = False
+        rc, out, err = mo.run(["git", "clone", DIRTY_HTTPS, str(tmp_path / "nope")],
+                              cwd=str(tmp_path))
+        assert rc != 0
+        assert FAKE_TOKEN not in err and FAKE_TOKEN not in out
+        assert _FAKE_PASS not in err
+
+    def test_redact_masks_tokens_and_env_values(self, tmp_path, monkeypatch):
+        mo = _load_orchestrator(tmp_path, monkeypatch)
+        s = mo.redact("fatal: auth failed for %s and GITHUB_TOKEN=%s" % (DIRTY_HTTPS, FAKE_TOKEN))
+        assert FAKE_TOKEN not in s
+        assert "<REDACTED>" in s
+
+    def test_log_file_contains_no_credential(self, tmp_path, monkeypatch):
+        mo = _load_orchestrator(tmp_path, monkeypatch)
+        mo.DRY_RUN = False
+        mo.run(["git", "clone", DIRTY_USERPASS, str(tmp_path / "x")], cwd=str(tmp_path))
+        content = mo.LOG_FILE.read_text(encoding="utf-8") if mo.LOG_FILE.exists() else ""
+        assert _FAKE_PASS not in content
+        assert not CRED_URL_RE.search(content)
+
+    def test_get_token_returns_no_value(self, tmp_path, monkeypatch):
+        mo = _load_orchestrator(tmp_path, monkeypatch)
+        monkeypatch.setenv("GITHUB_TOKEN", FAKE_TOKEN)
+        assert mo.get_token() == ""
+        assert mo.token_available() is True
+
+    def test_assert_clean_remote_scrubs_dirty_origin(self, tmp_path, monkeypatch):
+        mo = _load_orchestrator(tmp_path, monkeypatch)
+        mo.DRY_RUN = False
+        repo = _make_repo(tmp_path, DIRTY_HTTPS)
+        ok, why = mo.assert_clean_remote(repo)
+        assert ok is False and why
+        url = subprocess.run(["git", "-C", str(repo), "remote", "get-url", "origin"],
+                             capture_output=True, text=True).stdout.strip()
+        assert url == CLEAN_HTTPS
+
+    def test_assert_clean_remote_passes_clean_origin(self, tmp_path, monkeypatch):
+        mo = _load_orchestrator(tmp_path, monkeypatch)
+        mo.DRY_RUN = False
+        repo = _make_repo(tmp_path, CLEAN_HTTPS)
+        ok, why = mo.assert_clean_remote(repo)
+        assert ok is True and why == ""
+
+    def test_phase6_aborts_without_credential_helper(self, tmp_path, monkeypatch):
+        mo = _load_orchestrator(tmp_path, monkeypatch)
+        mo.DRY_RUN = False
+        monkeypatch.setattr(mo.shutil, "which", lambda _: None)
+        monkeypatch.setattr(mo, "ensure_git_auth", lambda: False)
+        repo = _make_repo(tmp_path, DIRTY_HTTPS)
+        (repo / "f.txt").write_text("x", encoding="utf-8")
+        mo.ACTIVE_REPOS, mo.ARCHIVED_REPOS = ["demo"], []
+        assert mo.phase6_push_all() == 0
+        url = subprocess.run(["git", "-C", str(repo), "remote", "get-url", "origin"],
+                             capture_output=True, text=True).stdout.strip()
+        assert url == DIRTY_HTTPS  # لم يُمسّ المستودع: لا دفع ولا تعديل
+
+
+class TestSourceHasNoDangerousPattern:
+    @pytest.mark.parametrize("path", ["master_orchestrator.py", "config/lib-common.sh",
+                                      "github-sync.sh", "token-manager.py"])
+    def test_no_credential_in_url_construction(self, path):
+        text = (REPO_ROOT / path).read_text(encoding="utf-8", errors="replace")
+        assert ("x-access" + "-token") not in text, path
+        assert not re.search(r'://\s*\$\{?[A-Za-z_]*USERNAME\}?[:$]', text), path
+        assert not re.search(r'https://[^"\']*\$\{?(GITHUB_TOKEN|token)\}?@', text), path
+
+    def test_orchestrator_has_no_shell_true(self):
+        text = ORCHESTRATOR.read_text(encoding="utf-8")
+        # ignore docstrings/comments: the rule is about executable code
+        code = re.sub(r'"""[\s\S]*?"""', "", text)
+        code = re.sub(r"#[^\n]*", "", code)
+        assert "shell=True" not in code
+
+    def test_setup_auth_reports_failure_when_gh_fails(self, tmp_path):
+        """لا ابتلاع صامت لفشل المصادقة: يجب أن يعود خطأ وأن يُسجَّل ERROR."""
+        binp = tmp_path / "bin"; binp.mkdir()
+        fake = binp / "gh"
+        fake.write_text("#!/bin/bash\nexit 3\n", encoding="utf-8")
+        fake.chmod(0o755)
+        repo = _make_repo(tmp_path, CLEAN_HTTPS)
+        r = _bash('setup_auth "%s" "%s" && echo AUTH_OK || echo AUTH_REFUSED\n'
+                  'grep -c ERROR "${CURRENT_LOG:-$LOG_DIR/sync.log}" || true\n' % (repo, CLEAN_HTTPS),
+                  tmp_path, extra_env={"PATH": "%s:/usr/bin:/bin" % binp})
+        assert "AUTH_REFUSED" in r.stdout
+
+    def test_setup_auth_succeeds_with_working_gh(self, tmp_path):
+        binp = tmp_path / "bin"; binp.mkdir()
+        fake = binp / "gh"
+        fake.write_text("#!/bin/bash\nexit 0\n", encoding="utf-8")
+        fake.chmod(0o755)
+        repo = _make_repo(tmp_path, CLEAN_HTTPS)
+        r = _bash('setup_auth "%s" "%s" && echo AUTH_OK || echo AUTH_REFUSED\n' % (repo, CLEAN_HTTPS),
+                  tmp_path, extra_env={"PATH": "%s:/usr/bin:/bin" % binp})
+        assert "AUTH_OK" in r.stdout
+
+
+# ══════════════════════════════════════════════════════════════ Bash
+
+
+@pytest.mark.skipif(not shutil.which("bash"), reason="bash required")
+class TestLibCommon:
+    def test_url_has_credentials_true(self, tmp_path):
+        r = _bash('url_has_credentials "%s" && echo DIRTY || echo CLEAN\n' % DIRTY_HTTPS, tmp_path)
+        assert "DIRTY" in r.stdout
+
+    def test_url_has_credentials_false_for_clean(self, tmp_path):
+        r = _bash('url_has_credentials "%s" && echo DIRTY || echo CLEAN\n' % CLEAN_HTTPS, tmp_path)
+        assert "CLEAN" in r.stdout
+        r2 = _bash('url_has_credentials "%s" && echo DIRTY || echo CLEAN\n' % CLEAN_SSH, tmp_path)
+        assert "CLEAN" in r2.stdout
+
+    def test_assert_clean_url_rejects_dirty(self, tmp_path):
+        r = _bash('assert_clean_url "%s" demo && echo ACCEPTED || echo REJECTED\n' % DIRTY_USERPASS, tmp_path)
+        assert "REJECTED" in r.stdout
+        assert _FAKE_PASS not in (r.stdout + r.stderr)
+
+    def test_assert_clean_url_accepts_clean(self, tmp_path):
+        r = _bash('assert_clean_url "%s" demo && echo ACCEPTED || echo REJECTED\n' % CLEAN_HTTPS, tmp_path)
+        assert "ACCEPTED" in r.stdout
+
+    def test_ensure_clean_remote_scrubs(self, tmp_path):
+        repo = _make_repo(tmp_path, DIRTY_HTTPS)
+        r = _bash('ensure_clean_remote "%s" && echo OK || echo FIXED\n'
+                  'git -C "%s" remote get-url origin\n' % (repo, repo), tmp_path)
+        assert CLEAN_HTTPS in r.stdout
+        assert FAKE_TOKEN not in r.stdout
+
+    def test_setup_auth_fails_closed_without_gh_or_helper(self, tmp_path):
+        repo = _make_repo(tmp_path, CLEAN_HTTPS)
+        body = ('PATH="%s"\n'
+                'setup_auth "%s" "%s" && echo AUTH_OK || echo AUTH_REFUSED\n'
+                % (tmp_path / "emptybin", repo, CLEAN_HTTPS))
+        (tmp_path / "emptybin").mkdir(exist_ok=True)
+        r = _bash(body, tmp_path, extra_env={"HOME": str(tmp_path / "fakehome")})
+        (tmp_path / "fakehome").mkdir(exist_ok=True)
+        assert "AUTH_REFUSED" in r.stdout
+
+
+# ══════════════════════════════════════════════════════════════ Scanner
+
+
+class TestSecretScanner:
+    def _run(self, target):
+        return subprocess.run([sys.executable, str(SCANNER), str(target)],
+                              capture_output=True, text=True, cwd=str(REPO_ROOT))
+
+    def test_blocks_real_shaped_token_and_never_prints_it(self, tmp_path):
+        f = tmp_path / "leak.env"
+        f.write_text("GITHUB_TOKEN=%s\n" % FAKE_TOKEN, encoding="utf-8")
+        r = self._run(f)
+        assert r.returncode == 1
+        assert FAKE_TOKEN not in r.stdout and FAKE_TOKEN not in r.stderr
+        assert "BLOCK" in r.stdout
+
+    def test_placeholder_is_not_blocking(self, tmp_path):
+        f = tmp_path / "ok.env.example"
+        f.write_text("GITHUB_TOKEN=ghp_REPLACE_ME\nHF_TOKEN=hf_REPLACE_ME\n", encoding="utf-8")
+        r = self._run(f)
+        assert r.returncode == 0
+
+    def test_masked_placeholder_is_downgraded_to_warning(self, tmp_path):
+        f = tmp_path / "masked.env.example"
+        f.write_text("GITHUB_TOKEN=ghp_%s\n" % ("x" * 36), encoding="utf-8")
+        r = self._run(f)
+        assert r.returncode == 0
+        assert "placeholder" in r.stdout
+
+    def test_whole_repo_passes(self):
+        r = subprocess.run([sys.executable, str(SCANNER), "--all"],
+                           capture_output=True, text=True, cwd=str(REPO_ROOT))
+        assert r.returncode == 0, r.stdout + r.stderr
+
+    def test_no_tracked_file_embeds_credentials_in_url(self):
+        files = subprocess.run(["git", "ls-files"], capture_output=True, text=True,
+                               cwd=str(REPO_ROOT)).stdout.split()
+        offenders = []
+        for rel in files:
+            if rel.startswith("legacy/"):      # أرشيف جلسة مُحمَّر مسبقًا — للقراءة فقط
+                continue
+            p = REPO_ROOT / rel
+            if not p.is_file() or p.stat().st_size > 2_000_000:
+                continue
+            text = p.read_text(encoding="utf-8", errors="replace")
+            for m in CRED_URL_RE.finditer(text):
+                seg = text[m.start():m.start() + 120]
+                if re.search(r"(?i)(your|example|replace|<user>|<cred>|localhost|change_me|\$\{)", seg):
+                    continue
+                offenders.append((rel, text.count("\n", 0, m.start()) + 1))
+        assert not offenders, offenders
+
+
+# ══════════════════════════════════════════════════════════════ Gate script
+
+GATE = REPO_ROOT / "scripts" / "check_no_credentials_in_urls.py"
+
+
+class TestCredentialUrlGate:
+    def _gate(self, *extra):
+        return subprocess.run([sys.executable, str(GATE), *extra],
+                              capture_output=True, text=True, cwd=str(REPO_ROOT))
+
+    def test_gate_passes_on_current_tree(self):
+        r = self._gate()
+        assert r.returncode == 0, r.stdout + r.stderr
+
+    def test_gate_module_blocks_reconstructed_anti_pattern(self, tmp_path):
+        """تحكّم سلبي: النمط القديم نفسه يجب أن يُرفض."""
+        spec = importlib.util.spec_from_file_location("gate_mod", GATE)
+        gate = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(gate)
+        tok = "x-access" + "-token"
+        bad = tmp_path / "bad_orchestrator.py"
+        bad.write_text(
+            "\n".join([
+                'url = f"https://' + tok + ':{token}@github.com/{U}/{r}.git"',
+                'run("git remote set-url origin https://' + tok + ':${GITHUB_TOKEN}@github.com/o/r.git")',
+            ]),
+            encoding="utf-8")
+        hits = gate.scan(bad)
+        assert hits and all(v == "BLOCK" for _, _, v in hits), hits
+        names = {n for _, n, _ in hits}
+        assert "x-access-token-in-url" in names
+
+    def test_gate_module_allows_documented_examples(self, tmp_path):
+        spec = importlib.util.spec_from_file_location("gate_mod2", GATE)
+        gate = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(gate)
+        ok = tmp_path / "docs.md"
+        ok.write_text(
+            "Set GITHUB_TOKEN=<REPLACE_WITH_YOUR_TOKEN> in your environment.\n"
+            "Anti-pattern (do NOT use): https://<USER>:<TOKEN>@github.com/owner/repo.git\n",
+            encoding="utf-8")
+        verdicts = [v for _, _, v in gate.scan(ok)]
+        assert "BLOCK" not in verdicts
+
+    def test_gate_module_ignores_prose_without_variable(self, tmp_path):
+        spec = importlib.util.spec_from_file_location("gate_mod3", GATE)
+        gate = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(gate)
+        doc = tmp_path / "prose.md"
+        doc.write_text("Never embed a token inside the remote URL of a repository.\n",
+                       encoding="utf-8")
+        assert gate.scan(doc) == []
+
+
+    def test_gate_module_allows_documented_examples(self, tmp_path):
+        spec = importlib.util.spec_from_file_location("gate_mod2", GATE)
+        gate = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(gate)
+        ok = tmp_path / "docs.md"
+        ok.write_text("Set GITHUB_TOKEN=<REPLACE_WITH_YOUR_TOKEN>; never use "
+                      "https://user:token@github.com/… (example only)\n", encoding="utf-8")
+        assert all(v != "BLOCK" for _, _, v in gate.scan(ok))
+
+    def test_gate_excludes_legacy_archive_by_default(self):
+        r = self._gate()
+        assert "legacy/" not in r.stdout
+
+    def test_gate_json_report_is_valid(self, tmp_path):
+        out = tmp_path / "report.json"
+        r = self._gate("--json", str(out))
+        assert r.returncode == 0
+        import json as _json
+        data = _json.loads(out.read_text(encoding="utf-8"))
+        assert data["blockers"] == []
+        assert data["scanned_files"] > 0
+
+```
+
+---
+
+### `pycharm-config/pycharm.vmoptions`
+**اللغة:** Other | **الأسطر:** 6 | **الحجم:** 95 حرف
+
+```other
+-Xms512m
+-Xmx2048m
+-XX:ReservedCodeCacheSize=512m
+-XX:+UseCompressedOops
+-Dfile.encoding=UTF-8
 
 ```
 
@@ -2820,77 +4108,6 @@ echo "OK: $ok | FAIL: $fail | TOTAL: $total"
 
 ---
 
-### `sync-scripts/sync-pull.sh`
-**اللغة:** Shell | **الأسطر:** 9 | **الحجم:** 538 حرف
-
-```shell
-#!/bin/bash
-SYNC_DIR="${SYNC_DIR:-$HOME/github-sync-system}"; source "$SYNC_DIR/config/lib-common.sh"
-start_log "pull"; log INFO "=== Pull Sync ==="; echo ""; total=0; ok=0; fail=0
-while IFS='|' read -r repo_name local_path github_url branch; do
-    [[ -z "$repo_name" || "$repo_name" == \#* ]] && continue; ((total++))
-    process_repo "$repo_name" "$local_path" "$github_url" "$branch" "pull" && ((ok++)) || ((fail++))
-done < "$CONFIG_FILE"
-echo ""; echo -e "  ${GREEN}$ok pulled${NC} / ${RED}$fail failed${NC} / $total total"; echo ""
-
-```
-
----
-
-### `sync-scripts/monitor-changes.sh`
-**اللغة:** Shell | **الأسطر:** 14 | **الحجم:** 701 حرف
-
-```shell
-#!/bin/bash
-SYNC_DIR="${SYNC_DIR:-$HOME/github-sync-system}"; source "$SYNC_DIR/config/lib-common.sh"
-INTERVAL="${WATCH_INTERVAL:-300}"
-echo -e "${BOLD}${CYAN}=========================================${NC}"
-echo -e "${BOLD}${CYAN}  Change Monitor -- Polling Mode${NC}"
-echo -e "${BOLD}${CYAN}=========================================${NC}"
-echo -e "  Interval: ${YELLOW}$INTERVAL seconds${NC}"
-echo -e "  ${DIM}Press Ctrl+C to stop${NC}"; echo ""; cycle=0
-while true; do
-    ((cycle++)); echo -e "${DIM}[$(date '+%H:%M:%S')] Cycle #$cycle${NC}"
-    "$SYNC_DIR/sync-scripts/sync-bidirectional.sh" >> "$LOG_DIR/monitor.log" 2>&1
-    echo -e "${DIM}  Next in $INTERVAL s...${NC}"; sleep "$INTERVAL"
-done
-
-```
-
----
-
-### `sync-scripts/sync-bidirectional.sh`
-**اللغة:** Shell | **الأسطر:** 9 | **الحجم:** 556 حرف
-
-```shell
-#!/bin/bash
-SYNC_DIR="${SYNC_DIR:-$HOME/github-sync-system}"; source "$SYNC_DIR/config/lib-common.sh"
-start_log "bidirectional"; log INFO "=== Bidirectional Sync ==="; echo ""; total=0; ok=0; fail=0
-while IFS='|' read -r repo_name local_path github_url branch; do
-    [[ -z "$repo_name" || "$repo_name" == \#* ]] && continue; ((total++))
-    process_repo "$repo_name" "$local_path" "$github_url" "$branch" "bidi" && ((ok++)) || ((fail++))
-done < "$CONFIG_FILE"
-echo ""; echo -e "  ${GREEN}$ok synced${NC} / ${RED}$fail failed${NC} / $total total"; echo ""
-
-```
-
----
-
-### `sync-scripts/sync-all.sh`
-**اللغة:** Shell | **الأسطر:** 7 | **الحجم:** 320 حرف
-
-```shell
-#!/bin/bash
-SYNC_DIR="${SYNC_DIR:-$HOME/github-sync-system}"
-echo -e "${BOLD}${CYAN}=========================================${NC}"
-echo -e "${BOLD}${CYAN}  Full Sync -- All Repositories${NC}"
-echo -e "${BOLD}${CYAN}=========================================${NC}"; echo ""
-"$SYNC_DIR/sync-scripts/sync-bidirectional.sh"
-
-```
-
----
-
 ### `sync-scripts/sync-custom.sh`
 **اللغة:** Shell | **الأسطر:** 12 | **الحجم:** 706 حرف
 
@@ -2928,6 +4145,142 @@ echo ""; echo -e "  ${GREEN}$ok pushed${NC} / ${RED}$fail failed${NC} / $total t
 
 ---
 
+### `sync-scripts/sync-bidirectional.sh`
+**اللغة:** Shell | **الأسطر:** 9 | **الحجم:** 556 حرف
+
+```shell
+#!/bin/bash
+SYNC_DIR="${SYNC_DIR:-$HOME/github-sync-system}"; source "$SYNC_DIR/config/lib-common.sh"
+start_log "bidirectional"; log INFO "=== Bidirectional Sync ==="; echo ""; total=0; ok=0; fail=0
+while IFS='|' read -r repo_name local_path github_url branch; do
+    [[ -z "$repo_name" || "$repo_name" == \#* ]] && continue; ((total++))
+    process_repo "$repo_name" "$local_path" "$github_url" "$branch" "bidi" && ((ok++)) || ((fail++))
+done < "$CONFIG_FILE"
+echo ""; echo -e "  ${GREEN}$ok synced${NC} / ${RED}$fail failed${NC} / $total total"; echo ""
+
+```
+
+---
+
+### `sync-scripts/sync-all.sh`
+**اللغة:** Shell | **الأسطر:** 7 | **الحجم:** 320 حرف
+
+```shell
+#!/bin/bash
+SYNC_DIR="${SYNC_DIR:-$HOME/github-sync-system}"
+echo -e "${BOLD}${CYAN}=========================================${NC}"
+echo -e "${BOLD}${CYAN}  Full Sync -- All Repositories${NC}"
+echo -e "${BOLD}${CYAN}=========================================${NC}"; echo ""
+"$SYNC_DIR/sync-scripts/sync-bidirectional.sh"
+
+```
+
+---
+
+### `sync-scripts/sync-single.sh`
+**اللغة:** Shell | **الأسطر:** 15 | **الحجم:** 796 حرف
+
+```shell
+#!/bin/bash
+SYNC_DIR="${SYNC_DIR:-$HOME/github-sync-system}"; source "$SYNC_DIR/config/lib-common.sh"
+REPO_NAME="$1"; OPERATION="${2:-bidi}"
+if [[ -z "$REPO_NAME" ]]; then
+    echo -e "${RED}Usage: sync-single.sh <repo_name> [push|pull|bidi]${NC}"; echo ""
+    echo "Available repos:"; while IFS='|' read -r name _; do
+        [[ -z "$name" || "$name" == \#* ]] && continue; echo "  - $name"
+    done < "$CONFIG_FILE"; exit 1
+fi
+repo_line="$(read_repo "$REPO_NAME")"
+if [[ -z "$repo_line" ]]; then echo -e "${RED}Repo '$REPO_NAME' not found!${NC}"; exit 1; fi
+IFS='|' read -r name local_path github_url branch <<< "$repo_line"
+echo -e "${BOLD}${CYAN}Syncing: $name [$OPERATION]${NC}"; echo ""
+start_log "single-$REPO_NAME"; process_repo "$name" "$local_path" "$github_url" "$branch" "$OPERATION"
+
+```
+
+---
+
+### `sync-scripts/setup-pycharm-hooks.sh`
+**اللغة:** Shell | **الأسطر:** 18 | **الحجم:** 950 حرف
+
+```shell
+#!/bin/bash
+SYNC_DIR="${SYNC_DIR:-$HOME/github-sync-system}"; source "$SYNC_DIR/config/lib-common.sh"
+HOOK='#!/bin/bash
+repo_name="$(basename "$(git rev-parse --show-toplevel)")"
+echo ">>> Auto-pushing $repo_name..."
+'"$SYNC_DIR"'/sync-scripts/sync-single.sh "$repo_name" push
+'
+echo -e "${BOLD}${CYAN}Setting up Git Hooks...${NC}"; echo ""; count=0
+while IFS='|' read -r repo_name local_path _; do
+    [[ -z "$repo_name" || "$repo_name" == \#* ]] && continue; local_path="${local_path/#\~/$HOME}"
+    [[ ! -d "$local_path/.git" ]] && { echo -e "  ${DIM}skip${NC} $repo_name"; continue; }
+    hooks_dir="$local_path/.git/hooks"; mkdir -p "$hooks_dir"
+    echo "$HOOK" > "$hooks_dir/post-commit"; chmod +x "$hooks_dir/post-commit"
+    echo "$HOOK" > "$hooks_dir/post-merge"; chmod +x "$hooks_dir/post-merge"
+    echo -e "  ${GREEN}OK${NC} $repo_name"; ((count++))
+done < "$CONFIG_FILE"
+echo ""; echo -e "  ${GREEN}Hooks in $count repos${NC}"; echo ""
+
+```
+
+---
+
+### `sync-scripts/sync-watch.sh`
+**اللغة:** Shell | **الأسطر:** 30 | **الحجم:** 1,802 حرف
+
+```shell
+#!/bin/bash
+SYNC_DIR="${SYNC_DIR:-$HOME/github-sync-system}"; source "$SYNC_DIR/config/lib-common.sh"
+WATCH_DIR="${HOME}/github~"; DEBOUNCE=3; WATCH_LOG="$LOG_DIR/watch.log"
+if ! command -v inotifywait &>/dev/null; then
+    echo -e "${RED}inotifywait not found. Install: sudo pacman -S inotify-tools${NC}"; exit 1
+fi
+declare -A REPO_MAP BRANCH_MAP URL_MAP
+while IFS='|' read -r name local_path github_url branch; do
+    [[ -z "$name" || "$name" == \#* ]] && continue; local_path="${local_path/#\~/$HOME}"
+    REPO_MAP["$local_path"]="$name"; BRANCH_MAP["$local_path"]="$branch"; URL_MAP["$local_path"]="$github_url"
+done < "$CONFIG_FILE"
+echo -e "${BOLD}${CYAN}=========================================${NC}"
+echo -e "${BOLD}${CYAN}  Real-time Watch -- inotifywait${NC}"
+echo -e "${BOLD}${CYAN}=========================================${NC}"
+echo -e "  Watching: ${YELLOW}$WATCH_DIR${NC} | Repos: ${YELLOW}${#REPO_MAP[@]}${NC}"
+echo -e "  ${DIM}Press Ctrl+C to stop${NC}"; echo ""
+declare -A LAST_SYNC
+inotifywait -m -r -e modify,create,delete,move \
+    --exclude '(\.git|__pycache__|\.pyc|\.idea|node_modules|\.venv|venv|\.DS_Store|\.egg-info)' \
+    "$WATCH_DIR" 2>/dev/null | while read -r dir event file; do
+    repo_dir="$dir"
+    while [[ "$repo_dir" != "/" && -z "${REPO_MAP[$repo_dir]}" ]]; do repo_dir="$(dirname "$repo_dir")"; done
+    [[ -z "${REPO_MAP[$repo_dir]}" ]] && continue
+    repo_name="${REPO_MAP[$repo_dir]}"; now="$(date +%s)"; last="${LAST_SYNC[$repo_name]:-0}"
+    (( now - last < DEBOUNCE )) && continue; LAST_SYNC["$repo_name"]="$now"
+    ts="$(date '+%H:%M:%S')"
+    echo -e "[${ts}] ${CYAN}$event${NC} ${DIM}$file${NC} in ${BOLD}$repo_name${NC}"
+    process_repo "$repo_name" "$repo_dir" "${URL_MAP[$repo_dir]}" "${BRANCH_MAP[$repo_dir]}" "push"
+done >> "$WATCH_LOG" 2>&1
+
+```
+
+---
+
+### `sync-scripts/sync-pull.sh`
+**اللغة:** Shell | **الأسطر:** 9 | **الحجم:** 538 حرف
+
+```shell
+#!/bin/bash
+SYNC_DIR="${SYNC_DIR:-$HOME/github-sync-system}"; source "$SYNC_DIR/config/lib-common.sh"
+start_log "pull"; log INFO "=== Pull Sync ==="; echo ""; total=0; ok=0; fail=0
+while IFS='|' read -r repo_name local_path github_url branch; do
+    [[ -z "$repo_name" || "$repo_name" == \#* ]] && continue; ((total++))
+    process_repo "$repo_name" "$local_path" "$github_url" "$branch" "pull" && ((ok++)) || ((fail++))
+done < "$CONFIG_FILE"
+echo ""; echo -e "  ${GREEN}$ok pulled${NC} / ${RED}$fail failed${NC} / $total total"; echo ""
+
+```
+
+---
+
 ### `sync-scripts/open-pycharm.sh`
 **اللغة:** Shell | **الأسطر:** 22 | **الحجم:** 1,073 حرف
 
@@ -2953,6 +4306,28 @@ while IFS='|' read -r repo_name local_path _; do
     fi
 done < "$CONFIG_FILE"
 echo ""; echo -e "  ${GREEN}$opened repo(s) opened${NC}"; echo ""
+
+```
+
+---
+
+### `sync-scripts/monitor-changes.sh`
+**اللغة:** Shell | **الأسطر:** 14 | **الحجم:** 701 حرف
+
+```shell
+#!/bin/bash
+SYNC_DIR="${SYNC_DIR:-$HOME/github-sync-system}"; source "$SYNC_DIR/config/lib-common.sh"
+INTERVAL="${WATCH_INTERVAL:-300}"
+echo -e "${BOLD}${CYAN}=========================================${NC}"
+echo -e "${BOLD}${CYAN}  Change Monitor -- Polling Mode${NC}"
+echo -e "${BOLD}${CYAN}=========================================${NC}"
+echo -e "  Interval: ${YELLOW}$INTERVAL seconds${NC}"
+echo -e "  ${DIM}Press Ctrl+C to stop${NC}"; echo ""; cycle=0
+while true; do
+    ((cycle++)); echo -e "${DIM}[$(date '+%H:%M:%S')] Cycle #$cycle${NC}"
+    "$SYNC_DIR/sync-scripts/sync-bidirectional.sh" >> "$LOG_DIR/monitor.log" 2>&1
+    echo -e "${DIM}  Next in $INTERVAL s...${NC}"; sleep "$INTERVAL"
+done
 
 ```
 

@@ -126,3 +126,50 @@ advisory on GitHub rather than a public issue.
 - `ECOSYSTEM_STATE.md` — role of repo-sync-toolkit in the ecosystem.
 - `GOVERNANCE.md` — high-level governance principles.
 - `config/governance.yaml` — actual allowlist / denylist / policies.
+
+---
+
+## قاعدة إلزامية: لا بيانات اعتماد داخل عناوين Git
+
+**ممنوع** بناء أي عنوان Git يحمل **userinfo** (أي `مستخدم:كلمة مرور` أو `مستخدم:توكن` قبل العلامة `@`)
+— سواء في الشيفرة أو الأمثلة أو التوثيق. الصيغة الممنوعة هي نفسها التي تُبنى عادةً هكذا:
+`https://` + `x-access` + `-token:${GITHUB_TOKEN}@github.com/owner/repo.git`.
+السبب: التوكن داخل العنوان يتسرب عبر
+
+1. `.git/config` (مخزَّن نصًّا صريحًا في كل مستودع مستنسخ)،
+2. `git remote -v` وأي مخرجات تشخيص،
+3. قائمة العمليات (`ps`) لأن العنوان يُمرَّر وسيطًا للأمر،
+4. سجلات الأخطاء عند فشل الاستنساخ أو الدفع.
+
+### البديل المعتمد
+
+| البيئة | الآلية |
+|---|---|
+| جهاز مطوَّر | GitHub CLI: `gh auth login` ثم `gh auth setup-git` |
+| Windows/macOS | Git Credential Manager |
+| CI (GitHub Actions) | `GITHUB_TOKEN` المدمج عبر `actions/checkout` مع `persist-credentials`، أو SSH deploy key |
+| Linux بلا واجهة | `git config --global credential.helper 'cache --timeout=3600'` أو SSH |
+
+### الحواجز المطبَّقة (Defense in depth)
+
+| الحاجز | الملف | السلوك |
+|---|---|---|
+| كشف النمط ومنع الدمج | `scripts/check_no_credentials_in_urls.py` | يرفض أي بناء عنوان يحمل userinfo مع متغير سري؛ يستثني `legacy/` (أرشيف مجمَّد) والأمثلة الموثَّقة |
+| فحص الأسرار | `scan_secrets.py` | يمنع التوكنات الحقيقية، ويخفّض الأقنعة (`ghp_REPLACE_ME`، `xxx…`) إلى تحذير بدل تعطيل كل commit |
+| حراسة وقت التشغيل | `config/lib-common.sh` → `url_has_credentials`, `ensure_clean_remote`, `assert_clean_url` | تفشل fail-closed قبل أي `fetch`/`push`/`clone`، وتنظّف `origin` الملوَّث دون طباعة العنوان |
+| حراسة Python | `master_orchestrator.py` → `url_has_credentials`, `strip_credentials`, `assert_clean_remote`, `ensure_git_auth`, `redact` | تنفيذ بلا `shell=True` (يمنع الحقن)، وتحمير بيانات الاعتماد من كل stderr وسجل |
+| الاختبارات | `tests/test_credential_hygiene.py` | 30+ اختبارًا تشمل تحكّمًا سلبيًا يعيد بناء النمط القديم ويتأكد من رفضه |
+| CI | `.github/workflows/security-gate.yml` | يشغّل الحاجزَين + الاختبارات + `bash -n` + `compileall` + dry-run عند كل push/PR إلى `main` |
+
+### ملاحظة حول التسريبات خارج المستودع
+
+إزالة قيمة سرية من ملف **لا تُبطل التوكن**. إذا ظهر توكن في صفحة مشاركة أو محادثة
+أو سجل خارج Git، فالإجراء الوحيد الحاسم هو **الإبطال من إعدادات الحساب** ثم
+التحقق من رفضه، ومراجعة سجل النشاط الأمني. راجع `legacy/session-archive-2026-10-05/`
+كمثال موثَّق على هذه الحالة.
+
+### خطاف محلي اختياري
+
+```bash
+bash scripts/install-hooks.sh   # يركّب pre-commit: فحص أسرار + بوابة النمط + الاختبارات
+```

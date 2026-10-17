@@ -83,6 +83,8 @@ EXCLUDED_EXTENSIONS |= {
 # أنماط أسماء ملفات تُستبعد (regex على الاسم الكامل)
 # الهدف: حماية شاملة من تسريب الأسرار بكل صيغ التسمية الشائعة
 EXCLUDED_PATTERNS = [
+    # مخرجات هذا السكريبت نفسه: تضمينها يولّد تضخّمًا تراكميًا (سياق داخل سياق)
+    r'^project_context(_part\d+)?\.(md|txt|json)$',
     # .env.*  ما عدا .env.example (template آمن)
     r'^\.env\.(?!example$).+$',
     # أي ملف يحتوي كلمات أسرار بصيغة مرنة (مفرد/جمع/مع/بدون underscores)
@@ -139,6 +141,10 @@ def should_include(file_path: Path, root: Path) -> bool:
     for part in file_path.parts:
         if part in EXCLUDED_DIRS:
             return False
+    # أرشيفات الجلسات المجمَّدة: تُقرأ للتدقيق فقط ولا تُعاد تغذيتها في السياق
+    # (كانت تعيد إدخال أنماط اعتماد قديمة إلى project_context.txt المولَّد)
+    if 'legacy' in file_path.parts:
+        return False
         # استبعاد dotfiles ما عدا المسموح بها
         if part.startswith('.') and part not in ALLOWED_DOTFILES:
             return False

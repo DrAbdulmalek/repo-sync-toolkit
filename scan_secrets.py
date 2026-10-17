@@ -103,6 +103,33 @@ def _all_tracked_files() -> list[Path]:
     return [Path(p) for p in out.splitlines() if p.strip()]
 
 
+# ─── Placeholder awareness ─────────────────────────────────────────────────
+# Masked example values (ghp_ + 36x "x", hf_ + 32x "x") used to trip the token
+# patterns and block every commit of this repository, including CI. A value is
+# treated as a placeholder only when its *secret body* is provably synthetic.
+
+_PLACEHOLDER_BODY = re.compile(
+    r"(?i)^(?:([a-z0-9])\1{5,}"                    # one repeated char (xxxxxx…)
+    r"|[x*_.#?\-]{6,}"                              # pure mask (****** / ____ )
+    r"|.*(your|replace|changeme|change_me|example|dummy|placeholder|sample|todo|redacted).*"
+    r"|.*(?:<[^>]*>|\{\{[^}]*\}\}|\$\{[^}]*\}).*)"  # <token> / {{token}} / ${TOKEN}
+)
+
+
+def _is_placeholder(value: str) -> bool:
+    v = (value or "").strip().strip("\"'")
+    if not v:
+        return True
+    body = v
+    for sep in ("_", ":"):
+        if sep in body:
+            body = body.split(sep, 1)[1]
+            break
+    if len(set(body)) <= 2 and len(body) >= 6:
+        return True
+    return bool(_PLACEHOLDER_BODY.match(body or v))
+
+
 def _scan_file(path: Path) -> list[tuple[int, str, str]]:
     """Return [(line_no, pattern_name, severity), ...] for findings in path."""
     if path.suffix.lower() in SKIP_SUFFIXES:
@@ -116,8 +143,15 @@ def _scan_file(path: Path) -> list[tuple[int, str, str]]:
     findings: list[tuple[int, str, str]] = []
     for line_no, line in enumerate(text.splitlines(), start=1):
         for name, rx, sev in COMPILED:
-            if rx.search(line):
-                findings.append((line_no, name, sev))
+            m = rx.search(line)
+            if not m:
+                continue
+            value = m.group(1) if m.groups() else m.group(0)
+            if _is_placeholder(value):
+                # downgraded, never silently dropped — still visible for review
+                findings.append((line_no, name + " [placeholder]", "warn"))
+                continue
+            findings.append((line_no, name, sev))
     return findings
 
 

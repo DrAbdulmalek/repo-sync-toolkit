@@ -10,10 +10,14 @@ Usage:
   python3 master_orchestrator.py --phase 1    # specific phase only
 """
 import os
-import sys
+import re
+import shlex
+import shutil
 import subprocess
+import sys
 from pathlib import Path
 from datetime import datetime
+from urllib.parse import urlsplit
 
 # ══════════════════════════════════════════════════════════════
 #  Settings
@@ -63,33 +67,138 @@ def log(msg, level="INFO"):
     with open(LOG_FILE, 'a', encoding='utf-8') as f:
         f.write(f"[{level}] {msg}\n")
 
+# ── Credential hygiene ─────────────────────────────────────────────────────
+# No credential may ever be placed inside a Git remote URL: it leaks through
+# `.git/config`, `git remote -v`, process listings and error output.
+
+_CRED_IN_URL = re.compile(r"^[a-z][a-z0-9+.-]*://[^/@:]+:[^/@]*@", re.IGNORECASE)
+_SAFE_ERR = re.compile(r"(?:[a-z][a-z0-9+.-]*|scp-like)://[^/\s@]+:[^/\s@]*@", re.IGNORECASE)
+_ENV_KEYS = re.compile(r"(?i)\b(GITHUB_TOKEN|GH_TOKEN|HF_TOKEN|HUGGINGFACE_TOKEN|"
+                       r"TELEGRAM_BOT_TOKEN|GIT_PASSWORD|GIT_TOKEN)\b\s*[=:]\s*\S+")
+
+
+def redact(text):
+    """Strips credentials from any string before it is logged or printed."""
+    if not text:
+        return ""
+    out = _SAFE_ERR.sub("<scheme>://<user>:<REDACTED>@", str(text))
+    out = _ENV_KEYS.sub(lambda m: m.group(1) + "=<REDACTED>", out)
+    return out
+
+
+def _display(cmd):
+    return " ".join(shlex.quote(str(c)) for c in cmd) if isinstance(cmd, (list, tuple)) else str(cmd)
+
+
 def run(cmd, cwd=None):
+    """Runs a command WITHOUT a shell (argv list) and redacts credentials in errors.
+
+    A list is required: shell=True re-introduces both command injection (repo or
+    branch names reach the shell) and credential leakage through the command line.
+    """
     if DRY_RUN:
-        log(f"$ {cmd}", "DRY")
+        log(f"$ {redact(_display(cmd))}", "DRY")
         return 0, "", ""
+    if isinstance(cmd, str):
+        raise TypeError(
+            "run() requires an argv list; shell strings are rejected "
+            "(command injection + credential leakage)."
+        )
     try:
-        r = subprocess.run(cmd, shell=True, cwd=cwd,
+        r = subprocess.run(list(cmd), shell=False, cwd=cwd,
                           capture_output=True, text=True, timeout=300)
-        return r.returncode, r.stdout, r.stderr
+        return r.returncode, r.stdout, redact(r.stderr)
     except Exception as e:
-        log(f"Failed: {e}", "ERROR")
-        return 1, "", str(e)
+        log(f"Failed: {redact(e)}", "ERROR")
+        return 1, "", redact(str(e))
+
+
+def url_has_credentials(url):
+    """True when a remote URL embeds user:password (i.e. a token)."""
+    if not url:
+        return False
+    if "://" not in url:
+        # scp-like syntax (git@host:owner/repo.git) carries no password field
+        return False
+    try:
+        parts = urlsplit(url)
+    except ValueError:
+        return True  # unparseable → refuse to treat it as safe
+    # username-only userinfo (https://token@host/…) leaks the identity too
+    return bool(parts.username) or bool(parts.password) or bool(_CRED_IN_URL.match(url))
+
+
+def strip_credentials(url):
+    """Returns the same URL with any userinfo removed."""
+    if "://" not in url:
+        return url
+    parts = urlsplit(url)
+    if not parts.password and not parts.username:
+        return url
+    host = parts.hostname or ""
+    if parts.port:
+        host = f"{host}:{parts.port}"
+    return parts._replace(netloc=host).geturl()
+
+
+def assert_clean_remote(repo_path):
+    """Fails closed when origin embeds credentials; scrubs it when possible."""
+    rc, url, err = run(["git", "remote", "get-url", "origin"], cwd=repo_path)
+    if rc != 0:
+        return False, f"cannot read origin ({err.strip()[:60] or 'no such remote'})"
+    url = url.strip()
+    if not url_has_credentials(url):
+        return True, ""
+    clean = strip_credentials(url)
+    rc2, _, err2 = run(["git", "remote", "set-url", "origin", clean], cwd=repo_path)
+    if rc2 == 0:
+        return False, "origin contained credentials; scrubbed — re-run the operation"
+    return False, f"origin contains credentials and could not be scrubbed ({err2.strip()[:60]})"
+
+
+def ensure_git_auth():
+    """Verifies a credential mechanism exists. Never embeds a token in a URL."""
+    if shutil.which("gh"):
+        rc, _, err = run(["gh", "auth", "setup-git"])
+        if rc == 0:
+            return True
+        log("GitHub CLI present but `gh auth setup-git` failed — run `gh auth login`.", "WARN")
+        return False
+    rc, helper, _ = run(["git", "config", "--get", "credential.helper"])
+    if helper.strip():
+        return True
+    if os.environ.get("SSH_AUTH_SOCK") or (Path.home() / ".ssh" / "id_ed25519").exists() \
+            or (Path.home() / ".ssh" / "id_rsa").exists():
+        return True
+    log("No Git credential mechanism found. Configure GitHub CLI (`gh auth login`), "
+        "Git Credential Manager, or SSH. Tokens are never written into remote URLs.", "ERROR")
+    return False
 
 def repo_exists(name):
     p = BASE_DIR / name
     return p.exists() and (p / ".git").exists()
 
-def get_token():
-    """Get GitHub token from environment or secrets file."""
-    token = os.environ.get("GITHUB_TOKEN", "")
-    if not token:
-        secrets = Path.home() / ".config" / "git-sync-system" / "secrets.env"
-        if secrets.exists():
+def token_available():
+    """Boolean only. The token VALUE is never read into this program any more:
+    a value in memory ends up in remote URLs, logs and error messages."""
+    if os.environ.get("GITHUB_TOKEN"):
+        return True
+    secrets = Path.home() / ".config" / "git-sync-system" / "secrets.env"
+    if secrets.exists():
+        try:
             for line in secrets.read_text().splitlines():
-                if line.startswith("GITHUB_TOKEN="):
-                    token = line.split("=", 1)[1].strip().strip('"')
-                    break
-    return token
+                if line.startswith("GITHUB_TOKEN=") and line.split("=", 1)[1].strip():
+                    return True
+        except OSError:
+            return False
+    return False
+
+
+def get_token():  # deprecated shim — kept so external callers do not break
+    """DEPRECATED: returns no value by design. Use ensure_git_auth() instead."""
+    log("get_token() is deprecated: credentials are supplied by a Git credential "
+        "helper, never read into this script.", "WARN")
+    return ""
 
 # ══════════════════════════════════════════════════════════════
 #  Phase 1: Download Missing Repos
@@ -100,9 +209,12 @@ def phase1_download_missing():
     log("Phase 1: Download missing repositories", "PHASE")
     log("=" * 55, "PHASE")
 
-    token = get_token()
     all_repos = ACTIVE_REPOS + ARCHIVED_REPOS
     downloaded, skipped, failed = 0, 0, 0
+    auth_ok = ensure_git_auth()
+    if not auth_ok:
+        log("Continuing without verified credentials: private repositories will fail "
+            "to clone. No token is ever placed in a remote URL.", "WARN")
 
     BASE_DIR.mkdir(parents=True, exist_ok=True)
 
@@ -115,8 +227,11 @@ def phase1_download_missing():
 
         log(f"{repo}...", "ACTION")
         url = f"https://github.com/{GITHUB_USER}/{repo}.git"
-        # Use configured Git credentials; never place credentials in the remote URL.
-        rc, _, err = run(f'git clone --depth 1 "{url}" "{path}"', cwd=BASE_DIR)
+        if url_has_credentials(url):  # defence in depth: refuse to clone a dirty URL
+            log(f"{repo}: refusing URL with embedded credentials", "ERROR")
+            failed += 1
+            continue
+        rc, _, err = run(["git", "clone", "--depth", "1", url, str(path)], cwd=BASE_DIR)
         if rc == 0:
             log(f"{repo}", "OK")
             downloaded += 1
@@ -281,18 +396,28 @@ def phase5_quality_audit():
             continue
         log(f"Scanning {repo}...", "ACTION")
 
-        rc, flake_out, _ = run(
-            'flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics 2>/dev/null | head -20',
-            cwd=BASE_DIR / repo
-        )
+        # No `2>/dev/null`, no `| head`: hiding stderr turned "tool missing" into
+        # "no issues found", which made the audit report unreadable-but-green.
         report_lines.append(f"## {repo}")
-        report_lines.append(f"### Flake8 (Critical)\n```\n{flake_out.strip() or 'No critical errors'}\n```\n")
+        if shutil.which("flake8"):
+            rc, flake_out, flake_err = run(
+                ["flake8", ".", "--count", "--select=E9,F63,F7,F82",
+                 "--show-source", "--statistics"],
+                cwd=BASE_DIR / repo
+            )
+            body = (flake_out or flake_err).strip()
+            status = "errors found" if rc != 0 else "clean"
+            report_lines.append(f"### Flake8 (Critical) — {status}\n```\n{body[:4000] or 'No critical errors'}\n```\n")
+        else:
+            report_lines.append("### Flake8 (Critical) — NOT INSTALLED\n```\nflake8 is not available in this environment\n```\n")
 
-        rc, bandit_out, _ = run(
-            'bandit -r . -q -lll 2>/dev/null | head -30',
-            cwd=BASE_DIR / repo
-        )
-        report_lines.append(f"### Bandit (High)\n```\n{bandit_out.strip() or 'No high issues'}\n```\n")
+        if shutil.which("bandit"):
+            rc, bandit_out, bandit_err = run(["bandit", "-r", ".", "-q", "-lll"], cwd=BASE_DIR / repo)
+            body = (bandit_out or bandit_err).strip()
+            status = "issues found" if rc != 0 else "clean"
+            report_lines.append(f"### Bandit (High) — {status}\n```\n{body[:4000] or 'No high issues'}\n```\n")
+        else:
+            report_lines.append("### Bandit (High) — NOT INSTALLED\n```\nbandit is not available in this environment\n```\n")
 
     report_path = BASE_DIR / "quality_audit_report.md"
     if not DRY_RUN:
@@ -313,20 +438,29 @@ def phase6_push_all():
         log("Would push changes to all repos", "DRY")
         return 0
 
-    token = get_token()
     pushed = 0
+    if not ensure_git_auth():
+        log("Push aborted: no credential helper is configured. Configure GitHub CLI, "
+            "Git Credential Manager, or SSH — never a token inside the remote URL.", "ERROR")
+        return 0
     for repo in ACTIVE_REPOS + ARCHIVED_REPOS:
         if not repo_exists(repo):
             continue
-        rc, status, _ = run("git status --porcelain", cwd=BASE_DIR / repo)
+        rc, status, _ = run(["git", "status", "--porcelain"], cwd=BASE_DIR / repo)
         if not status.strip():
             log(f"{repo} (clean)", "INFO")
             continue
         log(f"{repo}...", "ACTION")
-        # Authentication is supplied by Git credential helpers; do not rewrite origin URLs.
-        rc, branch, _ = run("git rev-parse --abbrev-ref HEAD", cwd=BASE_DIR / repo)
+        clean, why = assert_clean_remote(BASE_DIR / repo)
+        if not clean:
+            log(f"{repo}: {why}", "ERROR")
+            continue
+        rc, branch, _ = run(["git", "rev-parse", "--abbrev-ref", "HEAD"], cwd=BASE_DIR / repo)
         branch = branch.strip()
-        rc, _, err = run(f"git push origin {branch}", cwd=BASE_DIR / repo)
+        if not re.fullmatch(r"[A-Za-z0-9._/-]+", branch or ""):
+            log(f"{repo}: unexpected branch name; refusing to push", "ERROR")
+            continue
+        rc, _, err = run(["git", "push", "origin", branch], cwd=BASE_DIR / repo)
         if rc == 0:
             log(f"{repo}", "OK")
             pushed += 1
