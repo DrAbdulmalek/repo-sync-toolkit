@@ -53,28 +53,30 @@ setup_auth() {
     local repo_path="$1" remote_url="$2"
     if [[ -n "$GIT_NAME" ]]; then git -C "$repo_path" config user.name "$GIT_NAME" 2>/dev/null; fi
     if [[ -n "$GIT_EMAIL" ]]; then git -C "$repo_path" config user.email "$GIT_EMAIL" 2>/dev/null; fi
-    # فقط GitHub URLs — لا HF
-    if [[ "$remote_url" != *"github.com"* ]]; then return 0; fi
+    [[ "$remote_url" == *"github.com"* ]] || return 0
     case "$AUTH_METHOD" in
         token)
-            if [[ -n "$GITHUB_TOKEN" && -n "$GITHUB_USERNAME" ]]; then
-                local token_url="https://${GITHUB_USERNAME}:${GITHUB_TOKEN}@github.com/${remote_url#https://github.com/}"
-                git -C "$repo_path" remote set-url origin "$token_url" 2>/dev/null
+            if command -v gh >/dev/null 2>&1; then
+                gh auth setup-git >/dev/null 2>&1 || log WARN "GitHub CLI auth setup failed; configure a credential helper."
+            else
+                log WARN "Configure Git Credential Manager, GitHub CLI, or SSH; tokens are never saved in remote URLs."
             fi ;;
         ssh) return 0 ;;
-        store) git -C "$repo_path" config credential.helper store 2>/dev/null ;;
+        store)
+            log WARN "credential.helper=store stores credentials in plaintext; prefer Git Credential Manager or SSH."
+            git -C "$repo_path" config credential.helper store 2>/dev/null ;;
     esac
 }
 
 cleanup_auth() {
-    local repo_path="$1"
-    if [[ "$AUTH_METHOD" == "token" && -n "$GITHUB_USERNAME" ]]; then
-        local current_url
-        current_url="$(git -C "$repo_path" remote get-url origin 2>/dev/null)"
-        if [[ "$current_url" == *"${GITHUB_USERNAME}:"*@github.com/* ]]; then
-            local clean_url="${current_url#https://}"; clean_url="https://${clean_url#*@}"
-            git -C "$repo_path" remote set-url origin "$clean_url" 2>/dev/null
-        fi
+    local repo_path="$1" current_url clean_url
+    current_url="$(git -C "$repo_path" remote get-url origin 2>/dev/null)" || return 0
+    if [[ "$current_url" =~ ^https://[^/@]+:[^/@]+@github\.com/(.*)$ ]]; then
+        clean_url="https://github.com/${BASH_REMATCH[1]}"
+        git -C "$repo_path" remote set-url origin "$clean_url" 2>/dev/null
+    elif [[ "$current_url" =~ ^https://[^/@]+@github\.com/(.*)$ ]]; then
+        clean_url="https://github.com/${BASH_REMATCH[1]}"
+        git -C "$repo_path" remote set-url origin "$clean_url" 2>/dev/null
     fi
 }
 
