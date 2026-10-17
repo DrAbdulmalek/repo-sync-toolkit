@@ -115,8 +115,7 @@ def phase1_download_missing():
 
         log(f"{repo}...", "ACTION")
         url = f"https://github.com/{GITHUB_USER}/{repo}.git"
-        if token:
-            url = f"https://x-access-token:{token}@github.com/{GITHUB_USER}/{repo}.git"
+        # Use configured Git credentials; never place credentials in the remote URL.
         rc, _, err = run(f'git clone --depth 1 "{url}" "{path}"', cwd=BASE_DIR)
         if rc == 0:
             log(f"{repo}", "OK")
@@ -324,9 +323,7 @@ def phase6_push_all():
             log(f"{repo} (clean)", "INFO")
             continue
         log(f"{repo}...", "ACTION")
-        if token:
-            run(f'git remote set-url origin "https://x-access-token:{token}@github.com/{GITHUB_USER}/{repo}.git"',
-                cwd=BASE_DIR / repo)
+        # Authentication is supplied by Git credential helpers; do not rewrite origin URLs.
         rc, branch, _ = run("git rev-parse --abbrev-ref HEAD", cwd=BASE_DIR / repo)
         branch = branch.strip()
         rc, _, err = run(f"git push origin {branch}", cwd=BASE_DIR / repo)
