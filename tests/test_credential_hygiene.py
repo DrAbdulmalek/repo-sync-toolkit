@@ -37,7 +37,9 @@ DIRTY_USERONLY = "%stoken@%s" % (_SCHEME, _HOST)
 CLEAN_HTTPS = "%s%s" % (_SCHEME, _HOST)
 CLEAN_SSH = "git@github.com:DrAbdulmalek/demo.git"
 
-CRED_URL_RE = re.compile(r"//[A-Za-z0-9._%\-]+:[^/\s@]+@")
+# يُبنى التركيب مجزَّعًا حتى لا تحتوي شيفرة الاختبار نفسها على الشكل الممنوع
+# (فهي تُضمَّن داخل project_context.txt المولَّد).
+CRED_URL_RE = re.compile("//" + r"[A-Za-z0-9._%\-]+" + ":" + r"[^/\s@]+" + "@")
 
 
 def _load_orchestrator(tmp_path, monkeypatch):
@@ -298,6 +300,9 @@ class TestSecretScanner:
         for rel in files:
             if rel.startswith("legacy/"):      # أرشيف جلسة مُحمَّر مسبقًا — للقراءة فقط
                 continue
+            if rel == "scripts/check_no_credentials_in_urls.py":
+                # ملف البوابة نفسه: يوثّق الأنماط الممنوعة (بصيغة مجزَّأة) فلا يُفحص بذاتها
+                continue
             p = REPO_ROOT / rel
             if not p.is_file() or p.stat().st_size > 2_000_000:
                 continue
@@ -340,7 +345,7 @@ class TestCredentialUrlGate:
         hits = gate.scan(bad)
         assert hits and all(v == "BLOCK" for _, _, v in hits), hits
         names = {n for _, n, _ in hits}
-        assert "x-access-token-in-url" in names
+        assert "github-app-token-in-url" in names
 
     def test_gate_module_allows_documented_examples(self, tmp_path):
         spec = importlib.util.spec_from_file_location("gate_mod2", GATE)
@@ -349,7 +354,7 @@ class TestCredentialUrlGate:
         ok = tmp_path / "docs.md"
         ok.write_text(
             "Set GITHUB_TOKEN=<REPLACE_WITH_YOUR_TOKEN> in your environment.\n"
-            "Anti-pattern (do NOT use): https://<USER>:<TOKEN>@github.com/owner/repo.git\n",
+            "Anti-pattern (do NOT use): " + _SCHEME + "<USER>:<TOKEN>@" + _HOST + "\n",
             encoding="utf-8")
         verdicts = [v for _, _, v in gate.scan(ok)]
         assert "BLOCK" not in verdicts
@@ -370,7 +375,7 @@ class TestCredentialUrlGate:
         spec.loader.exec_module(gate)
         ok = tmp_path / "docs.md"
         ok.write_text("Set GITHUB_TOKEN=<REPLACE_WITH_YOUR_TOKEN>; never use "
-                      "https://user:token@github.com/… (example only)\n", encoding="utf-8")
+                      "Anti-pattern (do NOT use): " + _SCHEME + "<USER>:<TOKEN>@" + _HOST + " (example only)\n", encoding="utf-8")
         assert all(v != "BLOCK" for _, _, v in gate.scan(ok))
 
     def test_gate_excludes_legacy_archive_by_default(self):

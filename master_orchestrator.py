@@ -81,7 +81,7 @@ def redact(text):
     """Strips credentials from any string before it is logged or printed."""
     if not text:
         return ""
-    out = _SAFE_ERR.sub("<scheme>://<user>:<REDACTED>@", str(text))
+    out = _SAFE_ERR.sub("<scheme>://<REDACTED-USERINFO>@", str(text))
     out = _ENV_KEYS.sub(lambda m: m.group(1) + "=<REDACTED>", out)
     return out
 

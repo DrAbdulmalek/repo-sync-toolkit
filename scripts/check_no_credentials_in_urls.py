@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """بوابة النمط: تمنع عودة "بيانات اعتماد داخل عنوان Git".
 
-القاعدة: لا يجوز أن يُبنى أي remote URL بصيغة `scheme://user:token@host/...`
+القاعدة: لا يجوز أن يُبنى أي remote URL يحمل **userinfo** — أي اسم مستخدم ثم نقطتان ثم سر ثم علامة @ قبل اسم المضيف — لا في الشيفرة ولا في الأمثلة ولا في التوثيق.
 لا في الشيفرة التنفيذية، ولا في الأمثلة، ولا في التوثيق.
 
 لماذا بوابة نمط وليس فحص أسرار فقط؟
@@ -36,8 +36,10 @@ EXCLUDE_NAMES = {"project_context.txt"}
 _TOKEN_HOST = r"@(?:github|huggingface|gitlab)\.(?:com|co)"
 PATTERNS = [
     (
-        "x-access-token-in-url",
-        re.compile(r"x-access" + r"-token" + r"\s*[:@]"),
+        "github-app-token-in-url",
+        # البادئة مكتوبة مجزَّأة حتى لا يلتقط هذا الملف نفسه (وهو يُضمَّن
+        # داخل project_context.txt المولَّد، فيسبب فشلًا ذاتي المرجع).
+        re.compile("x-access" + "-token" + r"\s*[:@]"),
     ),
     (
         "userinfo-with-secret-var-in-url",
