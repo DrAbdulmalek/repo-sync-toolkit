@@ -2633,7 +2633,7 @@ hf-mission-control|~/github~/hf-mission-control|https://huggingface.co/spaces/Dr
 
 # ── GitHub ──
 GITHUB_USERNAME=your_username
-GITHUB_TOKEN=ghp_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+GITHUB_TOKEN=ghp_[REDACTED-DEAD-2026-10-08]
 
 # ── Git Config ──
 # token | ssh | store
