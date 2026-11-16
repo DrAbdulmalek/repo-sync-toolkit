@@ -11,6 +11,7 @@ Usage:
 """
 import os
 import sys
+import shlex
 import subprocess
 from pathlib import Path
 from datetime import datetime
@@ -68,7 +69,9 @@ def run(cmd, cwd=None):
         log(f"$ {cmd}", "DRY")
         return 0, "", ""
     try:
-        r = subprocess.run(cmd, shell=True, cwd=cwd,
+        if isinstance(cmd, str):
+            cmd = shlex.split(cmd)
+        r = subprocess.run(cmd, shell=False, cwd=cwd,
                           capture_output=True, text=True, timeout=300)
         return r.returncode, r.stdout, r.stderr
     except Exception as e:
@@ -283,17 +286,19 @@ def phase5_quality_audit():
         log(f"Scanning {repo}...", "ACTION")
 
         rc, flake_out, _ = run(
-            'flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics 2>/dev/null | head -20',
+            'flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics',
             cwd=BASE_DIR / repo
         )
+        flake_lines = "\n".join(flake_out.strip().splitlines()[:20])
         report_lines.append(f"## {repo}")
-        report_lines.append(f"### Flake8 (Critical)\n```\n{flake_out.strip() or 'No critical errors'}\n```\n")
+        report_lines.append(f"### Flake8 (Critical)\n```\n{flake_lines or 'No critical errors'}\n```\n")
 
         rc, bandit_out, _ = run(
-            'bandit -r . -q -lll 2>/dev/null | head -30',
+            'bandit -r . -q -lll',
             cwd=BASE_DIR / repo
         )
-        report_lines.append(f"### Bandit (High)\n```\n{bandit_out.strip() or 'No high issues'}\n```\n")
+        bandit_lines = "\n".join(bandit_out.strip().splitlines()[:30])
+        report_lines.append(f"### Bandit (High)\n```\n{bandit_lines or 'No high issues'}\n```\n")
 
     report_path = BASE_DIR / "quality_audit_report.md"
     if not DRY_RUN:
