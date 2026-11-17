@@ -11,8 +11,11 @@ Usage:
 """
 import os
 import sys
+import re
 import shlex
+import shutil
 import subprocess
+import tempfile
 from pathlib import Path
 from datetime import datetime
 
@@ -54,7 +57,16 @@ class C:
     RED = '\033[91m'; GREEN = '\033[92m'; YELLOW = '\033[93m'
     BLUE = '\033[94m'; CYAN = '\033[96m'; RESET = '\033[0m'; BOLD = '\033[1m'
 
+_TOKEN_RE = re.compile(r"(gh[posru]_[A-Za-z0-9]{20,}|github_pat_[A-Za-z0-9_]{20,})")
+
+
+def redact(text):
+    """Never let a credential-shaped string reach the console or the log file."""
+    return _TOKEN_RE.sub("[REDACTED]", str(text))
+
+
 def log(msg, level="INFO"):
+    msg = redact(msg)
     prefix = {"INFO": "  ", "OK": "[OK] ", "WARN": "[!!] ",
               "ERROR": "[XX] ", "ACTION": "[>>] ", "DRY": "[DRY] ", "PHASE": "[##] "}
     colors = {"INFO": C.BLUE, "OK": C.GREEN, "WARN": C.YELLOW,
@@ -64,19 +76,39 @@ def log(msg, level="INFO"):
     with open(LOG_FILE, 'a', encoding='utf-8') as f:
         f.write(f"[{level}] {msg}\n")
 
-def run(cmd, cwd=None):
+def run(cmd, cwd=None, env=None):
+    """Run a command without a shell. Prefer passing a list of arguments."""
     if DRY_RUN:
         log(f"$ {cmd}", "DRY")
         return 0, "", ""
     try:
         if isinstance(cmd, str):
             cmd = shlex.split(cmd)
-        r = subprocess.run(cmd, shell=False, cwd=cwd,
+        r = subprocess.run(cmd, shell=False, cwd=cwd, env=env,
                           capture_output=True, text=True, timeout=300)
-        return r.returncode, r.stdout, r.stderr
+        return r.returncode, r.stdout, redact(r.stderr)
+    except FileNotFoundError as e:
+        log(f"Tool not available: {e}", "ERROR")
+        return 127, "", str(e)
     except Exception as e:
         log(f"Failed: {e}", "ERROR")
-        return 1, "", str(e)
+        return 1, "", redact(e)
+
+
+def git_auth_env(token):
+    """Credentials via GIT_ASKPASS: never in a URL, argv, or .git/config."""
+    if not token:
+        return None, None
+    tmpdir = tempfile.mkdtemp(prefix="orch-askpass-")
+    helper = Path(tmpdir) / "askpass.sh"
+    helper.write_text(
+        '#!/bin/sh\n'
+        'case "$1" in *sername*) echo x-access-token;; '
+        '*) printf "%s\\n" "$ORCH_GIT_TOKEN";; esac\n')
+    helper.chmod(0o700)
+    env = dict(os.environ, GIT_ASKPASS=str(helper),
+               GIT_TERMINAL_PROMPT="0", ORCH_GIT_TOKEN=token)
+    return env, tmpdir
 
 def repo_exists(name):
     p = BASE_DIR / name
@@ -118,9 +150,13 @@ def phase1_download_missing():
 
         log(f"{repo}...", "ACTION")
         url = f"https://github.com/{GITHUB_USER}/{repo}.git"
-        if token:
-            url = f"https://x-access-token:{token}@github.com/{GITHUB_USER}/{repo}.git"
-        rc, _, err = run(f'git clone --depth 1 "{url}" "{path}"', cwd=BASE_DIR)
+        env, tmpdir = git_auth_env(token)
+        try:
+            rc, _, err = run(["git", "clone", "--depth", "1", url, str(path)],
+                             cwd=BASE_DIR, env=env)
+        finally:
+            if tmpdir:
+                shutil.rmtree(tmpdir, ignore_errors=True)
         if rc == 0:
             log(f"{repo}", "OK")
             downloaded += 1
@@ -286,17 +322,22 @@ def phase5_quality_audit():
         log(f"Scanning {repo}...", "ACTION")
 
         rc, flake_out, _ = run(
-            'flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics',
+            ["flake8", ".", "--count", "--select=E9,F63,F7,F82",
+             "--show-source", "--statistics"],
             cwd=BASE_DIR / repo
         )
+        if rc == 127:
+            flake_out = "flake8 NOT AVAILABLE - repository was NOT scanned"
         flake_lines = "\n".join(flake_out.strip().splitlines()[:20])
         report_lines.append(f"## {repo}")
         report_lines.append(f"### Flake8 (Critical)\n```\n{flake_lines or 'No critical errors'}\n```\n")
 
         rc, bandit_out, _ = run(
-            'bandit -r . -q -lll',
+            ["bandit", "-r", ".", "-q", "-lll"],
             cwd=BASE_DIR / repo
         )
+        if rc == 127:
+            bandit_out = "bandit NOT AVAILABLE - repository was NOT scanned"
         bandit_lines = "\n".join(bandit_out.strip().splitlines()[:30])
         report_lines.append(f"### Bandit (High)\n```\n{bandit_lines or 'No high issues'}\n```\n")
 
@@ -324,17 +365,21 @@ def phase6_push_all():
     for repo in ACTIVE_REPOS + ARCHIVED_REPOS:
         if not repo_exists(repo):
             continue
-        rc, status, _ = run("git status --porcelain", cwd=BASE_DIR / repo)
+        rc, status, _ = run(["git", "status", "--porcelain"], cwd=BASE_DIR / repo)
         if not status.strip():
             log(f"{repo} (clean)", "INFO")
             continue
         log(f"{repo}...", "ACTION")
-        if token:
-            run(f'git remote set-url origin "https://x-access-token:{token}@github.com/{GITHUB_USER}/{repo}.git"',
-                cwd=BASE_DIR / repo)
-        rc, branch, _ = run("git rev-parse --abbrev-ref HEAD", cwd=BASE_DIR / repo)
+        rc, branch, _ = run(["git", "rev-parse", "--abbrev-ref", "HEAD"],
+                            cwd=BASE_DIR / repo)
         branch = branch.strip()
-        rc, _, err = run(f"git push origin {branch}", cwd=BASE_DIR / repo)
+        env, tmpdir = git_auth_env(token)
+        try:
+            rc, _, err = run(["git", "push", "origin", "--", branch],
+                             cwd=BASE_DIR / repo, env=env)
+        finally:
+            if tmpdir:
+                shutil.rmtree(tmpdir, ignore_errors=True)
         if rc == 0:
             log(f"{repo}", "OK")
             pushed += 1
