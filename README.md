@@ -12,6 +12,7 @@ Secure, automated Git synchronization system for managing multiple GitHub reposi
 - **Real-time monitoring** — inotifywait-based file watcher + polling mode
 - **PyCharm integration** — open all repos, setup git hooks
 - **systemd service** — background auto-sync daemon
+- **License audit gate** — `license_audit.py` blocks GPL/AGPL/non-commercial contamination before third-party integration (policy: `LICENSES.json`)
 - **28 GitHub repos + 11 HF Spaces** — unified management
 
 ## Quick Start
@@ -82,6 +83,27 @@ Securely manage API tokens without storing them in the repository:
 
 See [`SECURITY.md`](SECURITY.md) for the full threat model, defense
 layers, hardening checklist, and pre-commit hook installation.
+
+## License Audit
+
+`license_audit.py` is the automated license-compliance gate (roadmap P5): it fails loudly on GPL/AGPL/non-commercial licenses in the account's first-party MIT repos and verifies the third-party watchlist before any integration. Standard library only — no third-party Python dependencies.
+
+```bash
+# Audit all owner repos + watchlist upstreams (nightly / unattended safe)
+python3 license_audit.py --owner DrAbdulmalek --json
+
+# Check specific repos before integrating them (bare name or owner/repo slug)
+python3 license_audit.py --owner DrAbdulmalek --repos omni-medical-suite,VikParuchuri/surya
+
+# Offline self-test (no network)
+python3 license_audit.py --selftest
+```
+
+Policy lives in [`LICENSES.json`](LICENSES.json): allowed / review-required /
+forbidden lists plus a third-party watchlist with approved consumption modes
+(library vs. separate CLI/service). The token is read from `GH_TOKEN` /
+`GITHUB_TOKEN` and never printed, logged, or embedded in URLs.
+Exit codes: `0` clean, `1` violations (barrier tripped), `2` config/API error.
 
 ## Dashboard Commands
 

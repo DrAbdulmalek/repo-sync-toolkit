@@ -1,0 +1,159 @@
+{
+  "policy": "account-license-policy",
+  "policy_version": "1.0",
+  "description": "License compliance policy for the DrAbdulmalek account. All first-party projects are MIT (roadmap P5). This file is the hard barrier checked by license_audit.py before any third-party integration: GPL/AGPL and non-commercial code must never be imported as a library inside first-party repos. Approved pattern: consume it as a separate CLI/service exchanging files only. Format is JSON (not YAML) so the audit runs on the Python standard library alone with zero third-party dependencies.",
+  "default_license": "MIT",
+  "allowed": [
+    "MIT",
+    "Apache-2.0",
+    "BSD-2-Clause",
+    "BSD-3-Clause",
+    "ISC",
+    "MPL-2.0"
+  ],
+  "review_required": [
+    "LGPL-2.1",
+    "LGPL-3.0",
+    "EPL-2.0",
+    "CDDL*"
+  ],
+  "forbidden_as_dependency": [
+    "GPL-2.0",
+    "GPL-3.0",
+    "AGPL-3.0"
+  ],
+  "forbidden_use": [
+    "CC-BY-NC-*",
+    "custom non-commercial"
+  ],
+  "forbidden_use_note": "CC-BY-NC-* is a glob covering every Creative Commons non-commercial variant (CC-BY-NC, CC-BY-NC-SA, CC-BY-NC-ND, any version). 'custom non-commercial' is enforced heuristically: any SPDX id containing 'noncommercial'/'non-commercial' (e.g. LicenseRef-NONCOMMERCIAL-*) is forbidden, and licenses GitHub cannot auto-identify (spdx_id NOASSERTION) are flagged for manual review.",
+  "consumption_modes": {
+    "library": "Imported/linked as a dependency inside first-party code. Only allowed-license entries may use this mode.",
+    "service": "Runs as a separate long-lived service; integration is via files/API only.",
+    "cli": "Invoked as a standalone command-line tool; integration is via files only.",
+    "non-commercial-experiments": "Permitted for non-commercial experiments only; must never ship inside MIT first-party products.",
+    "unassigned": "No approved mode yet. Entry must be resolved (verify_before_integration) before any integration."
+  },
+  "third_party_watchlist": [
+    {
+      "name": "PaddleOCR",
+      "repo_slug": "PaddlePaddle/PaddleOCR",
+      "license": "Apache-2.0",
+      "consumption": "library",
+      "verify_before_integration": false,
+      "note": "Approved as a library."
+    },
+    {
+      "name": "Qari-OCR",
+      "repo_slug": null,
+      "license": "Apache-2.0",
+      "consumption": "library",
+      "verify_before_integration": false,
+      "note": "Approved as a library. Confirm the upstream GitHub slug and set repo_slug so the audit can verify the license automatically."
+    },
+    {
+      "name": "Surya",
+      "repo_slug": "VikParuchuri/surya",
+      "license": "GPL-3.0",
+      "consumption": "service",
+      "verify_before_integration": false,
+      "note": "GPL-3.0: never a dependency. Run as a separate service exchanging files only."
+    },
+    {
+      "name": "OBLITERATUS",
+      "repo_slug": null,
+      "license": "AGPL-3.0",
+      "consumption": "cli",
+      "verify_before_integration": false,
+      "note": "AGPL-3.0: never a dependency. Invoke as a standalone CLI exchanging files only. Confirm the upstream GitHub slug and set repo_slug."
+    },
+    {
+      "name": "Jina-OCR",
+      "repo_slug": null,
+      "license": "CC-BY-NC-SA-4.0",
+      "consumption": "non-commercial-experiments",
+      "verify_before_integration": false,
+      "note": "Non-commercial license: experiments only, never ships inside MIT first-party products."
+    },
+    {
+      "name": "RapidOCR",
+      "repo_slug": "RapidAI/RapidOCR",
+      "license": "unknown",
+      "consumption": "unassigned",
+      "verify_before_integration": true,
+      "note": "License must be verified before any integration decision."
+    },
+    {
+      "name": "Docling",
+      "repo_slug": "docling-project/docling",
+      "license": "unknown",
+      "consumption": "unassigned",
+      "verify_before_integration": true,
+      "note": "License must be verified before any integration decision."
+    },
+    {
+      "name": "MinerU",
+      "repo_slug": "opendatalab/MinerU",
+      "license": "unknown",
+      "consumption": "unassigned",
+      "verify_before_integration": true,
+      "note": "License must be verified before any integration decision."
+    },
+    {
+      "name": "dots.ocr",
+      "repo_slug": "rednote-hilab/dots.ocr",
+      "license": "unknown",
+      "consumption": "unassigned",
+      "verify_before_integration": true,
+      "note": "License must be verified before any integration decision."
+    },
+    {
+      "name": "OCRmyPDF",
+      "repo_slug": "ocrmypdf/OCRmyPDF",
+      "license": "unknown",
+      "consumption": "unassigned",
+      "verify_before_integration": true,
+      "note": "License must be verified before any integration decision."
+    },
+    {
+      "name": "Paperless-ngx",
+      "repo_slug": "paperless-ngx/paperless-ngx",
+      "license": "unknown",
+      "consumption": "unassigned",
+      "verify_before_integration": true,
+      "note": "License must be verified before any integration decision."
+    },
+    {
+      "name": "Unstructured",
+      "repo_slug": "Unstructured-IO/unstructured",
+      "license": "unknown",
+      "consumption": "unassigned",
+      "verify_before_integration": true,
+      "note": "License must be verified before any integration decision."
+    },
+    {
+      "name": "manyhands",
+      "repo_slug": null,
+      "license": "unknown",
+      "consumption": "unassigned",
+      "verify_before_integration": true,
+      "note": "License unknown and upstream GitHub slug not confirmed - locate the upstream repo, verify its license, then fill both fields."
+    },
+    {
+      "name": "Nuqta OCR",
+      "repo_slug": null,
+      "license": "unknown",
+      "consumption": "unassigned",
+      "verify_before_integration": true,
+      "note": "License unknown and upstream GitHub slug not confirmed - locate the upstream repo, verify its license, then fill both fields."
+    }
+  ],
+  "notes": [
+    "First-party rule: every repo owned by the account that is not a fork must carry the default_license (MIT). A missing license file is a violation.",
+    "Forks are inspection tools, not integrations: a fork carrying a forbidden license is a warning (contamination vector), not an automatic failure. Never copy fork code into first-party repos.",
+    "Watchlist entries with an approved non-library mode (service / cli / non-commercial-experiments) may carry a forbidden license without failing the audit; importing them as a library (consumption: library) is always a violation.",
+    "The audit fetches each watchlist repo_slug and reports license drift when upstream re-licenses.",
+    "Unknown SPDX ids are warnings (unclassified) on first-party repos; add them to the correct list after manual review.",
+    "Exit codes of license_audit.py: 0 clean (warnings allowed), 1 violations found, 2 config/API error."
+  ]
+}
