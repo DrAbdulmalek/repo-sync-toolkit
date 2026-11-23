@@ -17,7 +17,10 @@
 #     7) النسخة الاحتياطية مستقلة قابلة للاستعادة: لقطة بيانات pr_meta_*.json +
 #        git bundle كامل للرأس مع bundle verify + اختبار استعادة فعلي في مستودع
 #        تجريبي — فشل أي خطوة يمنع الدمج. BACKUP_REMOTE_URL للاختبارات.
-#     8) close_pr: لا CLOSED إلا بتحقق حي (state=CLOSED)، ولا ادعاء نجاح في DRY_RUN.
+#     8) close_pr: لا CLOSED إلا بتحقق حي (state=closed من API)، ولا ادعاء نجاح في DRY_RUN.
+#   2026-11-23 جولة 3 (مراجعة المالك):
+#     9) لا توكن في عنوان Git ولا في وسائط العملية: askpass مؤقت يقرأ GH_TOKEN من
+#        البيئة عند سؤال git ويُحذف فور انتهاء الجلب؛ GIT_TERMINAL_PROMPT=0.
 set -euo pipefail
 
 : "${GH_TOKEN:?ضع التوكن: export GH_TOKEN=ghp_...  (لا تضع التوكن في أي ملف)}"
@@ -96,7 +99,7 @@ backup_pr() { # $1=repo $2=pr_number
   tag="pre-merge/pr-${pr}-$(date +%Y%m%d)"
   local mf="backups/pr_meta_${repo}_${pr}.json"
   local bf="backups/bundles/pr_${repo}_${pr}.bundle"
-  local remote="${BACKUP_REMOTE_URL:-https://x-access-token:${GH_TOKEN}@github.com/${OWNER}/${repo}.git}"
+  local remote="${BACKUP_REMOTE_URL:-https://github.com/${OWNER}/${repo}.git}"
   # 1) لقطة البيانات من API + تحقق صلاحيتها
   if ! gh api "repos/$OWNER/$repo/pulls/$pr" > "$mf" 2>/dev/null; then
     log "فشل النسخ الاحتياطي لـ$repo#$pr — تعذر جلب بيانات الـPR من API"; return 1
@@ -115,11 +118,25 @@ assert d.get("title"), "العنوان مفقود"
   # 2) bundle مستقل: جلب الرأس إلى مستودع عمل مؤقت ثم تغليفه
   local w="$PWD/.bk_scratch_$$" r="$PWD/.bk_restore_$$" v="$PWD/.bk_verify_$$"
   rm -rf "$w" "$r" "$v"; mkdir -p "$w"
-  if ! git -C "$w" init -q || ! git -C "$w" fetch -q "$remote" "${sha}:refs/heads/backup" \
+  # مصادقة بلا توكن في العنوان أو وسائط العملية (جولة 3): سكربت askpass مؤقت
+  # يقرأ GH_TOKEN من البيئة عند سؤال git — لا قيمة سرية في العنوان ولا الوسائط —
+  # ويُحذف مع مستودع العمل فور انتهاء الجلب والتغليف.
+  cat > "$w/.askpass" <<'ASKPASS'
+#!/bin/sh
+# مؤقت — المصادقة من البيئة (GH_TOKEN) لا من عنوان URL ولا من وسائط العملية
+case "$1" in
+  Username*) printf 'x-access-token\n' ;;
+  *)         printf '%s\n' "${GH_TOKEN:?missing}" ;;
+esac
+ASKPASS
+  chmod 700 "$w/.askpass"
+  if ! git -C "$w" init -q \
+     || ! GIT_ASKPASS="$w/.askpass" GIT_TERMINAL_PROMPT=0 git -C "$w" fetch -q "$remote" "${sha}:refs/heads/backup" \
      || ! git -C "$w" bundle create "$PWD/$bf" refs/heads/backup; then
     log "فشل النسخ الاحتياطي لـ$repo#$pr — تعذر إنشاء git bundle للرأس ${sha:0:7}"
     rm -rf "$w"; return 1
   fi
+  rm -rf "$w"   # حذف askpass ومستودع العمل فور انتهاء الجلب والتغليف
   # 3) تحقق الاستعادة: verify من مستودع فارغ (لا متطلبات مسبقة) + استنساخ فعلي
   mkdir -p "$v"
   if git -C "$v" init -q && git -C "$v" bundle verify "$PWD/$bf" > /dev/null 2>&1; then :; else

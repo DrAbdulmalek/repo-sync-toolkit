@@ -21,5 +21,5 @@ jobs:
       - name: ShellCheck — مستوى التحذير فأعلى (صفر تحذيرات مسموح)
         run: shellcheck -S warning phase1/ortho-ecosystem-phase0/*.sh phase1/ortho-ecosystem-phase0/tests/*.sh
 
-      - name: اختبارات بوابات lib.sh — 35 حالة (تسعة سلبية بمحاكاة gh كاملة، بلا شبكة ولا توكن)
+      - name: اختبارات بوابات lib.sh — 77 تأكيدًا عبر 22 سيناريو (بمحاكاة gh كاملة وأوامر git حقيقية، بلا شبكة ولا توكن)
         run: bash phase1/ortho-ecosystem-phase0/tests/test_lib.sh
