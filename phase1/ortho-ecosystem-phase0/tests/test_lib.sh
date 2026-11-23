@@ -33,6 +33,13 @@
 #   T26 تنظيف askpass ومجلد العمل المؤقت بعد فشل المصادقة
 #   T27 عدد السيناريوهات مستخرج آليًا من العناوين الفعلية + لا تكرار ولا فجوات
 #   T28 فشل المصادقة لا يسجل نجاح نسخة احتياطية ولا يواصل الدمج
+#   T29 تصنيف الإصدارات الأساسي — Patch/Minor/Major + حالات الجولة الفعلية (pandas/opencv/Pillow)
+#   T30 العناوين المضللة لا تحكم — Major مخفي خلف عنوان يبدو آمنًا (ci: bump / chore(deps) / actions/)
+#   T31 تحديثات GitHub Actions — سياسة محافظة: Major/Minor مراجعة، Patch فقط مرشحة
+#   T32 التحديثات المجمّعة — Major أو UNKNOWN واحدة تمنع تصنيفها آمنة
+#   T33 غير القابل للتحليل والبيانات الناقصة → UNKNOWN بلا تخمين
+#   T34 الاستثناءات الخمسة محمية — قبل أي تصنيف ولا يتجاوزها أي مسار جديد
+#   T35 حارس SAFE النهائي — لا BIG ولا UNKNOWN ولا EXEMPT في قائمة الدمج الآلي
 # تعطيلات مقصودة: تلوث متغيرات subshells عمدًا للعزل + تصدير ديناميكي لخيارات
 # السيناريو + مصدر lib غير ثابت النسبي — كلها قرار تصميمي في حزمة الاختبار
 # shellcheck disable=SC2030,SC2031,SC2163,SC1090
@@ -518,6 +525,169 @@ expect "السجل لا يعلن نسخة احتياطية مؤكدة" "$(lacks 
 expect "لا manifest نسخ احتياطية أصلًا (النسخة لم تكتمل)" "$([ ! -e "$SB/backups/backup_manifest.tsv" ] && echo 0 || echo 1)"
 expect "أمر الدمج لم يُحاول أصلًا (fail-closed)" "$(lacks "gh pr merge")"
 expect "لا MERGED" "$(lacks "MERGED")"
+
+# ── تصنيف Dependabot (جولة إصلاح 5): استدعاء مباشر لـdep_classify من 30_dependabot.sh ──
+# بلا gh وبلا شبكة: ملف JSONL ثابت ← تصنيف ← فحص الفئات والأهلية. القرار من
+# بيانات الإصدار القديم/الجديد في جسم الـPR — لا من العنوان.
+DEP30="$HERE/../30_dependabot.sh"
+FIX="$(mktemp /tmp/depfix.XXXXXX)"
+CLASSOUT="$(mktemp /tmp/depout.XXXXXX)"
+dep_row() { # يطبع سطر JSONL: repo n head title body
+  python3 -I - "$@" <<'PYEOF'
+import json, sys
+repo, n, head, title, body = sys.argv[1:6]
+print(json.dumps({"repo": repo, "n": int(n), "head": head, "title": title,
+                  "body": body}, ensure_ascii=False))
+PYEOF
+}
+add_row() { dep_row "$@" >> "$FIX"; }
+run_classify() { # $1+=تصديرات إضافية للسيناريو (مثل DEP_POLICY_ALLOW_MINOR=1)
+  : > "$CLASSOUT"
+  ( { [ "$#" -eq 0 ] || export "$@"; }
+    source "$DEP30"
+    dep_classify "$FIX" ) > "$CLASSOUT" 2>&1
+}
+cat_of() { # repo n → الفئة
+  python3 -I - "$1" "$2" "$CLASSOUT" <<'PYEOF'
+import json, sys
+repo, n, path = sys.argv[1], int(sys.argv[2]), sys.argv[3]
+for line in open(path):
+    d = json.loads(line)
+    if d["repo"] == repo and d["n"] == n:
+        print(d["category"]); break
+PYEOF
+}
+elig_of() { # repo n → 0 إن كان آليًا (eligible) وإلا 1
+  python3 -I - "$1" "$2" "$CLASSOUT" <<'PYEOF'
+import json, sys
+repo, n, path = sys.argv[1], int(sys.argv[2]), sys.argv[3]
+for line in open(path):
+    d = json.loads(line)
+    if d["repo"] == repo and d["n"] == n:
+        print("0" if d["eligible"] else "1"); break
+PYEOF
+}
+n_elig() { # عدد الصفوف الآلية في آخر تصنيف
+  python3 -I -c "import json;print(sum(1 for l in open('$CLASSOUT') if json.loads(l).get('eligible')))"
+}
+
+echo "═══ T29: تصنيف الإصدارات الأساسي — Patch/Minor/Major + حالات الجولة الفعلية (pandas/opencv/Pillow) ═══"
+: > "$FIX"
+add_row "repo-a" 1 "" "Bump lib from 1.2.3 to 1.2.4" $'Bumps [lib](https://ex.test/a) from 1.2.3 to 1.2.4.'
+add_row "repo-a" 2 "" "Bump lib from 1.2.3 to 1.3.0" $'Bumps [lib](https://ex.test/a) from 1.2.3 to 1.3.0.'
+add_row "repo-a" 3 "" "Bump lib from 1.2.3 to 2.0.0" $'Bumps [lib](https://ex.test/a) from 1.2.3 to 2.0.0.'
+add_row "medical-ocr-ground-truth" 15 "dependabot/pip/pandas-gte-3.1.1" "chore(deps): update pandas requirement from >=2.0.0 to >=3.1.1" $'Updates `pandas` requirement from >=2.0.0 to >=3.1.1\n\n- [Changelog](https://pandas.pydata.org/docs/whatsnew/v3.1.1.html)'
+add_row "medical-ocr-demo" 6 "dependabot/pip/opencv-python-headless-gte-5.1.0.95" "chore(deps): update opencv-python-headless requirement from >=4.8.0 to >=5.1.0.95" $'Updates `opencv-python-headless` requirement from >=4.8.0 to >=5.1.0.95'
+add_row "medical-ocr-demo" 5 "dependabot/pip/pillow-gte-13.0.0" "chore(deps): update pillow requirement from >=10.0.0 to >=13.0.0" $'Updates `pillow` requirement from >=10.0.0 to >=13.0.0'
+run_classify
+expect "Patch 1.2.3→1.2.4 مصنف PATCH" "$([ "$(cat_of repo-a 1)" = "PATCH" ] && echo 0 || echo 1)"
+expect "Patch مرشح للدمج الآلي" "$(elig_of repo-a 1)"
+expect "Minor 1.2.3→1.3.0 مصنف MINOR" "$([ "$(cat_of repo-a 2)" = "MINOR" ] && echo 0 || echo 1)"
+expect "Minor خارج السياسة الافتراضية — ليس آليًا" "$([ "$(elig_of repo-a 2)" = "1" ] && echo 0 || echo 1)"
+expect "Major 1.2.3→2.0.0 مصنف BIG" "$([ "$(cat_of repo-a 3)" = "BIG" ] && echo 0 || echo 1)"
+expect "Major ليس آليًا" "$([ "$(elig_of repo-a 3)" = "1" ] && echo 0 || echo 1)"
+expect "pandas >=2.0.0→>=3.1.1 (حالة الجولة الفعلية) = BIG رغم عنوان chore(deps)" "$([ "$(cat_of medical-ocr-ground-truth 15)" = "BIG" ] && echo 0 || echo 1)"
+expect "opencv >=4.8.0→>=5.1.0.95 = BIG" "$([ "$(cat_of medical-ocr-demo 6)" = "BIG" ] && echo 0 || echo 1)"
+expect "Pillow >=10.0.0→>=13.0.0 = BIG" "$([ "$(cat_of medical-ocr-demo 5)" = "BIG" ] && echo 0 || echo 1)"
+expect "الآلي الوحيد في المجموعة هو الـPatch (العدد=1)" "$([ "$(n_elig)" = "1" ] && echo 0 || echo 1)"
+
+echo "═══ T30: العناوين المضللة لا تحكم — Major مخفي خلف عنوان يبدو آمنًا ═══"
+: > "$FIX"
+add_row "repo-b" 7 "" "ci: bump tooling" $'Bumps [pkg](https://ex.test/b) from 1.0.0 to 2.0.0.'
+add_row "repo-b" 8 "" "chore(deps): bump pillow" $'Updates `pillow` requirement from >=10.0.0 to >=13.0.0'
+add_row "repo-b" 9 "" "Bump actions/cache from 1.0.0 to 2.0.0" $'Bumps [pytest](https://ex.test/c) from 1.2.3 to 2.0.0.'
+run_classify
+expect "عنوان ci: bump يخفي Major في الجسم → BIG" "$([ "$(cat_of repo-b 7)" = "BIG" ] && echo 0 || echo 1)"
+expect "عنوان chore(deps) مضلل مع Major في الجسم → BIG" "$([ "$(cat_of repo-b 8)" = "BIG" ] && echo 0 || echo 1)"
+expect "عنوان يذكر actions/ لكن الجسم ترقية Python Major → BIG (العنوان لا يصنّف)" "$([ "$(cat_of repo-b 9)" = "BIG" ] && echo 0 || echo 1)"
+expect "لا واحد من الثلاثة آلي (العدد=0)" "$([ "$(n_elig)" = "0" ] && echo 0 || echo 1)"
+
+echo "═══ T31: تحديثات GitHub Actions — سياسة محافظة تقرأ الإصدار لا العنوان ═══"
+: > "$FIX"
+add_row "repo-c" 10 "dependabot/github_actions/actions/checkout-5.0.0" "Bump actions/checkout from 4 to 5" $'Bumps [actions/checkout](https://ex.test/co) from 4 to 5.'
+add_row "repo-c" 11 "dependabot/github_actions/actions/cache-4.1.3" "Bump actions/cache from 4.1.2 to 4.1.3" $'Bumps [actions/cache](https://ex.test/ca) from 4.1.2 to 4.1.3.'
+add_row "repo-c" 12 "dependabot/github_actions/actions/cache-4.2.0" "Bump actions/cache from 4.1.0 to 4.2.0" $'Bumps [actions/cache](https://ex.test/ca) from 4.1.0 to 4.2.0.'
+add_row "repo-c" 13 "dependabot/pip/lib-gte-1.3.0" "chore(deps): bump lib" $'Updates `lib` requirement from >=1.2.0 to >=1.3.0'
+run_classify
+expect "actions Major (4→5) = BIG — احتواء العنوان على actions/ لا يصنّف آمنًا" "$([ "$(cat_of repo-c 10)" = "BIG" ] && echo 0 || echo 1)"
+expect "actions Patch (4.1.2→4.1.3) = PATCH مرشحة" "$([ "$(cat_of repo-c 11)" = "PATCH" ] && echo 0 || echo 1)"
+expect "actions Minor (4.1.0→4.2.0) = BIG سياسة محافظة" "$([ "$(cat_of repo-c 12)" = "BIG" ] && echo 0 || echo 1)"
+run_classify DEP_POLICY_ALLOW_MINOR=1
+expect "تفعيل السياسة لا يفتح actions minor — تبقى BIG (محافظة)" "$([ "$(cat_of repo-c 12)" = "BIG" ] && echo 0 || echo 1)"
+expect "تفعيل السياسة يفتح minor العادي فقط (eligible)" "$(elig_of repo-c 13)"
+
+echo "═══ T32: التحديثات المجمّعة — Major أو UNKNOWN واحدة تمنع تصنيفها آمنة ═══"
+: > "$FIX"
+add_row "repo-d" 20 "dependabot/pip/group-a" "Bump group a" $'Bumps [a](https://ex.test/x) from 1.0.0 to 1.0.1.\n\n---\n\nBumps [b](https://ex.test/y) from 1.0.0 to 2.0.0.'
+add_row "repo-d" 21 "dependabot/pip/group-b" "Bump group b" $'Bumps [a](https://ex.test/x) from 1.0.0 to 1.0.1.\n\n---\n\nBumps [b](https://ex.test/y) from 2.0.0 to 2.0.1.'
+add_row "repo-d" 22 "dependabot/pip/group-c" "Bump group c" $'Bumps [a](https://ex.test/x) from 1.0.0 to 1.0.1.\n\n---\n\nBumps [b](https://ex.test/y) from 1.0.0 to 1.0.nan'
+run_classify
+expect "مجمّعة فيها Major واحدة → BIG (المجموعة كلها غير آمنة)" "$([ "$(cat_of repo-d 20)" = "BIG" ] && echo 0 || echo 1)"
+expect "مجمّعة Patch كاملة → PATCH مرشحة" "$([ "$(cat_of repo-d 21)" = "PATCH" ] && echo 0 || echo 1)"
+expect "مجمّعة فيها إصدار غير قابل للتحليل → UNKNOWN" "$([ "$(cat_of repo-d 22)" = "UNKNOWN" ] && echo 0 || echo 1)"
+expect "المجمّعة غير القابلة للتحليل ليست آلية" "$([ "$(elig_of repo-d 22)" = "1" ] && echo 0 || echo 1)"
+
+echo "═══ T33: غير القابل للتحليل والبيانات الناقصة → UNKNOWN بلا تخمين ═══"
+: > "$FIX"
+add_row "repo-e" 30 "" "Bump x" $'Updates `x` requirement from >=1.2.3 to >=latest'
+add_row "repo-e" 31 "" "Update requirements" $'Updates requirements\n\n- [Changelog](https://ex.test/ch)\n\nNo version data here.'
+add_row "repo-e" 32 "" "Bump x from 1.2.3 to 1.2.3" $'Bumps [x](https://ex.test/x) from 1.2.3 to 1.2.3.'
+add_row "repo-e" 33 "" "Bump x" $'Updates `x` requirement from >=1.2.3.post1 to >=1.2.4'
+add_row "repo-e" 34 "" "Bump x" $'Bumps [x](https://ex.test/x) from v1.2.3 to v1.2.4.'
+run_classify
+expect "إصدار جديد غير قابل للتحليل (latest) → UNKNOWN" "$([ "$(cat_of repo-e 30)" = "UNKNOWN" ] && echo 0 || echo 1)"
+expect "غياب بيانات الإصدار القديم والجديد → UNKNOWN" "$([ "$(cat_of repo-e 31)" = "UNKNOWN" ] && echo 0 || echo 1)"
+expect "إصداران متساويان (لا ترقية مثبتة) → UNKNOWN" "$([ "$(cat_of repo-e 32)" = "UNKNOWN" ] && echo 0 || echo 1)"
+expect "صيغة لا تطابق semver حرفيًا (post1) → UNKNOWN بلا تخمين" "$([ "$(cat_of repo-e 33)" = "UNKNOWN" ] && echo 0 || echo 1)"
+expect "v-prefix شائع يُحلل صحيحًا (v1.2.3→v1.2.4 = PATCH)" "$([ "$(cat_of repo-e 34)" = "PATCH" ] && echo 0 || echo 1)"
+expect "الآلي الوحيد هو حالة الـv-prefix (العدد=1)" "$([ "$(n_elig)" = "1" ] && echo 0 || echo 1)"
+
+echo "═══ T34: الاستثناءات الخمسة محمية — قبل أي تصنيف ولا يتجاوزها أي مسار جديد ═══"
+: > "$FIX"
+add_row "marathon_ted_pipeline" 32 "" "Bump x" $'Bumps [x](https://ex.test/x) from 1.0.0 to 2.0.0.'
+add_row "omni-medical-suite" 84 "" "Bump x" $'Bumps [x](https://ex.test/x) from 4.8.0 to 4.8.1.'
+add_row "medical-ocr-trainer-hf" 9 "" "chore(deps): bump x" $'Updates `x` requirement from >=1.0.0 to >=1.1.0'
+add_row "marathon_ted_pipeline" 33 "" "Bump y" $'Bumps [y](https://ex.test/x) from 1.2.3 to 1.2.4.'
+run_classify
+expect "استثناء marathon_ted_pipeline:32 (جسمه Major) = EXEMPT وليس آليًا" "$([ "$(cat_of marathon_ted_pipeline 32)" = "EXEMPT" ] && echo 0 || echo 1)"
+expect "استثناء omni-medical-suite:84 — حتى بجسم Patch يبقى EXEMPT" "$([ "$(cat_of omni-medical-suite 84)" = "EXEMPT" ] && echo 0 || echo 1)"
+expect "استثناء medical-ocr-trainer-hf:9 (جسمه Minor) = EXEMPT" "$([ "$(cat_of medical-ocr-trainer-hf 9)" = "EXEMPT" ] && echo 0 || echo 1)"
+expect "المطابقة repo:رقم دقيقة — marathon_ted_pipeline:33 غير المستثنى يصنف PATCH" "$([ "$(cat_of marathon_ted_pipeline 33)" = "PATCH" ] && echo 0 || echo 1)"
+run_classify DEP_POLICY_ALLOW_MINOR=1
+expect "تفعيل السياسة لا يتجاوز الاستثناءات (9 يبقى EXEMPT)" "$([ "$(cat_of medical-ocr-trainer-hf 9)" = "EXEMPT" ] && echo 0 || echo 1)"
+expect "والاستثناء ليس آليًا حتى مع السياسة المفعلة" "$([ "$(elig_of medical-ocr-trainer-hf 9)" = "1" ] && echo 0 || echo 1)"
+
+echo "═══ T35: حارس SAFE النهائي — لا BIG ولا UNKNOWN ولا EXEMPT في قائمة الدمج الآلي ═══"
+: > "$FIX"
+add_row "g1" 1 "" "safe patch" $'Bumps [x](https://ex.test/x) from 1.2.3 to 1.2.4.'
+add_row "g1" 2 "" "major" $'Bumps [x](https://ex.test/x) from 1.0.0 to 2.0.0.'
+add_row "g1" 3 "" "unknown" $'Updates `x` requirement from >=1.2.3 to >=latest'
+add_row "marathon_ted_pipeline" 32 "" "exempt patch" $'Bumps [x](https://ex.test/x) from 1.2.3 to 1.2.4.'
+add_row "g1" 4 "" "minor" $'Bumps [x](https://ex.test/x) from 1.2.0 to 1.3.0.'
+run_classify
+SAFELIST="$(mktemp /tmp/depsafe.XXXXXX)"
+( source "$DEP30"; dep_safe_extract "$CLASSOUT" ) > "$SAFELIST"
+expect "قائمة الدمج الآلي تحوي المرشح الآمن الوحيد فقط (العدد=1)" "$([ "$(python3 -I -c "import json;print(len(json.load(open('$SAFELIST'))))")" = "1" ] && echo 0 || echo 1)"
+expect "المرشح الآلي هو g1#1 (patch) بالضبط" "$(python3 -I -c "import json;d=json.load(open('$SAFELIST'));print(0 if d==[['g1',1,'','safe patch']] else 1)")"
+expect "صفر صفوف eligible بفئة خارج PATCH/MINOR في كل المخرجات" "$(python3 -I - "$CLASSOUT" <<'PYEOF'
+import json, sys
+bad = sum(1 for line in open(sys.argv[1]) if line.strip()
+          and json.loads(line).get("eligible")
+          and json.loads(line)["category"] not in ("PATCH", "MINOR"))
+print(0 if bad == 0 else 1)
+PYEOF
+)"
+expect "صفر BIG/UNKNOWN/EXEMPT وصلوا لقائمة الدمج الآلي" "$(python3 -I - "$SAFELIST" "$CLASSOUT" <<'PYEOF'
+import json, sys
+keys = {(r[0], r[1]) for r in json.load(open(sys.argv[1]))}
+bad = sum(1 for line in open(sys.argv[2]) if line.strip()
+          and json.loads(line)["category"] in ("BIG", "UNKNOWN", "EXEMPT")
+          and (json.loads(line)["repo"], json.loads(line)["n"]) in keys)
+print(0 if bad == 0 else 1)
+PYEOF
+)"
+rm -f "$SAFELIST"
+rm -f "$FIX" "$CLASSOUT"
 
 echo "═══ T27: عدد السيناريوهات مستخرج آليًا من العناوين الفعلية + تسلسل سليم ═══"
 # لا اعتماد على تعليق التغطية: الاستخراج من أسطر echo "═══ T<n>:" في جسم الاختبارات نفسه
