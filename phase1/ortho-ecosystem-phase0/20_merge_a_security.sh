@@ -18,7 +18,7 @@ SECURITY_PRS=(
 for entry in "${SECURITY_PRS[@]}"; do
   set -- $entry; repo=$1; pr=$2; shift 2; title="$*"
   log "=== الفئة أ: $repo#$pr — $title"
-  head=$(gh pr view "$OWNER/$repo#$pr" --json headRefName --jq .headRefName)
+  head=$(gh pr view --repo "$OWNER/$repo" "$pr" --json headRefName --jq .headRefName)
   merge_pr "$repo" "$pr" "$head" merge || log "توقف $repo#$pr — راجع سجل البوابة"
 done
 

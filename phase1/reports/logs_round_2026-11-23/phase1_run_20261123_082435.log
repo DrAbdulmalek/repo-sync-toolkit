@@ -1,0 +1,248 @@
+[2026-11-23 08:24:36] gh جاهز — DRY_RUN=1
+[2026-11-23 08:24:36] بوابة الجودة: medical-ocr-trainer#6
+{"mergeStateStatus":"UNSTABLE","mergeable":"MERGEABLE","reviewDecision":"","state":"OPEN"}
+[2026-11-23 08:24:38] رفض: CI غير أخضر على medical-ocr-trainer#6
+[2026-11-23 08:24:38] توقف medical-ocr-trainer#6 — يُترك للفحص اليدوي
+[2026-11-23 08:24:38] بوابة الجودة: medical-ocr-trainer#5
+{"mergeStateStatus":"UNSTABLE","mergeable":"MERGEABLE","reviewDecision":"","state":"OPEN"}
+[2026-11-23 08:24:41] رفض: CI غير أخضر على medical-ocr-trainer#5
+[2026-11-23 08:24:41] توقف medical-ocr-trainer#5 — يُترك للفحص اليدوي
+[2026-11-23 08:24:41] بوابة الجودة: medical-ocr-ground-truth#15
+{"mergeStateStatus":"UNSTABLE","mergeable":"MERGEABLE","reviewDecision":"","state":"OPEN"}
+[2026-11-23 08:24:43] رفض: CI غير أخضر على medical-ocr-ground-truth#15
+[2026-11-23 08:24:43] توقف medical-ocr-ground-truth#15 — يُترك للفحص اليدوي
+[2026-11-23 08:24:43] بوابة الجودة: medical-ocr-ground-truth#14
+{"mergeStateStatus":"UNSTABLE","mergeable":"MERGEABLE","reviewDecision":"","state":"OPEN"}
+[2026-11-23 08:24:45] رفض: CI غير أخضر على medical-ocr-ground-truth#14
+[2026-11-23 08:24:45] توقف medical-ocr-ground-truth#14 — يُترك للفحص اليدوي
+[2026-11-23 08:24:45] بوابة الجودة: medical-ocr-ground-truth#13
+{"mergeStateStatus":"UNSTABLE","mergeable":"MERGEABLE","reviewDecision":"","state":"OPEN"}
+[2026-11-23 08:24:47] رفض: CI غير أخضر على medical-ocr-ground-truth#13
+[2026-11-23 08:24:47] توقف medical-ocr-ground-truth#13 — يُترك للفحص اليدوي
+[2026-11-23 08:24:47] بوابة الجودة: medical-ocr-ground-truth#12
+{"mergeStateStatus":"UNSTABLE","mergeable":"MERGEABLE","reviewDecision":"","state":"OPEN"}
+[2026-11-23 08:24:49] رفض: CI غير أخضر على medical-ocr-ground-truth#12
+[2026-11-23 08:24:49] توقف medical-ocr-ground-truth#12 — يُترك للفحص اليدوي
+[2026-11-23 08:24:49] بوابة الجودة: medical-handwriting-ocr#6
+{"mergeStateStatus":"UNSTABLE","mergeable":"MERGEABLE","reviewDecision":"","state":"OPEN"}
+[2026-11-23 08:24:51] رفض: CI غير أخضر على medical-handwriting-ocr#6
+[2026-11-23 08:24:51] توقف medical-handwriting-ocr#6 — يُترك للفحص اليدوي
+[2026-11-23 08:24:51] بوابة الجودة: telegram-tools#16
+{"mergeStateStatus":"CLEAN","mergeable":"MERGEABLE","reviewDecision":"","state":"OPEN"}
+[2026-11-23 08:24:54] DRY-RUN (لن يُنفذ): git -C telegram-tools tag pre-merge/pr-16-20261123 d7b7f31e51b1c1210edefbb991df13b5ea6a906e
+[2026-11-23 08:24:54] نسخة احتياطية: telegram-tools#16 @ d7b7f31 (وسم محلي pre-merge/pr-16-20261123)
+[2026-11-23 08:24:54] DRY-RUN (لن يُنفذ): gh pr merge --repo DrAbdulmalek/telegram-tools 16 --squash --delete-branch=false
+[2026-11-23 08:24:54] MERGED telegram-tools#16 (squash)
+[2026-11-23 08:24:54] بوابة الجودة: radiology-ai-platform#5
+{"mergeStateStatus":"CLEAN","mergeable":"MERGEABLE","reviewDecision":"","state":"OPEN"}
+[2026-11-23 08:24:55] رفض: CI غير أخضر على radiology-ai-platform#5
+[2026-11-23 08:24:55] توقف radiology-ai-platform#5 — يُترك للفحص اليدوي
+[2026-11-23 08:24:55] بوابة الجودة: medical-ocr-demo#6
+{"mergeStateStatus":"CLEAN","mergeable":"MERGEABLE","reviewDecision":"","state":"OPEN"}
+[2026-11-23 08:24:57] رفض: CI غير أخضر على medical-ocr-demo#6
+[2026-11-23 08:24:57] توقف medical-ocr-demo#6 — يُترك للفحص اليدوي
+[2026-11-23 08:24:57] بوابة الجودة: medical-ocr-demo#5
+{"mergeStateStatus":"CLEAN","mergeable":"MERGEABLE","reviewDecision":"","state":"OPEN"}
+[2026-11-23 08:24:59] رفض: CI غير أخضر على medical-ocr-demo#5
+[2026-11-23 08:24:59] توقف medical-ocr-demo#5 — يُترك للفحص اليدوي
+[2026-11-23 08:24:59] بوابة الجودة: reset-net#5
+{"mergeStateStatus":"UNSTABLE","mergeable":"MERGEABLE","reviewDecision":"","state":"OPEN"}
+[2026-11-23 08:25:01] رفض: CI غير أخضر على reset-net#5
+[2026-11-23 08:25:01] توقف reset-net#5 — يُترك للفحص اليدوي
+[2026-11-23 08:25:01] بوابة الجودة: reset-net#4
+{"mergeStateStatus":"UNSTABLE","mergeable":"MERGEABLE","reviewDecision":"","state":"OPEN"}
+[2026-11-23 08:25:03] رفض: CI غير أخضر على reset-net#4
+[2026-11-23 08:25:03] توقف reset-net#4 — يُترك للفحص اليدوي
+[2026-11-23 08:25:03] بوابة الجودة: reset-net#3
+{"mergeStateStatus":"UNSTABLE","mergeable":"MERGEABLE","reviewDecision":"","state":"OPEN"}
+[2026-11-23 08:25:05] رفض: CI غير أخضر على reset-net#3
+[2026-11-23 08:25:05] توقف reset-net#3 — يُترك للفحص اليدوي
+[2026-11-23 08:25:05] بوابة الجودة: translation-core#6
+{"mergeStateStatus":"CLEAN","mergeable":"MERGEABLE","reviewDecision":"","state":"OPEN"}
+[2026-11-23 08:25:08] DRY-RUN (لن يُنفذ): git -C translation-core tag pre-merge/pr-6-20261123 13dd744fd2b4aa98c6677a42412f6ad82f7c69e3
+[2026-11-23 08:25:08] نسخة احتياطية: translation-core#6 @ 13dd744 (وسم محلي pre-merge/pr-6-20261123)
+[2026-11-23 08:25:08] DRY-RUN (لن يُنفذ): gh pr merge --repo DrAbdulmalek/translation-core 6 --squash --delete-branch=false
+[2026-11-23 08:25:08] MERGED translation-core#6 (squash)
+[2026-11-23 08:25:08] بوابة الجودة: medical-rag-ar#3
+{"mergeStateStatus":"CLEAN","mergeable":"MERGEABLE","reviewDecision":"","state":"OPEN"}
+[2026-11-23 08:25:11] DRY-RUN (لن يُنفذ): git -C medical-rag-ar tag pre-merge/pr-3-20261123 dd130669bae771f10619d9d4633d6d237180d6fb
+[2026-11-23 08:25:11] نسخة احتياطية: medical-rag-ar#3 @ dd13066 (وسم محلي pre-merge/pr-3-20261123)
+[2026-11-23 08:25:11] DRY-RUN (لن يُنفذ): gh pr merge --repo DrAbdulmalek/medical-rag-ar 3 --squash --delete-branch=false
+[2026-11-23 08:25:11] MERGED medical-rag-ar#3 (squash)
+[2026-11-23 08:25:11] بوابة الجودة: arabic-medical-handwriting#5
+{"mergeStateStatus":"CLEAN","mergeable":"MERGEABLE","reviewDecision":"","state":"OPEN"}
+[2026-11-23 08:25:13] DRY-RUN (لن يُنفذ): git -C arabic-medical-handwriting tag pre-merge/pr-5-20261123 051c49129b4c8c0f8b97dd4fa64beaa61c7e0656
+[2026-11-23 08:25:14] نسخة احتياطية: arabic-medical-handwriting#5 @ 051c491 (وسم محلي pre-merge/pr-5-20261123)
+[2026-11-23 08:25:14] DRY-RUN (لن يُنفذ): gh pr merge --repo DrAbdulmalek/arabic-medical-handwriting 5 --squash --delete-branch=false
+[2026-11-23 08:25:14] MERGED arabic-medical-handwriting#5 (squash)
+[2026-11-23 08:25:14] بوابة الجودة: omni-medical-dictionaries#9
+{"mergeStateStatus":"CLEAN","mergeable":"MERGEABLE","reviewDecision":"","state":"OPEN"}
+[2026-11-23 08:25:16] DRY-RUN (لن يُنفذ): git -C omni-medical-dictionaries tag pre-merge/pr-9-20261123 15c20be4e26d3986bde93fd8b4c81a68c63d553f
+[2026-11-23 08:25:16] نسخة احتياطية: omni-medical-dictionaries#9 @ 15c20be (وسم محلي pre-merge/pr-9-20261123)
+[2026-11-23 08:25:16] DRY-RUN (لن يُنفذ): gh pr merge --repo DrAbdulmalek/omni-medical-dictionaries 9 --squash --delete-branch=false
+[2026-11-23 08:25:16] MERGED omni-medical-dictionaries#9 (squash)
+[2026-11-23 08:25:16] بوابة الجودة: arabic-medical-glossary#11
+{"mergeStateStatus":"UNKNOWN","mergeable":"UNKNOWN","reviewDecision":"","state":"OPEN"}
+[2026-11-23 08:25:19] DRY-RUN (لن يُنفذ): git -C arabic-medical-glossary tag pre-merge/pr-11-20261123 41fab4e4e3464ab9b23e4baf98e4ce5e3443e2b4
+[2026-11-23 08:25:19] نسخة احتياطية: arabic-medical-glossary#11 @ 41fab4e (وسم محلي pre-merge/pr-11-20261123)
+[2026-11-23 08:25:19] DRY-RUN (لن يُنفذ): gh pr merge --repo DrAbdulmalek/arabic-medical-glossary 11 --squash --delete-branch=false
+[2026-11-23 08:25:19] MERGED arabic-medical-glossary#11 (squash)
+[2026-11-23 08:25:19] بوابة الجودة: marathon-suite#27
+{"mergeStateStatus":"CLEAN","mergeable":"MERGEABLE","reviewDecision":"","state":"OPEN"}
+[2026-11-23 08:25:22] DRY-RUN (لن يُنفذ): git -C marathon-suite tag pre-merge/pr-27-20261123 3075ec5017c9b61545c11c643a7d6e84b392b3a6
+[2026-11-23 08:25:22] نسخة احتياطية: marathon-suite#27 @ 3075ec5 (وسم محلي pre-merge/pr-27-20261123)
+[2026-11-23 08:25:22] DRY-RUN (لن يُنفذ): gh pr merge --repo DrAbdulmalek/marathon-suite 27 --squash --delete-branch=false
+[2026-11-23 08:25:22] MERGED marathon-suite#27 (squash)
+[2026-11-23 08:25:22] بوابة الجودة: ocr-core#69
+{"mergeStateStatus":"CLEAN","mergeable":"MERGEABLE","reviewDecision":"","state":"OPEN"}
+[2026-11-23 08:25:24] DRY-RUN (لن يُنفذ): git -C ocr-core tag pre-merge/pr-69-20261123 89d40551926223c51f8e6a3712bd3cb76ba3e85c
+[2026-11-23 08:25:24] نسخة احتياطية: ocr-core#69 @ 89d4055 (وسم محلي pre-merge/pr-69-20261123)
+[2026-11-23 08:25:24] DRY-RUN (لن يُنفذ): gh pr merge --repo DrAbdulmalek/ocr-core 69 --squash --delete-branch=false
+[2026-11-23 08:25:24] MERGED ocr-core#69 (squash)
+[2026-11-23 08:25:24] بوابة الجودة: omni-medical-suite#161
+{"mergeStateStatus":"CLEAN","mergeable":"MERGEABLE","reviewDecision":"","state":"OPEN"}
+[2026-11-23 08:25:28] DRY-RUN (لن يُنفذ): git -C omni-medical-suite tag pre-merge/pr-161-20261123 5678cb4a42789123b837443fc69208184c2ff1a5
+[2026-11-23 08:25:28] نسخة احتياطية: omni-medical-suite#161 @ 5678cb4 (وسم محلي pre-merge/pr-161-20261123)
+[2026-11-23 08:25:28] DRY-RUN (لن يُنفذ): gh pr merge --repo DrAbdulmalek/omni-medical-suite 161 --squash --delete-branch=false
+[2026-11-23 08:25:28] MERGED omni-medical-suite#161 (squash)
+[2026-11-23 08:25:28] بوابة الجودة: omni-medical-suite#160
+{"mergeStateStatus":"CLEAN","mergeable":"MERGEABLE","reviewDecision":"","state":"OPEN"}
+[2026-11-23 08:25:32] DRY-RUN (لن يُنفذ): git -C omni-medical-suite tag pre-merge/pr-160-20261123 b290d733c7ead94b5eccc7a926dd16118f979a46
+[2026-11-23 08:25:32] نسخة احتياطية: omni-medical-suite#160 @ b290d73 (وسم محلي pre-merge/pr-160-20261123)
+[2026-11-23 08:25:32] DRY-RUN (لن يُنفذ): gh pr merge --repo DrAbdulmalek/omni-medical-suite 160 --squash --delete-branch=false
+[2026-11-23 08:25:32] MERGED omni-medical-suite#160 (squash)
+[2026-11-23 08:25:32] بوابة الجودة: omni-medical-suite#159
+{"mergeStateStatus":"DIRTY","mergeable":"CONFLICTING","reviewDecision":"","state":"OPEN"}
+[2026-11-23 08:25:34] DRY-RUN (لن يُنفذ): git -C omni-medical-suite tag pre-merge/pr-159-20261123 3571ac3a7a039caad5b1aff6d5828e1a0cd71713
+[2026-11-23 08:25:34] نسخة احتياطية: omni-medical-suite#159 @ 3571ac3 (وسم محلي pre-merge/pr-159-20261123)
+[2026-11-23 08:25:34] DRY-RUN (لن يُنفذ): gh pr merge --repo DrAbdulmalek/omni-medical-suite 159 --squash --delete-branch=false
+[2026-11-23 08:25:34] MERGED omni-medical-suite#159 (squash)
+[2026-11-23 08:25:34] بوابة الجودة: omni-medical-suite#157
+{"mergeStateStatus":"CLEAN","mergeable":"MERGEABLE","reviewDecision":"","state":"OPEN"}
+[2026-11-23 08:25:37] DRY-RUN (لن يُنفذ): git -C omni-medical-suite tag pre-merge/pr-157-20261123 dc34fdade19d7d8548e42b56bc82f437fc7d5a84
+[2026-11-23 08:25:37] نسخة احتياطية: omni-medical-suite#157 @ dc34fda (وسم محلي pre-merge/pr-157-20261123)
+[2026-11-23 08:25:37] DRY-RUN (لن يُنفذ): gh pr merge --repo DrAbdulmalek/omni-medical-suite 157 --squash --delete-branch=false
+[2026-11-23 08:25:37] MERGED omni-medical-suite#157 (squash)
+[2026-11-23 08:25:37] بوابة الجودة: omni-medical-suite#156
+{"mergeStateStatus":"CLEAN","mergeable":"MERGEABLE","reviewDecision":"","state":"OPEN"}
+[2026-11-23 08:25:40] DRY-RUN (لن يُنفذ): git -C omni-medical-suite tag pre-merge/pr-156-20261123 a7c913a34d8a22e0e5becaebc67345e58d3f18b8
+[2026-11-23 08:25:40] نسخة احتياطية: omni-medical-suite#156 @ a7c913a (وسم محلي pre-merge/pr-156-20261123)
+[2026-11-23 08:25:40] DRY-RUN (لن يُنفذ): gh pr merge --repo DrAbdulmalek/omni-medical-suite 156 --squash --delete-branch=false
+[2026-11-23 08:25:40] MERGED omni-medical-suite#156 (squash)
+[2026-11-23 08:25:40] بوابة الجودة: omni-medical-suite#155
+{"mergeStateStatus":"CLEAN","mergeable":"MERGEABLE","reviewDecision":"","state":"OPEN"}
+[2026-11-23 08:25:45] DRY-RUN (لن يُنفذ): git -C omni-medical-suite tag pre-merge/pr-155-20261123 5b31eafefe49eff41e748d659121879ad263d577
+[2026-11-23 08:25:45] نسخة احتياطية: omni-medical-suite#155 @ 5b31eaf (وسم محلي pre-merge/pr-155-20261123)
+[2026-11-23 08:25:45] DRY-RUN (لن يُنفذ): gh pr merge --repo DrAbdulmalek/omni-medical-suite 155 --squash --delete-branch=false
+[2026-11-23 08:25:45] MERGED omni-medical-suite#155 (squash)
+[2026-11-23 08:25:45] بوابة الجودة: omni-medical-suite#107
+{"mergeStateStatus":"CLEAN","mergeable":"MERGEABLE","reviewDecision":"","state":"OPEN"}
+[2026-11-23 08:25:49] DRY-RUN (لن يُنفذ): git -C omni-medical-suite tag pre-merge/pr-107-20261123 57b57917f5e727152c4d8206656f25cbec9a23d5
+[2026-11-23 08:25:49] نسخة احتياطية: omni-medical-suite#107 @ 57b5791 (وسم محلي pre-merge/pr-107-20261123)
+[2026-11-23 08:25:49] DRY-RUN (لن يُنفذ): gh pr merge --repo DrAbdulmalek/omni-medical-suite 107 --squash --delete-branch=false
+[2026-11-23 08:25:49] MERGED omni-medical-suite#107 (squash)
+[2026-11-23 08:25:49] بوابة الجودة: omni-medical-suite#83
+{"mergeStateStatus":"UNSTABLE","mergeable":"MERGEABLE","reviewDecision":"","state":"OPEN"}
+[2026-11-23 08:25:51] رفض: CI غير أخضر على omni-medical-suite#83
+[2026-11-23 08:25:51] توقف omni-medical-suite#83 — يُترك للفحص اليدوي
+[2026-11-23 08:25:51] بوابة الجودة: omni-medical-suite#82
+{"mergeStateStatus":"CLEAN","mergeable":"MERGEABLE","reviewDecision":"","state":"OPEN"}
+[2026-11-23 08:25:55] DRY-RUN (لن يُنفذ): git -C omni-medical-suite tag pre-merge/pr-82-20261123 1541d6da24a764c990687093467e821e25e3266c
+[2026-11-23 08:25:55] نسخة احتياطية: omni-medical-suite#82 @ 1541d6d (وسم محلي pre-merge/pr-82-20261123)
+[2026-11-23 08:25:55] DRY-RUN (لن يُنفذ): gh pr merge --repo DrAbdulmalek/omni-medical-suite 82 --squash --delete-branch=false
+[2026-11-23 08:25:55] MERGED omni-medical-suite#82 (squash)
+[2026-11-23 08:25:55] بوابة الجودة: omni-medical-suite#81
+{"mergeStateStatus":"CLEAN","mergeable":"MERGEABLE","reviewDecision":"","state":"OPEN"}
+[2026-11-23 08:25:59] DRY-RUN (لن يُنفذ): git -C omni-medical-suite tag pre-merge/pr-81-20261123 dc792eb79c20639d11e86c4df3686ded3069a303
+[2026-11-23 08:25:59] نسخة احتياطية: omni-medical-suite#81 @ dc792eb (وسم محلي pre-merge/pr-81-20261123)
+[2026-11-23 08:25:59] DRY-RUN (لن يُنفذ): gh pr merge --repo DrAbdulmalek/omni-medical-suite 81 --squash --delete-branch=false
+[2026-11-23 08:25:59] MERGED omni-medical-suite#81 (squash)
+[2026-11-23 08:25:59] بوابة الجودة: omni-medical-suite#78
+{"mergeStateStatus":"CLEAN","mergeable":"MERGEABLE","reviewDecision":"","state":"OPEN"}
+[2026-11-23 08:26:03] DRY-RUN (لن يُنفذ): git -C omni-medical-suite tag pre-merge/pr-78-20261123 a66938f633a8a05668f3d88f8151cb61943dc90a
+[2026-11-23 08:26:03] نسخة احتياطية: omni-medical-suite#78 @ a66938f (وسم محلي pre-merge/pr-78-20261123)
+[2026-11-23 08:26:03] DRY-RUN (لن يُنفذ): gh pr merge --repo DrAbdulmalek/omni-medical-suite 78 --squash --delete-branch=false
+[2026-11-23 08:26:03] MERGED omni-medical-suite#78 (squash)
+[2026-11-23 08:26:03] بوابة الجودة: omni-medical-suite#55
+{"mergeStateStatus":"CLEAN","mergeable":"MERGEABLE","reviewDecision":"","state":"OPEN"}
+[2026-11-23 08:26:05] DRY-RUN (لن يُنفذ): git -C omni-medical-suite tag pre-merge/pr-55-20261123 b2faaa80409d1f3d6429f7064d87e0c47b66cbf4
+[2026-11-23 08:26:06] نسخة احتياطية: omni-medical-suite#55 @ b2faaa8 (وسم محلي pre-merge/pr-55-20261123)
+[2026-11-23 08:26:06] DRY-RUN (لن يُنفذ): gh pr merge --repo DrAbdulmalek/omni-medical-suite 55 --squash --delete-branch=false
+[2026-11-23 08:26:06] MERGED omni-medical-suite#55 (squash)
+[2026-11-23 08:26:06] بوابة الجودة: omni-medical-suite#53
+{"mergeStateStatus":"CLEAN","mergeable":"MERGEABLE","reviewDecision":"","state":"OPEN"}
+[2026-11-23 08:26:09] DRY-RUN (لن يُنفذ): git -C omni-medical-suite tag pre-merge/pr-53-20261123 5c6fb3d80adc2c08f46385a27d80fd3f10b46e87
+[2026-11-23 08:26:09] نسخة احتياطية: omni-medical-suite#53 @ 5c6fb3d (وسم محلي pre-merge/pr-53-20261123)
+[2026-11-23 08:26:09] DRY-RUN (لن يُنفذ): gh pr merge --repo DrAbdulmalek/omni-medical-suite 53 --squash --delete-branch=false
+[2026-11-23 08:26:09] MERGED omni-medical-suite#53 (squash)
+[2026-11-23 08:26:09] بوابة الجودة: marathon_ted_pipeline#35
+{"mergeStateStatus":"CLEAN","mergeable":"MERGEABLE","reviewDecision":"","state":"OPEN"}
+[2026-11-23 08:26:11] DRY-RUN (لن يُنفذ): git -C marathon_ted_pipeline tag pre-merge/pr-35-20261123 0d7d82724d6fc8d99653c3acd855a58374444019
+[2026-11-23 08:26:11] نسخة احتياطية: marathon_ted_pipeline#35 @ 0d7d827 (وسم محلي pre-merge/pr-35-20261123)
+[2026-11-23 08:26:11] DRY-RUN (لن يُنفذ): gh pr merge --repo DrAbdulmalek/marathon_ted_pipeline 35 --squash --delete-branch=false
+[2026-11-23 08:26:11] MERGED marathon_ted_pipeline#35 (squash)
+[2026-11-23 08:26:11] بوابة الجودة: marathon_ted_pipeline#34
+{"mergeStateStatus":"CLEAN","mergeable":"MERGEABLE","reviewDecision":"","state":"OPEN"}
+[2026-11-23 08:26:14] DRY-RUN (لن يُنفذ): git -C marathon_ted_pipeline tag pre-merge/pr-34-20261123 1a8db28a0b4f9a6e49649c7fead5b430e1f3689c
+[2026-11-23 08:26:14] نسخة احتياطية: marathon_ted_pipeline#34 @ 1a8db28 (وسم محلي pre-merge/pr-34-20261123)
+[2026-11-23 08:26:14] DRY-RUN (لن يُنفذ): gh pr merge --repo DrAbdulmalek/marathon_ted_pipeline 34 --squash --delete-branch=false
+[2026-11-23 08:26:14] MERGED marathon_ted_pipeline#34 (squash)
+[2026-11-23 08:26:14] بوابة الجودة: marathon_ted_pipeline#9
+{"mergeStateStatus":"CLEAN","mergeable":"MERGEABLE","reviewDecision":"","state":"OPEN"}
+[2026-11-23 08:26:17] DRY-RUN (لن يُنفذ): git -C marathon_ted_pipeline tag pre-merge/pr-9-20261123 e0aa03eeb41935250054c6cf39222bcacb96e9c7
+[2026-11-23 08:26:17] نسخة احتياطية: marathon_ted_pipeline#9 @ e0aa03e (وسم محلي pre-merge/pr-9-20261123)
+[2026-11-23 08:26:17] DRY-RUN (لن يُنفذ): gh pr merge --repo DrAbdulmalek/marathon_ted_pipeline 9 --squash --delete-branch=false
+[2026-11-23 08:26:17] MERGED marathon_ted_pipeline#9 (squash)
+[2026-11-23 08:26:17] بوابة الجودة: marathon_ted_pipeline#8
+{"mergeStateStatus":"CLEAN","mergeable":"MERGEABLE","reviewDecision":"","state":"OPEN"}
+[2026-11-23 08:26:20] DRY-RUN (لن يُنفذ): git -C marathon_ted_pipeline tag pre-merge/pr-8-20261123 f71305b763503efc0ec0b6031909b5fa809bcf90
+[2026-11-23 08:26:20] نسخة احتياطية: marathon_ted_pipeline#8 @ f71305b (وسم محلي pre-merge/pr-8-20261123)
+[2026-11-23 08:26:20] DRY-RUN (لن يُنفذ): gh pr merge --repo DrAbdulmalek/marathon_ted_pipeline 8 --squash --delete-branch=false
+[2026-11-23 08:26:20] MERGED marathon_ted_pipeline#8 (squash)
+[2026-11-23 08:26:20] بوابة الجودة: marathon_ted_pipeline#4
+{"mergeStateStatus":"CLEAN","mergeable":"MERGEABLE","reviewDecision":"","state":"OPEN"}
+[2026-11-23 08:26:23] DRY-RUN (لن يُنفذ): git -C marathon_ted_pipeline tag pre-merge/pr-4-20261123 d47d133975b6cd60149832be4f18b6e55f5453dc
+[2026-11-23 08:26:23] نسخة احتياطية: marathon_ted_pipeline#4 @ d47d133 (وسم محلي pre-merge/pr-4-20261123)
+[2026-11-23 08:26:23] DRY-RUN (لن يُنفذ): gh pr merge --repo DrAbdulmalek/marathon_ted_pipeline 4 --squash --delete-branch=false
+[2026-11-23 08:26:23] MERGED marathon_ted_pipeline#4 (squash)
+[2026-11-23 08:26:23] بوابة الجودة: marathon_ted_pipeline#3
+{"mergeStateStatus":"CLEAN","mergeable":"MERGEABLE","reviewDecision":"","state":"OPEN"}
+[2026-11-23 08:26:27] DRY-RUN (لن يُنفذ): git -C marathon_ted_pipeline tag pre-merge/pr-3-20261123 a1ec8ef43272b2eeb8f9ea9dc99a94843cacd510
+[2026-11-23 08:26:27] نسخة احتياطية: marathon_ted_pipeline#3 @ a1ec8ef (وسم محلي pre-merge/pr-3-20261123)
+[2026-11-23 08:26:27] DRY-RUN (لن يُنفذ): gh pr merge --repo DrAbdulmalek/marathon_ted_pipeline 3 --squash --delete-branch=false
+[2026-11-23 08:26:27] MERGED marathon_ted_pipeline#3 (squash)
+[2026-11-23 08:26:27] بوابة الجودة: marathon_ted_pipeline#1
+{"mergeStateStatus":"CLEAN","mergeable":"MERGEABLE","reviewDecision":"","state":"OPEN"}
+[2026-11-23 08:26:30] DRY-RUN (لن يُنفذ): git -C marathon_ted_pipeline tag pre-merge/pr-1-20261123 fcc2cc2439670573e025d5c32f45812ee300968a
+[2026-11-23 08:26:30] نسخة احتياطية: marathon_ted_pipeline#1 @ fcc2cc2 (وسم محلي pre-merge/pr-1-20261123)
+[2026-11-23 08:26:30] DRY-RUN (لن يُنفذ): gh pr merge --repo DrAbdulmalek/marathon_ted_pipeline 1 --squash --delete-branch=false
+[2026-11-23 08:26:30] MERGED marathon_ted_pipeline#1 (squash)
+[2026-11-23 08:26:30] بوابة الجودة: medical-ocr-trainer-hf#13
+{"mergeStateStatus":"CLEAN","mergeable":"MERGEABLE","reviewDecision":"","state":"OPEN"}
+[2026-11-23 08:26:33] DRY-RUN (لن يُنفذ): git -C medical-ocr-trainer-hf tag pre-merge/pr-13-20261123 36201abcdeb07bf493dc26889da48dbe5d114c30
+[2026-11-23 08:26:33] نسخة احتياطية: medical-ocr-trainer-hf#13 @ 36201ab (وسم محلي pre-merge/pr-13-20261123)
+[2026-11-23 08:26:33] DRY-RUN (لن يُنفذ): gh pr merge --repo DrAbdulmalek/medical-ocr-trainer-hf 13 --squash --delete-branch=false
+[2026-11-23 08:26:33] MERGED medical-ocr-trainer-hf#13 (squash)
+[2026-11-23 08:26:33] بوابة الجودة: medical-ocr-trainer-hf#12
+{"mergeStateStatus":"CLEAN","mergeable":"MERGEABLE","reviewDecision":"","state":"OPEN"}
+[2026-11-23 08:26:35] DRY-RUN (لن يُنفذ): git -C medical-ocr-trainer-hf tag pre-merge/pr-12-20261123 8de0293630dceb9b4a6b85d5d845eff34947f41a
+[2026-11-23 08:26:35] نسخة احتياطية: medical-ocr-trainer-hf#12 @ 8de0293 (وسم محلي pre-merge/pr-12-20261123)
+[2026-11-23 08:26:35] DRY-RUN (لن يُنفذ): gh pr merge --repo DrAbdulmalek/medical-ocr-trainer-hf 12 --squash --delete-branch=false
+[2026-11-23 08:26:35] MERGED medical-ocr-trainer-hf#12 (squash)
+[2026-11-23 08:26:35] بوابة الجودة: medical-ocr-trainer-hf#11
+{"mergeStateStatus":"CLEAN","mergeable":"MERGEABLE","reviewDecision":"","state":"OPEN"}
+[2026-11-23 08:26:38] DRY-RUN (لن يُنفذ): git -C medical-ocr-trainer-hf tag pre-merge/pr-11-20261123 e204b7324444f334993237f089a2b8a375e88103
+[2026-11-23 08:26:38] نسخة احتياطية: medical-ocr-trainer-hf#11 @ e204b73 (وسم محلي pre-merge/pr-11-20261123)
+[2026-11-23 08:26:38] DRY-RUN (لن يُنفذ): gh pr merge --repo DrAbdulmalek/medical-ocr-trainer-hf 11 --squash --delete-branch=false
+[2026-11-23 08:26:38] MERGED medical-ocr-trainer-hf#11 (squash)
+[2026-11-23 08:26:38] بوابة الجودة: medical-ocr-trainer-hf#8
+{"mergeStateStatus":"UNSTABLE","mergeable":"MERGEABLE","reviewDecision":"","state":"OPEN"}
+[2026-11-23 08:26:40] رفض: CI غير أخضر على medical-ocr-trainer-hf#8
+[2026-11-23 08:26:40] توقف medical-ocr-trainer-hf#8 — يُترك للفحص اليدوي
+[2026-11-23 08:26:40] بوابة الجودة: medical-ocr-trainer-hf#4
+{"mergeStateStatus":"CLEAN","mergeable":"MERGEABLE","reviewDecision":"","state":"OPEN"}
+[2026-11-23 08:26:43] DRY-RUN (لن يُنفذ): git -C medical-ocr-trainer-hf tag pre-merge/pr-4-20261123 86abe03bbdd715c844dc66367e0017f11789bf82
+[2026-11-23 08:26:43] نسخة احتياطية: medical-ocr-trainer-hf#4 @ 86abe03 (وسم محلي pre-merge/pr-4-20261123)
+[2026-11-23 08:26:43] DRY-RUN (لن يُنفذ): gh pr merge --repo DrAbdulmalek/medical-ocr-trainer-hf 4 --squash --delete-branch=false
+[2026-11-23 08:26:43] MERGED medical-ocr-trainer-hf#4 (squash)
+[2026-11-23 08:26:43] انتهت الفئة ج

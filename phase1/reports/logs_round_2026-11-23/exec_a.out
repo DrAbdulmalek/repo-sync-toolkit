@@ -1,0 +1,362 @@
+[2026-11-23 08:27:08] gh جاهز — DRY_RUN=0
+[2026-11-23 08:27:08] === الفئة أ: omni-medical-suite#201 — fix(security): remove python-jose (PYSEC-2026-4298)
+[2026-11-23 08:27:08] بوابة الجودة: omni-medical-suite#201
+{"mergeStateStatus":"CLEAN","mergeable":"MERGEABLE","reviewDecision":"","state":"OPEN"}
+[2026-11-23 08:27:11] EXEC: git -C omni-medical-suite tag pre-merge/pr-201-20261123 47e57ed22737ba3b95c8ef22d8cb230b684dafb5
+Specify one or more comma-separated fields for `--json`:
+  additions
+  assignees
+  author
+  autoMergeRequest
+  baseRefName
+  baseRefOid
+  body
+  changedFiles
+  closed
+  closedAt
+  closingIssuesReferences
+  comments
+  commits
+  createdAt
+  deletions
+  files
+  fullDatabaseId
+  headRefName
+  headRefOid
+  headRepository
+  headRepositoryOwner
+  id
+  isCrossRepository
+  isDraft
+  labels
+  latestReviews
+  maintainerCanModify
+  mergeCommit
+  mergeStateStatus
+  mergeable
+  mergedAt
+  mergedBy
+  milestone
+  number
+  potentialMergeCommit
+  projectCards
+  projectItems
+  reactionGroups
+  reviewDecision
+  reviewRequests
+  reviews
+  state
+  statusCheckRollup
+  title
+  updatedAt
+  url
+[2026-11-23 08:27:11] نسخة احتياطية: omni-medical-suite#201 @ 47e57ed (وسم محلي pre-merge/pr-201-20261123)
+[2026-11-23 08:27:11] EXEC: gh pr merge --repo DrAbdulmalek/omni-medical-suite 201 --merge --delete-branch=false
+[2026-11-23 08:27:15] MERGED omni-medical-suite#201 (merge)
+[2026-11-23 08:27:15] === الفئة أ: omni-medical-suite#102 — harden snapshot exporter against path/symlink escapes
+[2026-11-23 08:27:15] بوابة الجودة: omni-medical-suite#102
+{"mergeStateStatus":"UNKNOWN","mergeable":"UNKNOWN","reviewDecision":"","state":"OPEN"}
+[2026-11-23 08:27:18] EXEC: git -C omni-medical-suite tag pre-merge/pr-102-20261123 b3d1c6206216c6a026d83528792d57c744f8e227
+Specify one or more comma-separated fields for `--json`:
+  additions
+  assignees
+  author
+  autoMergeRequest
+  baseRefName
+  baseRefOid
+  body
+  changedFiles
+  closed
+  closedAt
+  closingIssuesReferences
+  comments
+  commits
+  createdAt
+  deletions
+  files
+  fullDatabaseId
+  headRefName
+  headRefOid
+  headRepository
+  headRepositoryOwner
+  id
+  isCrossRepository
+  isDraft
+  labels
+  latestReviews
+  maintainerCanModify
+  mergeCommit
+  mergeStateStatus
+  mergeable
+  mergedAt
+  mergedBy
+  milestone
+  number
+  potentialMergeCommit
+  projectCards
+  projectItems
+  reactionGroups
+  reviewDecision
+  reviewRequests
+  reviews
+  state
+  statusCheckRollup
+  title
+  updatedAt
+  url
+[2026-11-23 08:27:18] نسخة احتياطية: omni-medical-suite#102 @ b3d1c62 (وسم محلي pre-merge/pr-102-20261123)
+[2026-11-23 08:27:18] EXEC: gh pr merge --repo DrAbdulmalek/omni-medical-suite 102 --merge --delete-branch=false
+X Pull request DrAbdulmalek/omni-medical-suite#102 is not mergeable: the merge commit cannot be cleanly created.
+To have the pull request merged after all the requirements have been met, add the `--auto` flag.
+[2026-11-23 08:27:19] MERGED omni-medical-suite#102 (merge)
+[2026-11-23 08:27:19] === الفئة أ: omni-medical-suite#90 — security fixes: separator, admin auth, deployment
+[2026-11-23 08:27:20] بوابة الجودة: omni-medical-suite#90
+{"mergeStateStatus":"UNKNOWN","mergeable":"UNKNOWN","reviewDecision":"","state":"OPEN"}
+[2026-11-23 08:27:21] رفض: CI غير أخضر على omni-medical-suite#90
+[2026-11-23 08:27:21] توقف omni-medical-suite#90 — راجع سجل البوابة
+[2026-11-23 08:27:21] === الفئة أ: omni-medical-suite#86 — close post-85 deployment and condition-parser gaps
+[2026-11-23 08:27:22] بوابة الجودة: omni-medical-suite#86
+{"mergeStateStatus":"UNKNOWN","mergeable":"UNKNOWN","reviewDecision":"","state":"OPEN"}
+[2026-11-23 08:27:25] EXEC: git -C omni-medical-suite tag pre-merge/pr-86-20261123 8a7e5725569c5ada342241cd0440f245e24cc952
+Specify one or more comma-separated fields for `--json`:
+  additions
+  assignees
+  author
+  autoMergeRequest
+  baseRefName
+  baseRefOid
+  body
+  changedFiles
+  closed
+  closedAt
+  closingIssuesReferences
+  comments
+  commits
+  createdAt
+  deletions
+  files
+  fullDatabaseId
+  headRefName
+  headRefOid
+  headRepository
+  headRepositoryOwner
+  id
+  isCrossRepository
+  isDraft
+  labels
+  latestReviews
+  maintainerCanModify
+  mergeCommit
+  mergeStateStatus
+  mergeable
+  mergedAt
+  mergedBy
+  milestone
+  number
+  potentialMergeCommit
+  projectCards
+  projectItems
+  reactionGroups
+  reviewDecision
+  reviewRequests
+  reviews
+  state
+  statusCheckRollup
+  title
+  updatedAt
+  url
+[2026-11-23 08:27:25] نسخة احتياطية: omni-medical-suite#86 @ 8a7e572 (وسم محلي pre-merge/pr-86-20261123)
+[2026-11-23 08:27:25] EXEC: gh pr merge --repo DrAbdulmalek/omni-medical-suite 86 --merge --delete-branch=false
+X Pull request DrAbdulmalek/omni-medical-suite#86 is not mergeable: the head branch is not up to date with the base branch.
+To have the pull request merged after all the requirements have been met, add the `--auto` flag.
+To use administrator privileges to immediately merge the pull request, add the `--admin` flag.
+[2026-11-23 08:27:26] MERGED omni-medical-suite#86 (merge)
+[2026-11-23 08:27:26] === الفئة أ: omni-medical-suite#132 — HF upload OFF by default + de-identification
+[2026-11-23 08:27:27] بوابة الجودة: omni-medical-suite#132
+{"mergeStateStatus":"UNKNOWN","mergeable":"UNKNOWN","reviewDecision":"","state":"OPEN"}
+[2026-11-23 08:27:29] EXEC: git -C omni-medical-suite tag pre-merge/pr-132-20261123 ce526ddca3fbb3370e06871a85d7f6c8950ebae2
+Specify one or more comma-separated fields for `--json`:
+  additions
+  assignees
+  author
+  autoMergeRequest
+  baseRefName
+  baseRefOid
+  body
+  changedFiles
+  closed
+  closedAt
+  closingIssuesReferences
+  comments
+  commits
+  createdAt
+  deletions
+  files
+  fullDatabaseId
+  headRefName
+  headRefOid
+  headRepository
+  headRepositoryOwner
+  id
+  isCrossRepository
+  isDraft
+  labels
+  latestReviews
+  maintainerCanModify
+  mergeCommit
+  mergeStateStatus
+  mergeable
+  mergedAt
+  mergedBy
+  milestone
+  number
+  potentialMergeCommit
+  projectCards
+  projectItems
+  reactionGroups
+  reviewDecision
+  reviewRequests
+  reviews
+  state
+  statusCheckRollup
+  title
+  updatedAt
+  url
+[2026-11-23 08:27:29] نسخة احتياطية: omni-medical-suite#132 @ ce526dd (وسم محلي pre-merge/pr-132-20261123)
+[2026-11-23 08:27:29] EXEC: gh pr merge --repo DrAbdulmalek/omni-medical-suite 132 --merge --delete-branch=false
+X Pull request DrAbdulmalek/omni-medical-suite#132 is not mergeable: the merge commit cannot be cleanly created.
+To have the pull request merged after all the requirements have been met, add the `--auto` flag.
+[2026-11-23 08:27:30] MERGED omni-medical-suite#132 (merge)
+[2026-11-23 08:27:30] === الفئة أ: omni-medical-suite#131 — SEC-2 env token-shape guard
+[2026-11-23 08:27:31] بوابة الجودة: omni-medical-suite#131
+{"mergeStateStatus":"UNKNOWN","mergeable":"UNKNOWN","reviewDecision":"","state":"OPEN"}
+[2026-11-23 08:27:34] EXEC: git -C omni-medical-suite tag pre-merge/pr-131-20261123 49060f9ef14c56bd68cd6af8932d1cd20690e02e
+Specify one or more comma-separated fields for `--json`:
+  additions
+  assignees
+  author
+  autoMergeRequest
+  baseRefName
+  baseRefOid
+  body
+  changedFiles
+  closed
+  closedAt
+  closingIssuesReferences
+  comments
+  commits
+  createdAt
+  deletions
+  files
+  fullDatabaseId
+  headRefName
+  headRefOid
+  headRepository
+  headRepositoryOwner
+  id
+  isCrossRepository
+  isDraft
+  labels
+  latestReviews
+  maintainerCanModify
+  mergeCommit
+  mergeStateStatus
+  mergeable
+  mergedAt
+  mergedBy
+  milestone
+  number
+  potentialMergeCommit
+  projectCards
+  projectItems
+  reactionGroups
+  reviewDecision
+  reviewRequests
+  reviews
+  state
+  statusCheckRollup
+  title
+  updatedAt
+  url
+[2026-11-23 08:27:35] نسخة احتياطية: omni-medical-suite#131 @ 49060f9 (وسم محلي pre-merge/pr-131-20261123)
+[2026-11-23 08:27:35] EXEC: gh pr merge --repo DrAbdulmalek/omni-medical-suite 131 --merge --delete-branch=false
+X Pull request DrAbdulmalek/omni-medical-suite#131 is not mergeable: the head branch is not up to date with the base branch.
+To have the pull request merged after all the requirements have been met, add the `--auto` flag.
+To use administrator privileges to immediately merge the pull request, add the `--admin` flag.
+[2026-11-23 08:27:35] MERGED omni-medical-suite#131 (merge)
+[2026-11-23 08:27:35] === الفئة أ: omni-medical-suite#130 — quarantine Telegram Forwarder
+[2026-11-23 08:27:36] بوابة الجودة: omni-medical-suite#130
+{"mergeStateStatus":"UNKNOWN","mergeable":"UNKNOWN","reviewDecision":"","state":"OPEN"}
+[2026-11-23 08:27:40] EXEC: git -C omni-medical-suite tag pre-merge/pr-130-20261123 49436813e62dd0c4238ef8e76324f4189cb58480
+Specify one or more comma-separated fields for `--json`:
+  additions
+  assignees
+  author
+  autoMergeRequest
+  baseRefName
+  baseRefOid
+  body
+  changedFiles
+  closed
+  closedAt
+  closingIssuesReferences
+  comments
+  commits
+  createdAt
+  deletions
+  files
+  fullDatabaseId
+  headRefName
+  headRefOid
+  headRepository
+  headRepositoryOwner
+  id
+  isCrossRepository
+  isDraft
+  labels
+  latestReviews
+  maintainerCanModify
+  mergeCommit
+  mergeStateStatus
+  mergeable
+  mergedAt
+  mergedBy
+  milestone
+  number
+  potentialMergeCommit
+  projectCards
+  projectItems
+  reactionGroups
+  reviewDecision
+  reviewRequests
+  reviews
+  state
+  statusCheckRollup
+  title
+  updatedAt
+  url
+[2026-11-23 08:27:40] نسخة احتياطية: omni-medical-suite#130 @ 4943681 (وسم محلي pre-merge/pr-130-20261123)
+[2026-11-23 08:27:40] EXEC: gh pr merge --repo DrAbdulmalek/omni-medical-suite 130 --merge --delete-branch=false
+X Pull request DrAbdulmalek/omni-medical-suite#130 is not mergeable: the head branch is not up to date with the base branch.
+To have the pull request merged after all the requirements have been met, add the `--auto` flag.
+To use administrator privileges to immediately merge the pull request, add the `--admin` flag.
+[2026-11-23 08:27:40] MERGED omni-medical-suite#130 (merge)
+[2026-11-23 08:27:40] === الفحص المستعرض: أسرار في query strings عبر كل المستودعات الأساسية
+[2026-11-23 08:27:40]   omni-medical-suite: نظيف
+scan/intelli-file-manager/src/services/hf_exporter.py:129:        api = HfApi(token=token)
+scan/intelli-file-manager/src/mcp_server/server.py:232:        return self._result(structured, token=token, is_error=not result.success)
+scan/intelli-file-manager/src/mcp_server/server.py:251:        return self._result(structured, token=token, is_error=not result.success)
+scan/intelli-file-manager/src/mcp_server/server.py:323:        return self._result(structured, token=token, is_error=not structured["success"])
+scan/intelli-file-manager/src/mcp_server/server.py:342:                token=token,
+scan/intelli-file-manager/src/mcp_server/server.py:369:            self.store.record(token=token, tool=tool, signal="outcome",
+scan/intelli-file-manager/src/mcp_server/feedback.py:141:                logger.info("إشارة بلا مخزن (ذاكرة فقط): token=%s signal=%s", token, signal)
+scan/ocr-core/src/ocr_core/benchmarks/ci_suite/threshold_checker.py:224:            api.create_repo(repo_id=repo_id, token=hf_token, exist_ok=True)
+scan/ocr-core/src/ocr_core/benchmarks/ci_suite/threshold_checker.py:228:                token=hf_token,
+scan/OmniFile_Processor/src/export.py:251:            login(token=hf_token)
+scan/OmniFile_Processor/src/gradio_ui.py:70:            hf_token=config.hf_token,
+scan/OmniFile_Processor/src/main.py:128:        hf_token=config.hf_token,
+[2026-11-23 08:27:41]   scanner-fixer: نظيف
+[2026-11-23 08:27:41]   medical-rag-ar: نظيف
+[2026-11-23 08:27:41]   marathon-suite: نظيف
+[2026-11-23 08:27:41]   translation-core: نظيف
+[2026-11-23 08:27:41] انتهت الفئة أ
