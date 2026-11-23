@@ -33,8 +33,10 @@ json.dump(safe, open("inventory/dep_safe.json","w"))
 EOF
 
 # دمج الدفعي الآمن واحدًا واحدًا مع البوابة والنسخ الاحتياطي
-for entry in $(python3 -c "import json;[print(f'{r} {n} {h}') for r,n,h,t in json.load(open('inventory/dep_safe.json'))]"); do
-  set -- $entry; repo=$1; pr=$2; head=$3
+# إصلاح 2026-11-23: الحلقة الأصلية كانت تقسم مخرجات $(...) على كلمات لا أسطر
+# (كل $entry كلمة واحدة → $2 unbound تحت set -u). القراءة الصحيحة سطرًا: repo pr head.
+while read -r repo pr head; do
+  [ -z "${repo:-}" ] && continue
   merge_pr "$repo" "$pr" "$head" squash || log "توقف $repo#$pr — يُترك للفحص اليدوي"
-done
+done < <(python3 -c "import json;[print(f'{r} {n} {h}') for r,n,h,t in json.load(open('inventory/dep_safe.json'))]")
 log "انتهت الفئة ج"

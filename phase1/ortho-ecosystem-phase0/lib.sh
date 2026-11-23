@@ -12,7 +12,10 @@ mkdir -p logs backups
 
 log()  { echo "[$(date '+%F %T')] $*" | tee -a "logs/$LOG_FILE"; }
 run()  { # يطبق الأمر فعليًا فقط إذا لم نكن في وضع المحاكاة
-  if [ "$DRY_RUN" = "1" ]; then log "DRY-RUN (لن يُنفذ): $*"; else log "EXEC: $*"; "$@"; fi
+  if [ "$DRY_RUN" = "1" ]; then log "DRY-RUN (لن يُنفذ): $*"; else
+    log "EXEC: $*"
+    if "$@"; then log "EXEC-OK"; else log "EXEC-FAILED (رمز $?)"; return 1; fi
+  fi
 }
 
 gh_api() { gh api "$1" ${2:-}; }   # غلاف موحد للتوثيق والتصحيح
@@ -27,9 +30,11 @@ require_gh() {
 premerge_gate() { # $1=repo $2=pr_number
   local repo="$1" pr="$2"
   log "بوابة الجودة: $repo#$pr"
-  gh pr view "$OWNER/$repo#$pr" --json state,mergeable,mergeStateStatus,reviewDecision \
+  gh pr view --repo "$OWNER/$repo" "$pr" --json state,mergeable,mergeStateStatus,reviewDecision \
     --jq '{state,mergeable,mergeStateStatus,reviewDecision}' | tee -a "logs/$LOG_FILE"
-  if ! gh pr checks "$OWNER/$repo#$pr" --watch --fail-fast >/dev/null 2>&1; then
+  # رقعة 2026-11-23: فحص لحظي واحد بدل --watch (بوابة fail-closed نفسها؛
+  # الـPR الذي CI معلق يُسجل "توقف" ويُعاد في نهاية الجولة — لا انتظار حي)
+  if ! gh pr checks --repo "$OWNER/$repo" "$pr" >/dev/null 2>&1; then
     log "رفض: CI غير أخضر على $repo#$pr"; return 1; fi
 }
 
@@ -41,7 +46,7 @@ backup_pr() { # $1=repo $2=pr_number $3=head_branch
   sha=$(gh api "repos/$OWNER/$repo/commits/$head" --jq .sha)
   echo "$repo#$pr $sha $tag $(date -Iseconds)" >> "backups/backup_manifest.tsv"
   run git -C "$repo" tag "$tag" "$sha" 2>/dev/null || true
-  gh pr view "$OWNER/$repo#$pr" --json > "backups/pr_${repo}_${pr}.json"
+  gh pr view --repo "$OWNER/$repo" "$pr" --json > "backups/pr_${repo}_${pr}.json"
   log "نسخة احتياطية: $repo#$pr @ ${sha:0:7} (وسم محلي $tag)"
 }
 
@@ -49,13 +54,13 @@ merge_pr() { # $1=repo $2=pr_number $3=head_branch $4=طريقة الدمج (mer
   local repo="$1" pr="$2" head="$3" method="${4:-merge}"
   premerge_gate "$repo" "$pr" || return 1
   backup_pr "$repo" "$pr" "$head"
-  run gh pr merge "$OWNER/$repo#$pr" --"$method" --delete-branch=false
+  run gh pr merge --repo "$OWNER/$repo" "$pr" --"$method" --delete-branch=false
   log "MERGED $repo#$pr ($method)"
 }
 
 close_pr() { # $1=repo $2=pr_number $3=سبب بالعربية
   local repo="$1" pr="$2"; shift 2
   local reason="$*"
-  run gh pr close "$OWNER/$repo#$pr" --comment "الإغلاق بقرار موثق من المالك: $reason"
+  run gh pr close --repo "$OWNER/$repo" "$pr" --comment "الإغلاق بقرار موثق من المالك: $reason"
   log "CLOSED $repo#$pr — $reason"
 }

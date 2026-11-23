@@ -1,0 +1,41 @@
+[2026-11-23 08:20:57] gh جاهز — DRY_RUN=1
+[2026-11-23 08:20:57] === الفئة ب-1: intelli-file-manager#78 — مدموج مسبقًا (90b38f0) — تخطٍ
+[2026-11-23 08:20:57] === الفئة ب-2: intelli-file-manager#80
+[2026-11-23 08:20:58] بوابة الجودة: intelli-file-manager#80
+{"mergeStateStatus":"UNKNOWN","mergeable":"UNKNOWN","reviewDecision":"","state":"OPEN"}
+[2026-11-23 08:21:01] DRY-RUN (لن يُنفذ): git -C intelli-file-manager tag pre-merge/pr-80-20261123 427d7996792ba5d2c0d35d00844d276343144335
+[2026-11-23 08:21:01] نسخة احتياطية: intelli-file-manager#80 @ 427d799 (وسم محلي pre-merge/pr-80-20261123)
+[2026-11-23 08:21:01] DRY-RUN (لن يُنفذ): gh pr merge --repo DrAbdulmalek/intelli-file-manager 80 --merge --delete-branch=false
+[2026-11-23 08:21:01] MERGED intelli-file-manager#80 (merge)
+[2026-11-23 08:21:01] === الفئة ب-2: OmniFile_Processor#4
+[2026-11-23 08:21:01] بوابة الجودة: OmniFile_Processor#4
+{"mergeStateStatus":"UNSTABLE","mergeable":"MERGEABLE","reviewDecision":"","state":"OPEN"}
+[2026-11-23 08:21:03] رفض: CI غير أخضر على OmniFile_Processor#4
+[2026-11-23 08:21:03] توقف OmniFile_Processor#4
+[2026-11-23 08:21:03] === الفئة ب-2: ocr-core#71
+[2026-11-23 08:21:04] بوابة الجودة: ocr-core#71
+{"mergeStateStatus":"CLEAN","mergeable":"MERGEABLE","reviewDecision":"","state":"OPEN"}
+[2026-11-23 08:21:06] DRY-RUN (لن يُنفذ): git -C ocr-core tag pre-merge/pr-71-20261123 ed393dfabeb7b6df40a454efa347ad572cd3b97f
+[2026-11-23 08:21:06] نسخة احتياطية: ocr-core#71 @ ed393df (وسم محلي pre-merge/pr-71-20261123)
+[2026-11-23 08:21:06] DRY-RUN (لن يُنفذ): gh pr merge --repo DrAbdulmalek/ocr-core 71 --merge --delete-branch=false
+[2026-11-23 08:21:06] MERGED ocr-core#71 (merge)
+[2026-11-23 08:21:06] === الفئة ب-2: scanner-fixer#6
+[2026-11-23 08:21:07] بوابة الجودة: scanner-fixer#6
+{"mergeStateStatus":"UNSTABLE","mergeable":"MERGEABLE","reviewDecision":"","state":"OPEN"}
+[2026-11-23 08:21:09] رفض: CI غير أخضر على scanner-fixer#6
+[2026-11-23 08:21:09] توقف scanner-fixer#6
+[2026-11-23 08:21:09] === الفئة ب-2: repo-sync-toolkit#12
+[2026-11-23 08:21:10] بوابة الجودة: repo-sync-toolkit#12
+{"mergeStateStatus":"UNKNOWN","mergeable":"UNKNOWN","reviewDecision":"","state":"OPEN"}
+[2026-11-23 08:21:12] رفض: CI غير أخضر على repo-sync-toolkit#12
+[2026-11-23 08:21:12] توقف repo-sync-toolkit#12
+[2026-11-23 08:21:12] === الفئة ب-2: medical-ocr-benchmarks#1
+[2026-11-23 08:21:13] بوابة الجودة: medical-ocr-benchmarks#1
+{"mergeStateStatus":"UNSTABLE","mergeable":"MERGEABLE","reviewDecision":"","state":"OPEN"}
+[2026-11-23 08:21:15] رفض: CI غير أخضر على medical-ocr-benchmarks#1
+[2026-11-23 08:21:15] توقف medical-ocr-benchmarks#1
+[2026-11-23 08:21:15] === بنود التكامل الفوري (تذكير تنفيذي):
+[2026-11-23 08:21:15]   a) سطر gate_text_for_indexing(text, source=str(path)) في RAGEngine.ingest_file — intelli-file-manager/src/core/rag_engine.py
+[2026-11-23 08:21:15]   b) ربط merge_into_gate_report() في scripts/run_all_benchmarks.py — medical-ocr-benchmarks
+[2026-11-23 08:21:15] ملاحظة: البندان يُطبقان عبر فرع fix/integration-* وPR منفصل لكل منهما (قاعدة مسار PR الإلزامية).
+[2026-11-23 08:21:15] انتهت الفئة ب

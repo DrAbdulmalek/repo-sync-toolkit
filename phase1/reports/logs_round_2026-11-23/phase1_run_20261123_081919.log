@@ -1,0 +1,67 @@
+[2026-11-23 08:19:20] gh جاهز — DRY_RUN=1
+[2026-11-23 08:19:20] === الفئة أ: omni-medical-suite#201 — fix(security): remove python-jose (PYSEC-2026-4298)
+[2026-11-23 08:19:20] بوابة الجودة: omni-medical-suite#201
+{"mergeStateStatus":"CLEAN","mergeable":"MERGEABLE","reviewDecision":"","state":"OPEN"}
+[2026-11-23 08:19:24] DRY-RUN (لن يُنفذ): git -C omni-medical-suite tag pre-merge/pr-201-20261123 47e57ed22737ba3b95c8ef22d8cb230b684dafb5
+[2026-11-23 08:19:24] نسخة احتياطية: omni-medical-suite#201 @ 47e57ed (وسم محلي pre-merge/pr-201-20261123)
+[2026-11-23 08:19:24] DRY-RUN (لن يُنفذ): gh pr merge --repo DrAbdulmalek/omni-medical-suite 201 --merge --delete-branch=false
+[2026-11-23 08:19:24] MERGED omni-medical-suite#201 (merge)
+[2026-11-23 08:19:24] === الفئة أ: omni-medical-suite#102 — harden snapshot exporter against path/symlink escapes
+[2026-11-23 08:19:24] بوابة الجودة: omni-medical-suite#102
+{"mergeStateStatus":"DIRTY","mergeable":"CONFLICTING","reviewDecision":"","state":"OPEN"}
+[2026-11-23 08:19:27] DRY-RUN (لن يُنفذ): git -C omni-medical-suite tag pre-merge/pr-102-20261123 b3d1c6206216c6a026d83528792d57c744f8e227
+[2026-11-23 08:19:27] نسخة احتياطية: omni-medical-suite#102 @ b3d1c62 (وسم محلي pre-merge/pr-102-20261123)
+[2026-11-23 08:19:27] DRY-RUN (لن يُنفذ): gh pr merge --repo DrAbdulmalek/omni-medical-suite 102 --merge --delete-branch=false
+[2026-11-23 08:19:27] MERGED omni-medical-suite#102 (merge)
+[2026-11-23 08:19:27] === الفئة أ: omni-medical-suite#90 — security fixes: separator, admin auth, deployment
+[2026-11-23 08:19:27] بوابة الجودة: omni-medical-suite#90
+{"mergeStateStatus":"DIRTY","mergeable":"CONFLICTING","reviewDecision":"","state":"OPEN"}
+[2026-11-23 08:19:29] رفض: CI غير أخضر على omni-medical-suite#90
+[2026-11-23 08:19:29] توقف omni-medical-suite#90 — راجع سجل البوابة
+[2026-11-23 08:19:29] === الفئة أ: omni-medical-suite#86 — close post-85 deployment and condition-parser gaps
+[2026-11-23 08:19:30] بوابة الجودة: omni-medical-suite#86
+{"mergeStateStatus":"CLEAN","mergeable":"MERGEABLE","reviewDecision":"","state":"OPEN"}
+[2026-11-23 08:19:34] DRY-RUN (لن يُنفذ): git -C omni-medical-suite tag pre-merge/pr-86-20261123 8a7e5725569c5ada342241cd0440f245e24cc952
+[2026-11-23 08:19:34] نسخة احتياطية: omni-medical-suite#86 @ 8a7e572 (وسم محلي pre-merge/pr-86-20261123)
+[2026-11-23 08:19:34] DRY-RUN (لن يُنفذ): gh pr merge --repo DrAbdulmalek/omni-medical-suite 86 --merge --delete-branch=false
+[2026-11-23 08:19:34] MERGED omni-medical-suite#86 (merge)
+[2026-11-23 08:19:34] === الفئة أ: omni-medical-suite#132 — HF upload OFF by default + de-identification
+[2026-11-23 08:19:34] بوابة الجودة: omni-medical-suite#132
+{"mergeStateStatus":"DIRTY","mergeable":"CONFLICTING","reviewDecision":"","state":"OPEN"}
+[2026-11-23 08:19:37] DRY-RUN (لن يُنفذ): git -C omni-medical-suite tag pre-merge/pr-132-20261123 ce526ddca3fbb3370e06871a85d7f6c8950ebae2
+[2026-11-23 08:19:37] نسخة احتياطية: omni-medical-suite#132 @ ce526dd (وسم محلي pre-merge/pr-132-20261123)
+[2026-11-23 08:19:37] DRY-RUN (لن يُنفذ): gh pr merge --repo DrAbdulmalek/omni-medical-suite 132 --merge --delete-branch=false
+[2026-11-23 08:19:37] MERGED omni-medical-suite#132 (merge)
+[2026-11-23 08:19:37] === الفئة أ: omni-medical-suite#131 — SEC-2 env token-shape guard
+[2026-11-23 08:19:37] بوابة الجودة: omni-medical-suite#131
+{"mergeStateStatus":"CLEAN","mergeable":"MERGEABLE","reviewDecision":"","state":"OPEN"}
+[2026-11-23 08:19:42] DRY-RUN (لن يُنفذ): git -C omni-medical-suite tag pre-merge/pr-131-20261123 49060f9ef14c56bd68cd6af8932d1cd20690e02e
+[2026-11-23 08:19:42] نسخة احتياطية: omni-medical-suite#131 @ 49060f9 (وسم محلي pre-merge/pr-131-20261123)
+[2026-11-23 08:19:42] DRY-RUN (لن يُنفذ): gh pr merge --repo DrAbdulmalek/omni-medical-suite 131 --merge --delete-branch=false
+[2026-11-23 08:19:42] MERGED omni-medical-suite#131 (merge)
+[2026-11-23 08:19:42] === الفئة أ: omni-medical-suite#130 — quarantine Telegram Forwarder
+[2026-11-23 08:19:42] بوابة الجودة: omni-medical-suite#130
+{"mergeStateStatus":"CLEAN","mergeable":"MERGEABLE","reviewDecision":"","state":"OPEN"}
+[2026-11-23 08:19:46] DRY-RUN (لن يُنفذ): git -C omni-medical-suite tag pre-merge/pr-130-20261123 49436813e62dd0c4238ef8e76324f4189cb58480
+[2026-11-23 08:19:46] نسخة احتياطية: omni-medical-suite#130 @ 4943681 (وسم محلي pre-merge/pr-130-20261123)
+[2026-11-23 08:19:46] DRY-RUN (لن يُنفذ): gh pr merge --repo DrAbdulmalek/omni-medical-suite 130 --merge --delete-branch=false
+[2026-11-23 08:19:46] MERGED omni-medical-suite#130 (merge)
+[2026-11-23 08:19:46] === الفحص المستعرض: أسرار في query strings عبر كل المستودعات الأساسية
+[2026-11-23 08:20:01]   omni-medical-suite: نظيف
+scan/intelli-file-manager/src/services/hf_exporter.py:129:        api = HfApi(token=token)
+scan/intelli-file-manager/src/mcp_server/server.py:232:        return self._result(structured, token=token, is_error=not result.success)
+scan/intelli-file-manager/src/mcp_server/server.py:251:        return self._result(structured, token=token, is_error=not result.success)
+scan/intelli-file-manager/src/mcp_server/server.py:323:        return self._result(structured, token=token, is_error=not structured["success"])
+scan/intelli-file-manager/src/mcp_server/server.py:342:                token=token,
+scan/intelli-file-manager/src/mcp_server/server.py:369:            self.store.record(token=token, tool=tool, signal="outcome",
+scan/intelli-file-manager/src/mcp_server/feedback.py:141:                logger.info("إشارة بلا مخزن (ذاكرة فقط): token=%s signal=%s", token, signal)
+scan/ocr-core/src/ocr_core/benchmarks/ci_suite/threshold_checker.py:224:            api.create_repo(repo_id=repo_id, token=hf_token, exist_ok=True)
+scan/ocr-core/src/ocr_core/benchmarks/ci_suite/threshold_checker.py:228:                token=hf_token,
+scan/OmniFile_Processor/src/export.py:251:            login(token=hf_token)
+scan/OmniFile_Processor/src/gradio_ui.py:70:            hf_token=config.hf_token,
+scan/OmniFile_Processor/src/main.py:128:        hf_token=config.hf_token,
+[2026-11-23 08:20:10]   scanner-fixer: نظيف
+[2026-11-23 08:20:11]   medical-rag-ar: نظيف
+[2026-11-23 08:20:12]   marathon-suite: نظيف
+[2026-11-23 08:20:13]   translation-core: نظيف
+[2026-11-23 08:20:13] انتهت الفئة أ

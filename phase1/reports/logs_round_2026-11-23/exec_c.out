@@ -1,0 +1,1855 @@
+[2026-11-23 08:31:04] gh جاهز — DRY_RUN=0
+SAFE (دفعي): 46
+   ('medical-ocr-trainer', 6, 'dependabot/pip/python-levenshtein-gte-0.27.5', 'chore(deps): update python-levenshtein requirement from >=0.21.0 to >=0.27.5')
+   ('medical-ocr-trainer', 5, 'dependabot/github_actions/actions/setup-python-7', 'chore(deps): bump actions/setup-python from 5 to 7')
+   ('medical-ocr-ground-truth', 15, 'dependabot/pip/pandas-gte-3.1.1', 'chore(deps): update pandas requirement from >=2.0.0 to >=3.1.1')
+   ('medical-ocr-ground-truth', 14, 'dependabot/pip/pytesseract-gte-0.3.13', 'chore(deps): update pytesseract requirement from >=0.3.10 to >=0.3.13')
+   ('medical-ocr-ground-truth', 13, 'dependabot/pip/tqdm-gte-4.70.1', 'chore(deps): update tqdm requirement from >=4.65.0 to >=4.70.1')
+   ('medical-ocr-ground-truth', 12, 'dependabot/github_actions/actions/setup-python-7', 'chore(deps): bump actions/setup-python from 5 to 7')
+   ('medical-handwriting-ocr', 6, 'dependabot/pip/tiktoken-0.14.0', 'chore(deps): bump tiktoken from 0.8.0 to 0.14.0')
+   ('telegram-tools', 16, 'dependabot/pip/telethon-gte-1.46.0', 'chore(deps): update telethon requirement from >=1.36.0 to >=1.46.0')
+   ('radiology-ai-platform', 5, 'dependabot/pip/pip-minor-patch-872bd2d795', 'chore(deps): bump the pip-minor-patch group across 1 directory with 55 updates')
+   ('medical-ocr-demo', 6, 'dependabot/pip/opencv-python-headless-gte-5.1.0.95', 'chore(deps): update opencv-python-headless requirement from >=4.8.0 to >=5.1.0.95')
+   ('medical-ocr-demo', 5, 'dependabot/pip/pillow-gte-13.0.0', 'chore(deps): update pillow requirement from >=10.0.0 to >=13.0.0')
+   ('reset-net', 5, 'dependabot/github_actions/softprops/action-gh-release-3', 'ci: bump softprops/action-gh-release from 2 to 3')
+   ('reset-net', 4, 'dependabot/github_actions/actions/checkout-7', 'ci: bump actions/checkout from 4 to 7')
+   ('reset-net', 3, 'dependabot/github_actions/actions/setup-python-7', 'ci: bump actions/setup-python from 5 to 7')
+   ('translation-core', 6, 'dependabot/github_actions/actions/checkout-7', 'ci: bump actions/checkout from 4 to 7')
+   ('medical-rag-ar', 3, 'dependabot/github_actions/actions/setup-python-7', 'ci: bump actions/setup-python from 5 to 7')
+   ('arabic-medical-handwriting', 5, 'dependabot/github_actions/actions/checkout-7', 'ci: bump actions/checkout from 4 to 7')
+   ('omni-medical-dictionaries', 9, 'dependabot/pip/selenium-gte-4.53.0', 'chore(deps): update selenium requirement from >=4.15.0 to >=4.53.0')
+   ('arabic-medical-glossary', 11, 'dependabot/pip/pydantic-gte-2.14.3', 'chore(deps): update pydantic requirement from >=2.0.0 to >=2.14.3')
+   ('marathon-suite', 27, 'dependabot/github_actions/actions/checkout-7', 'ci: bump actions/checkout from 4 to 7')
+   ('ocr-core', 69, 'dependabot/github_actions/actions/setup-python-7', 'ci: bump actions/setup-python from 5 to 7')
+   ('omni-medical-suite', 161, 'dependabot/pip/sqlalchemy-gte-2.0.54', 'chore(deps): update sqlalchemy requirement from >=2.0.51 to >=2.0.54')
+   ('omni-medical-suite', 160, 'dependabot/pip/filelock-gte-4.0.5', 'chore(deps): update filelock requirement from >=3.31.0 to >=4.0.9')
+   ('omni-medical-suite', 159, 'dependabot/pip/huggingface-hub-gte-0.19.0-and-lt-3.0.0', 'chore(deps): update huggingface-hub requirement from <1.0.0,>=0.19.0 to >=0.19.0,<3.0.0')
+   ('omni-medical-suite', 157, 'dependabot/github_actions/actions/cache-6', 'chore(deps): bump actions/cache from 4 to 6')
+   ('omni-medical-suite', 156, 'dependabot/github_actions/actions/setup-java-6', 'chore(deps): bump actions/setup-java from 4 to 6')
+   ('omni-medical-suite', 155, 'dependabot/github_actions/actions/setup-python-7', 'chore(deps): bump actions/setup-python from 5 to 7')
+   ('omni-medical-suite', 107, 'dependabot/pip/click-gte-8.5.0', 'chore(deps): update click requirement from >=8.0 to >=8.5.0')
+   ('omni-medical-suite', 83, 'dependabot/pip/pdfplumber-gte-0.11.10', 'chore(deps): update pdfplumber requirement from >=0.9.0 to >=0.11.10')
+   ('omni-medical-suite', 82, 'dependabot/pip/numpy-gte-1.24.0-and-lt-3.0.0', 'chore(deps): update numpy requirement from <2.0.0,>=1.24.0 to >=1.24.0,<3.0.0')
+   ('omni-medical-suite', 81, 'dependabot/pip/img2pdf-gte-0.6.3', 'chore(deps): update img2pdf requirement from >=0.4.4 to >=0.6.3')
+   ('omni-medical-suite', 78, 'dependabot/pip/prometheus-fastapi-instrumentator-gte-8.1.0', 'chore(deps): update prometheus-fastapi-instrumentator requirement from >=7.0.0 to >=8.1.0')
+   ('omni-medical-suite', 55, 'dependabot/github_actions/docker/metadata-action-6', 'chore(deps): bump docker/metadata-action from 5 to 6')
+   ('omni-medical-suite', 53, 'dependabot/github_actions/actions/upload-artifact-7', 'chore(deps): bump actions/upload-artifact from 4 to 7')
+   ('marathon_ted_pipeline', 35, 'dependabot/pip/python-bidi-gte-0.6.12', 'chore(deps): update python-bidi requirement from >=0.4.2 to >=0.6.12')
+   ('marathon_ted_pipeline', 34, 'dependabot/pip/nltk-gte-3.10.4', 'chore(deps): update nltk requirement from >=3.8.1 to >=3.10.4')
+   ('marathon_ted_pipeline', 9, 'dependabot/github_actions/codecov/codecov-action-7', 'Bump codecov/codecov-action from 4 to 7')
+   ('marathon_ted_pipeline', 8, 'dependabot/github_actions/docker/metadata-action-6', 'Bump docker/metadata-action from 5 to 6')
+   ('marathon_ted_pipeline', 4, 'dependabot/github_actions/docker/login-action-4', 'Bump docker/login-action from 3 to 4')
+   ('marathon_ted_pipeline', 3, 'dependabot/github_actions/docker/setup-buildx-action-4', 'Bump docker/setup-buildx-action from 3 to 4')
+   ('marathon_ted_pipeline', 1, 'dependabot/github_actions/appleboy/ssh-action-1.2.5', 'Bump appleboy/ssh-action from 1.0.3 to 1.2.5')
+   ('medical-ocr-trainer-hf', 13, 'dependabot/pip/python-levenshtein-gte-0.27.5', 'chore(deps): update python-levenshtein requirement from >=0.21.0 to >=0.27.5')
+   ('medical-ocr-trainer-hf', 12, 'dependabot/pip/paddlepaddle-gte-3.3.1', 'chore(deps): update paddlepaddle requirement from >=2.5.0 to >=3.3.1')
+   ('medical-ocr-trainer-hf', 11, 'dependabot/pip/easyocr-gte-1.7.2', 'chore(deps): update easyocr requirement from >=1.7.0 to >=1.7.2')
+   ('medical-ocr-trainer-hf', 8, 'dependabot/pip/opencv-python-headless-gte-5.1.0.95', 'chore(deps): update opencv-python-headless requirement from >=4.8.0 to >=5.1.0.95')
+   ('medical-ocr-trainer-hf', 4, 'dependabot/github_actions/actions/setup-python-7', 'ci: bump actions/setup-python from 5 to 7')
+BIG (يدوي): 5
+   ('medical-ocr-demo', 4, 'chore(deps): update paddleocr requirement from >=2.7.0 to >=3.7.0')
+   ('omni-medical-suite', 158, 'chore(deps): update gradio requirement from <5.0.0,>=4.44.0 to >=4.44.0,<7.0.0')
+   ('omni-medical-suite', 84, 'chore(deps): update pydantic requirement from <2.11,>=2.0.0 to >=2.0.0,<2.14')
+   ('marathon_ted_pipeline', 32, 'chore(deps): bump python from 3.11-slim to 3.15-slim')
+   ('medical-ocr-trainer-hf', 9, 'chore(deps): update numpy requirement from <2.0.0,>=1.24.0 to >=2.5.5,<3.0.0')
+[2026-11-23 08:31:04] بوابة الجودة: medical-ocr-trainer#6
+{"mergeStateStatus":"UNSTABLE","mergeable":"MERGEABLE","reviewDecision":"","state":"OPEN"}
+[2026-11-23 08:31:06] رفض: CI غير أخضر على medical-ocr-trainer#6
+[2026-11-23 08:31:06] توقف medical-ocr-trainer#6 — يُترك للفحص اليدوي
+[2026-11-23 08:31:06] بوابة الجودة: medical-ocr-trainer#5
+{"mergeStateStatus":"UNSTABLE","mergeable":"MERGEABLE","reviewDecision":"","state":"OPEN"}
+[2026-11-23 08:31:08] رفض: CI غير أخضر على medical-ocr-trainer#5
+[2026-11-23 08:31:08] توقف medical-ocr-trainer#5 — يُترك للفحص اليدوي
+[2026-11-23 08:31:08] بوابة الجودة: medical-ocr-ground-truth#15
+{"mergeStateStatus":"UNSTABLE","mergeable":"MERGEABLE","reviewDecision":"","state":"OPEN"}
+[2026-11-23 08:31:10] رفض: CI غير أخضر على medical-ocr-ground-truth#15
+[2026-11-23 08:31:10] توقف medical-ocr-ground-truth#15 — يُترك للفحص اليدوي
+[2026-11-23 08:31:10] بوابة الجودة: medical-ocr-ground-truth#14
+{"mergeStateStatus":"UNSTABLE","mergeable":"MERGEABLE","reviewDecision":"","state":"OPEN"}
+[2026-11-23 08:31:12] رفض: CI غير أخضر على medical-ocr-ground-truth#14
+[2026-11-23 08:31:12] توقف medical-ocr-ground-truth#14 — يُترك للفحص اليدوي
+[2026-11-23 08:31:12] بوابة الجودة: medical-ocr-ground-truth#13
+{"mergeStateStatus":"UNSTABLE","mergeable":"MERGEABLE","reviewDecision":"","state":"OPEN"}
+[2026-11-23 08:31:14] رفض: CI غير أخضر على medical-ocr-ground-truth#13
+[2026-11-23 08:31:14] توقف medical-ocr-ground-truth#13 — يُترك للفحص اليدوي
+[2026-11-23 08:31:14] بوابة الجودة: medical-ocr-ground-truth#12
+{"mergeStateStatus":"UNSTABLE","mergeable":"MERGEABLE","reviewDecision":"","state":"OPEN"}
+[2026-11-23 08:31:16] رفض: CI غير أخضر على medical-ocr-ground-truth#12
+[2026-11-23 08:31:16] توقف medical-ocr-ground-truth#12 — يُترك للفحص اليدوي
+[2026-11-23 08:31:16] بوابة الجودة: medical-handwriting-ocr#6
+{"mergeStateStatus":"UNSTABLE","mergeable":"MERGEABLE","reviewDecision":"","state":"OPEN"}
+[2026-11-23 08:31:18] رفض: CI غير أخضر على medical-handwriting-ocr#6
+[2026-11-23 08:31:18] توقف medical-handwriting-ocr#6 — يُترك للفحص اليدوي
+[2026-11-23 08:31:18] بوابة الجودة: telegram-tools#16
+{"mergeStateStatus":"CLEAN","mergeable":"MERGEABLE","reviewDecision":"","state":"OPEN"}
+[2026-11-23 08:31:20] EXEC: git -C telegram-tools tag pre-merge/pr-16-20261123 d7b7f31e51b1c1210edefbb991df13b5ea6a906e
+[2026-11-23 08:31:20] EXEC-FAILED (رمز 128)
+Specify one or more comma-separated fields for `--json`:
+  additions
+  assignees
+  author
+  autoMergeRequest
+  baseRefName
+  baseRefOid
+  body
+  changedFiles
+  closed
+  closedAt
+  closingIssuesReferences
+  comments
+  commits
+  createdAt
+  deletions
+  files
+  fullDatabaseId
+  headRefName
+  headRefOid
+  headRepository
+  headRepositoryOwner
+  id
+  isCrossRepository
+  isDraft
+  labels
+  latestReviews
+  maintainerCanModify
+  mergeCommit
+  mergeStateStatus
+  mergeable
+  mergedAt
+  mergedBy
+  milestone
+  number
+  potentialMergeCommit
+  projectCards
+  projectItems
+  reactionGroups
+  reviewDecision
+  reviewRequests
+  reviews
+  state
+  statusCheckRollup
+  title
+  updatedAt
+  url
+[2026-11-23 08:31:20] نسخة احتياطية: telegram-tools#16 @ d7b7f31 (وسم محلي pre-merge/pr-16-20261123)
+[2026-11-23 08:31:20] EXEC: gh pr merge --repo DrAbdulmalek/telegram-tools 16 --squash --delete-branch=false
+[2026-11-23 08:31:23] EXEC-OK
+[2026-11-23 08:31:23] MERGED telegram-tools#16 (squash)
+[2026-11-23 08:31:23] بوابة الجودة: radiology-ai-platform#5
+{"mergeStateStatus":"CLEAN","mergeable":"MERGEABLE","reviewDecision":"","state":"OPEN"}
+[2026-11-23 08:31:25] رفض: CI غير أخضر على radiology-ai-platform#5
+[2026-11-23 08:31:25] توقف radiology-ai-platform#5 — يُترك للفحص اليدوي
+[2026-11-23 08:31:25] بوابة الجودة: medical-ocr-demo#6
+{"mergeStateStatus":"CLEAN","mergeable":"MERGEABLE","reviewDecision":"","state":"OPEN"}
+[2026-11-23 08:31:27] رفض: CI غير أخضر على medical-ocr-demo#6
+[2026-11-23 08:31:27] توقف medical-ocr-demo#6 — يُترك للفحص اليدوي
+[2026-11-23 08:31:27] بوابة الجودة: medical-ocr-demo#5
+{"mergeStateStatus":"CLEAN","mergeable":"MERGEABLE","reviewDecision":"","state":"OPEN"}
+[2026-11-23 08:31:28] رفض: CI غير أخضر على medical-ocr-demo#5
+[2026-11-23 08:31:28] توقف medical-ocr-demo#5 — يُترك للفحص اليدوي
+[2026-11-23 08:31:28] بوابة الجودة: reset-net#5
+{"mergeStateStatus":"UNSTABLE","mergeable":"MERGEABLE","reviewDecision":"","state":"OPEN"}
+[2026-11-23 08:31:30] رفض: CI غير أخضر على reset-net#5
+[2026-11-23 08:31:30] توقف reset-net#5 — يُترك للفحص اليدوي
+[2026-11-23 08:31:30] بوابة الجودة: reset-net#4
+{"mergeStateStatus":"UNSTABLE","mergeable":"MERGEABLE","reviewDecision":"","state":"OPEN"}
+[2026-11-23 08:31:33] رفض: CI غير أخضر على reset-net#4
+[2026-11-23 08:31:33] توقف reset-net#4 — يُترك للفحص اليدوي
+[2026-11-23 08:31:33] بوابة الجودة: reset-net#3
+{"mergeStateStatus":"UNSTABLE","mergeable":"MERGEABLE","reviewDecision":"","state":"OPEN"}
+[2026-11-23 08:31:34] رفض: CI غير أخضر على reset-net#3
+[2026-11-23 08:31:34] توقف reset-net#3 — يُترك للفحص اليدوي
+[2026-11-23 08:31:34] بوابة الجودة: translation-core#6
+{"mergeStateStatus":"CLEAN","mergeable":"MERGEABLE","reviewDecision":"","state":"OPEN"}
+[2026-11-23 08:31:36] EXEC: git -C translation-core tag pre-merge/pr-6-20261123 13dd744fd2b4aa98c6677a42412f6ad82f7c69e3
+[2026-11-23 08:31:36] EXEC-FAILED (رمز 128)
+Specify one or more comma-separated fields for `--json`:
+  additions
+  assignees
+  author
+  autoMergeRequest
+  baseRefName
+  baseRefOid
+  body
+  changedFiles
+  closed
+  closedAt
+  closingIssuesReferences
+  comments
+  commits
+  createdAt
+  deletions
+  files
+  fullDatabaseId
+  headRefName
+  headRefOid
+  headRepository
+  headRepositoryOwner
+  id
+  isCrossRepository
+  isDraft
+  labels
+  latestReviews
+  maintainerCanModify
+  mergeCommit
+  mergeStateStatus
+  mergeable
+  mergedAt
+  mergedBy
+  milestone
+  number
+  potentialMergeCommit
+  projectCards
+  projectItems
+  reactionGroups
+  reviewDecision
+  reviewRequests
+  reviews
+  state
+  statusCheckRollup
+  title
+  updatedAt
+  url
+[2026-11-23 08:31:36] نسخة احتياطية: translation-core#6 @ 13dd744 (وسم محلي pre-merge/pr-6-20261123)
+[2026-11-23 08:31:36] EXEC: gh pr merge --repo DrAbdulmalek/translation-core 6 --squash --delete-branch=false
+[2026-11-23 08:31:40] EXEC-OK
+[2026-11-23 08:31:40] MERGED translation-core#6 (squash)
+[2026-11-23 08:31:40] بوابة الجودة: medical-rag-ar#3
+{"mergeStateStatus":"CLEAN","mergeable":"MERGEABLE","reviewDecision":"","state":"OPEN"}
+[2026-11-23 08:31:42] EXEC: git -C medical-rag-ar tag pre-merge/pr-3-20261123 dd130669bae771f10619d9d4633d6d237180d6fb
+[2026-11-23 08:31:42] EXEC-FAILED (رمز 128)
+Specify one or more comma-separated fields for `--json`:
+  additions
+  assignees
+  author
+  autoMergeRequest
+  baseRefName
+  baseRefOid
+  body
+  changedFiles
+  closed
+  closedAt
+  closingIssuesReferences
+  comments
+  commits
+  createdAt
+  deletions
+  files
+  fullDatabaseId
+  headRefName
+  headRefOid
+  headRepository
+  headRepositoryOwner
+  id
+  isCrossRepository
+  isDraft
+  labels
+  latestReviews
+  maintainerCanModify
+  mergeCommit
+  mergeStateStatus
+  mergeable
+  mergedAt
+  mergedBy
+  milestone
+  number
+  potentialMergeCommit
+  projectCards
+  projectItems
+  reactionGroups
+  reviewDecision
+  reviewRequests
+  reviews
+  state
+  statusCheckRollup
+  title
+  updatedAt
+  url
+[2026-11-23 08:31:42] نسخة احتياطية: medical-rag-ar#3 @ dd13066 (وسم محلي pre-merge/pr-3-20261123)
+[2026-11-23 08:31:42] EXEC: gh pr merge --repo DrAbdulmalek/medical-rag-ar 3 --squash --delete-branch=false
+[2026-11-23 08:31:46] EXEC-OK
+[2026-11-23 08:31:46] MERGED medical-rag-ar#3 (squash)
+[2026-11-23 08:31:46] بوابة الجودة: arabic-medical-handwriting#5
+{"mergeStateStatus":"CLEAN","mergeable":"MERGEABLE","reviewDecision":"","state":"OPEN"}
+[2026-11-23 08:31:48] EXEC: git -C arabic-medical-handwriting tag pre-merge/pr-5-20261123 051c49129b4c8c0f8b97dd4fa64beaa61c7e0656
+[2026-11-23 08:31:48] EXEC-FAILED (رمز 128)
+Specify one or more comma-separated fields for `--json`:
+  additions
+  assignees
+  author
+  autoMergeRequest
+  baseRefName
+  baseRefOid
+  body
+  changedFiles
+  closed
+  closedAt
+  closingIssuesReferences
+  comments
+  commits
+  createdAt
+  deletions
+  files
+  fullDatabaseId
+  headRefName
+  headRefOid
+  headRepository
+  headRepositoryOwner
+  id
+  isCrossRepository
+  isDraft
+  labels
+  latestReviews
+  maintainerCanModify
+  mergeCommit
+  mergeStateStatus
+  mergeable
+  mergedAt
+  mergedBy
+  milestone
+  number
+  potentialMergeCommit
+  projectCards
+  projectItems
+  reactionGroups
+  reviewDecision
+  reviewRequests
+  reviews
+  state
+  statusCheckRollup
+  title
+  updatedAt
+  url
+[2026-11-23 08:31:48] نسخة احتياطية: arabic-medical-handwriting#5 @ 051c491 (وسم محلي pre-merge/pr-5-20261123)
+[2026-11-23 08:31:48] EXEC: gh pr merge --repo DrAbdulmalek/arabic-medical-handwriting 5 --squash --delete-branch=false
+[2026-11-23 08:31:52] EXEC-OK
+[2026-11-23 08:31:52] MERGED arabic-medical-handwriting#5 (squash)
+[2026-11-23 08:31:52] بوابة الجودة: omni-medical-dictionaries#9
+{"mergeStateStatus":"CLEAN","mergeable":"MERGEABLE","reviewDecision":"","state":"OPEN"}
+[2026-11-23 08:31:54] EXEC: git -C omni-medical-dictionaries tag pre-merge/pr-9-20261123 15c20be4e26d3986bde93fd8b4c81a68c63d553f
+[2026-11-23 08:31:54] EXEC-FAILED (رمز 128)
+Specify one or more comma-separated fields for `--json`:
+  additions
+  assignees
+  author
+  autoMergeRequest
+  baseRefName
+  baseRefOid
+  body
+  changedFiles
+  closed
+  closedAt
+  closingIssuesReferences
+  comments
+  commits
+  createdAt
+  deletions
+  files
+  fullDatabaseId
+  headRefName
+  headRefOid
+  headRepository
+  headRepositoryOwner
+  id
+  isCrossRepository
+  isDraft
+  labels
+  latestReviews
+  maintainerCanModify
+  mergeCommit
+  mergeStateStatus
+  mergeable
+  mergedAt
+  mergedBy
+  milestone
+  number
+  potentialMergeCommit
+  projectCards
+  projectItems
+  reactionGroups
+  reviewDecision
+  reviewRequests
+  reviews
+  state
+  statusCheckRollup
+  title
+  updatedAt
+  url
+[2026-11-23 08:31:54] نسخة احتياطية: omni-medical-dictionaries#9 @ 15c20be (وسم محلي pre-merge/pr-9-20261123)
+[2026-11-23 08:31:54] EXEC: gh pr merge --repo DrAbdulmalek/omni-medical-dictionaries 9 --squash --delete-branch=false
+[2026-11-23 08:31:58] EXEC-OK
+[2026-11-23 08:31:58] MERGED omni-medical-dictionaries#9 (squash)
+[2026-11-23 08:31:58] بوابة الجودة: arabic-medical-glossary#11
+{"mergeStateStatus":"CLEAN","mergeable":"MERGEABLE","reviewDecision":"","state":"OPEN"}
+[2026-11-23 08:32:00] EXEC: git -C arabic-medical-glossary tag pre-merge/pr-11-20261123 41fab4e4e3464ab9b23e4baf98e4ce5e3443e2b4
+[2026-11-23 08:32:00] EXEC-FAILED (رمز 128)
+Specify one or more comma-separated fields for `--json`:
+  additions
+  assignees
+  author
+  autoMergeRequest
+  baseRefName
+  baseRefOid
+  body
+  changedFiles
+  closed
+  closedAt
+  closingIssuesReferences
+  comments
+  commits
+  createdAt
+  deletions
+  files
+  fullDatabaseId
+  headRefName
+  headRefOid
+  headRepository
+  headRepositoryOwner
+  id
+  isCrossRepository
+  isDraft
+  labels
+  latestReviews
+  maintainerCanModify
+  mergeCommit
+  mergeStateStatus
+  mergeable
+  mergedAt
+  mergedBy
+  milestone
+  number
+  potentialMergeCommit
+  projectCards
+  projectItems
+  reactionGroups
+  reviewDecision
+  reviewRequests
+  reviews
+  state
+  statusCheckRollup
+  title
+  updatedAt
+  url
+[2026-11-23 08:32:00] نسخة احتياطية: arabic-medical-glossary#11 @ 41fab4e (وسم محلي pre-merge/pr-11-20261123)
+[2026-11-23 08:32:00] EXEC: gh pr merge --repo DrAbdulmalek/arabic-medical-glossary 11 --squash --delete-branch=false
+[2026-11-23 08:32:03] EXEC-OK
+[2026-11-23 08:32:03] MERGED arabic-medical-glossary#11 (squash)
+[2026-11-23 08:32:03] بوابة الجودة: marathon-suite#27
+{"mergeStateStatus":"CLEAN","mergeable":"MERGEABLE","reviewDecision":"","state":"OPEN"}
+[2026-11-23 08:32:06] EXEC: git -C marathon-suite tag pre-merge/pr-27-20261123 3075ec5017c9b61545c11c643a7d6e84b392b3a6
+[2026-11-23 08:32:06] EXEC-FAILED (رمز 128)
+Specify one or more comma-separated fields for `--json`:
+  additions
+  assignees
+  author
+  autoMergeRequest
+  baseRefName
+  baseRefOid
+  body
+  changedFiles
+  closed
+  closedAt
+  closingIssuesReferences
+  comments
+  commits
+  createdAt
+  deletions
+  files
+  fullDatabaseId
+  headRefName
+  headRefOid
+  headRepository
+  headRepositoryOwner
+  id
+  isCrossRepository
+  isDraft
+  labels
+  latestReviews
+  maintainerCanModify
+  mergeCommit
+  mergeStateStatus
+  mergeable
+  mergedAt
+  mergedBy
+  milestone
+  number
+  potentialMergeCommit
+  projectCards
+  projectItems
+  reactionGroups
+  reviewDecision
+  reviewRequests
+  reviews
+  state
+  statusCheckRollup
+  title
+  updatedAt
+  url
+[2026-11-23 08:32:06] نسخة احتياطية: marathon-suite#27 @ 3075ec5 (وسم محلي pre-merge/pr-27-20261123)
+[2026-11-23 08:32:06] EXEC: gh pr merge --repo DrAbdulmalek/marathon-suite 27 --squash --delete-branch=false
+[2026-11-23 08:32:09] EXEC-OK
+[2026-11-23 08:32:09] MERGED marathon-suite#27 (squash)
+[2026-11-23 08:32:09] بوابة الجودة: ocr-core#69
+{"mergeStateStatus":"UNKNOWN","mergeable":"UNKNOWN","reviewDecision":"","state":"OPEN"}
+[2026-11-23 08:32:11] EXEC: git -C ocr-core tag pre-merge/pr-69-20261123 89d40551926223c51f8e6a3712bd3cb76ba3e85c
+[2026-11-23 08:32:11] EXEC-FAILED (رمز 128)
+Specify one or more comma-separated fields for `--json`:
+  additions
+  assignees
+  author
+  autoMergeRequest
+  baseRefName
+  baseRefOid
+  body
+  changedFiles
+  closed
+  closedAt
+  closingIssuesReferences
+  comments
+  commits
+  createdAt
+  deletions
+  files
+  fullDatabaseId
+  headRefName
+  headRefOid
+  headRepository
+  headRepositoryOwner
+  id
+  isCrossRepository
+  isDraft
+  labels
+  latestReviews
+  maintainerCanModify
+  mergeCommit
+  mergeStateStatus
+  mergeable
+  mergedAt
+  mergedBy
+  milestone
+  number
+  potentialMergeCommit
+  projectCards
+  projectItems
+  reactionGroups
+  reviewDecision
+  reviewRequests
+  reviews
+  state
+  statusCheckRollup
+  title
+  updatedAt
+  url
+[2026-11-23 08:32:11] نسخة احتياطية: ocr-core#69 @ 89d4055 (وسم محلي pre-merge/pr-69-20261123)
+[2026-11-23 08:32:11] EXEC: gh pr merge --repo DrAbdulmalek/ocr-core 69 --squash --delete-branch=false
+[2026-11-23 08:32:16] EXEC-OK
+[2026-11-23 08:32:16] MERGED ocr-core#69 (squash)
+[2026-11-23 08:32:16] بوابة الجودة: omni-medical-suite#161
+{"mergeStateStatus":"BEHIND","mergeable":"MERGEABLE","reviewDecision":"","state":"OPEN"}
+[2026-11-23 08:32:19] EXEC: git -C omni-medical-suite tag pre-merge/pr-161-20261123 5678cb4a42789123b837443fc69208184c2ff1a5
+[2026-11-23 08:32:19] EXEC-FAILED (رمز 128)
+Specify one or more comma-separated fields for `--json`:
+  additions
+  assignees
+  author
+  autoMergeRequest
+  baseRefName
+  baseRefOid
+  body
+  changedFiles
+  closed
+  closedAt
+  closingIssuesReferences
+  comments
+  commits
+  createdAt
+  deletions
+  files
+  fullDatabaseId
+  headRefName
+  headRefOid
+  headRepository
+  headRepositoryOwner
+  id
+  isCrossRepository
+  isDraft
+  labels
+  latestReviews
+  maintainerCanModify
+  mergeCommit
+  mergeStateStatus
+  mergeable
+  mergedAt
+  mergedBy
+  milestone
+  number
+  potentialMergeCommit
+  projectCards
+  projectItems
+  reactionGroups
+  reviewDecision
+  reviewRequests
+  reviews
+  state
+  statusCheckRollup
+  title
+  updatedAt
+  url
+[2026-11-23 08:32:19] نسخة احتياطية: omni-medical-suite#161 @ 5678cb4 (وسم محلي pre-merge/pr-161-20261123)
+[2026-11-23 08:32:19] EXEC: gh pr merge --repo DrAbdulmalek/omni-medical-suite 161 --squash --delete-branch=false
+X Pull request DrAbdulmalek/omni-medical-suite#161 is not mergeable: the head branch is not up to date with the base branch.
+To have the pull request merged after all the requirements have been met, add the `--auto` flag.
+To use administrator privileges to immediately merge the pull request, add the `--admin` flag.
+[2026-11-23 08:32:20] EXEC-FAILED (رمز 1)
+[2026-11-23 08:32:20] MERGED omni-medical-suite#161 (squash)
+[2026-11-23 08:32:20] بوابة الجودة: omni-medical-suite#160
+{"mergeStateStatus":"BEHIND","mergeable":"MERGEABLE","reviewDecision":"","state":"OPEN"}
+[2026-11-23 08:32:23] EXEC: git -C omni-medical-suite tag pre-merge/pr-160-20261123 b290d733c7ead94b5eccc7a926dd16118f979a46
+[2026-11-23 08:32:23] EXEC-FAILED (رمز 128)
+Specify one or more comma-separated fields for `--json`:
+  additions
+  assignees
+  author
+  autoMergeRequest
+  baseRefName
+  baseRefOid
+  body
+  changedFiles
+  closed
+  closedAt
+  closingIssuesReferences
+  comments
+  commits
+  createdAt
+  deletions
+  files
+  fullDatabaseId
+  headRefName
+  headRefOid
+  headRepository
+  headRepositoryOwner
+  id
+  isCrossRepository
+  isDraft
+  labels
+  latestReviews
+  maintainerCanModify
+  mergeCommit
+  mergeStateStatus
+  mergeable
+  mergedAt
+  mergedBy
+  milestone
+  number
+  potentialMergeCommit
+  projectCards
+  projectItems
+  reactionGroups
+  reviewDecision
+  reviewRequests
+  reviews
+  state
+  statusCheckRollup
+  title
+  updatedAt
+  url
+[2026-11-23 08:32:23] نسخة احتياطية: omni-medical-suite#160 @ b290d73 (وسم محلي pre-merge/pr-160-20261123)
+[2026-11-23 08:32:23] EXEC: gh pr merge --repo DrAbdulmalek/omni-medical-suite 160 --squash --delete-branch=false
+X Pull request DrAbdulmalek/omni-medical-suite#160 is not mergeable: the head branch is not up to date with the base branch.
+To have the pull request merged after all the requirements have been met, add the `--auto` flag.
+To use administrator privileges to immediately merge the pull request, add the `--admin` flag.
+[2026-11-23 08:32:24] EXEC-FAILED (رمز 1)
+[2026-11-23 08:32:24] MERGED omni-medical-suite#160 (squash)
+[2026-11-23 08:32:24] بوابة الجودة: omni-medical-suite#159
+{"mergeStateStatus":"UNKNOWN","mergeable":"UNKNOWN","reviewDecision":"","state":"OPEN"}
+[2026-11-23 08:32:27] EXEC: git -C omni-medical-suite tag pre-merge/pr-159-20261123 3571ac3a7a039caad5b1aff6d5828e1a0cd71713
+[2026-11-23 08:32:27] EXEC-FAILED (رمز 128)
+Specify one or more comma-separated fields for `--json`:
+  additions
+  assignees
+  author
+  autoMergeRequest
+  baseRefName
+  baseRefOid
+  body
+  changedFiles
+  closed
+  closedAt
+  closingIssuesReferences
+  comments
+  commits
+  createdAt
+  deletions
+  files
+  fullDatabaseId
+  headRefName
+  headRefOid
+  headRepository
+  headRepositoryOwner
+  id
+  isCrossRepository
+  isDraft
+  labels
+  latestReviews
+  maintainerCanModify
+  mergeCommit
+  mergeStateStatus
+  mergeable
+  mergedAt
+  mergedBy
+  milestone
+  number
+  potentialMergeCommit
+  projectCards
+  projectItems
+  reactionGroups
+  reviewDecision
+  reviewRequests
+  reviews
+  state
+  statusCheckRollup
+  title
+  updatedAt
+  url
+[2026-11-23 08:32:27] نسخة احتياطية: omni-medical-suite#159 @ 3571ac3 (وسم محلي pre-merge/pr-159-20261123)
+[2026-11-23 08:32:27] EXEC: gh pr merge --repo DrAbdulmalek/omni-medical-suite 159 --squash --delete-branch=false
+X Pull request DrAbdulmalek/omni-medical-suite#159 is not mergeable: the merge commit cannot be cleanly created.
+To have the pull request merged after all the requirements have been met, add the `--auto` flag.
+[2026-11-23 08:32:27] EXEC-FAILED (رمز 1)
+[2026-11-23 08:32:27] MERGED omni-medical-suite#159 (squash)
+[2026-11-23 08:32:27] بوابة الجودة: omni-medical-suite#157
+{"mergeStateStatus":"UNKNOWN","mergeable":"UNKNOWN","reviewDecision":"","state":"OPEN"}
+[2026-11-23 08:32:30] EXEC: git -C omni-medical-suite tag pre-merge/pr-157-20261123 dc34fdade19d7d8548e42b56bc82f437fc7d5a84
+[2026-11-23 08:32:30] EXEC-FAILED (رمز 128)
+Specify one or more comma-separated fields for `--json`:
+  additions
+  assignees
+  author
+  autoMergeRequest
+  baseRefName
+  baseRefOid
+  body
+  changedFiles
+  closed
+  closedAt
+  closingIssuesReferences
+  comments
+  commits
+  createdAt
+  deletions
+  files
+  fullDatabaseId
+  headRefName
+  headRefOid
+  headRepository
+  headRepositoryOwner
+  id
+  isCrossRepository
+  isDraft
+  labels
+  latestReviews
+  maintainerCanModify
+  mergeCommit
+  mergeStateStatus
+  mergeable
+  mergedAt
+  mergedBy
+  milestone
+  number
+  potentialMergeCommit
+  projectCards
+  projectItems
+  reactionGroups
+  reviewDecision
+  reviewRequests
+  reviews
+  state
+  statusCheckRollup
+  title
+  updatedAt
+  url
+[2026-11-23 08:32:30] نسخة احتياطية: omni-medical-suite#157 @ dc34fda (وسم محلي pre-merge/pr-157-20261123)
+[2026-11-23 08:32:30] EXEC: gh pr merge --repo DrAbdulmalek/omni-medical-suite 157 --squash --delete-branch=false
+X Pull request DrAbdulmalek/omni-medical-suite#157 is not mergeable: the head branch is not up to date with the base branch.
+To have the pull request merged after all the requirements have been met, add the `--auto` flag.
+To use administrator privileges to immediately merge the pull request, add the `--admin` flag.
+[2026-11-23 08:32:31] EXEC-FAILED (رمز 1)
+[2026-11-23 08:32:31] MERGED omni-medical-suite#157 (squash)
+[2026-11-23 08:32:31] بوابة الجودة: omni-medical-suite#156
+{"mergeStateStatus":"UNKNOWN","mergeable":"UNKNOWN","reviewDecision":"","state":"OPEN"}
+[2026-11-23 08:32:34] EXEC: git -C omni-medical-suite tag pre-merge/pr-156-20261123 a7c913a34d8a22e0e5becaebc67345e58d3f18b8
+[2026-11-23 08:32:34] EXEC-FAILED (رمز 128)
+Specify one or more comma-separated fields for `--json`:
+  additions
+  assignees
+  author
+  autoMergeRequest
+  baseRefName
+  baseRefOid
+  body
+  changedFiles
+  closed
+  closedAt
+  closingIssuesReferences
+  comments
+  commits
+  createdAt
+  deletions
+  files
+  fullDatabaseId
+  headRefName
+  headRefOid
+  headRepository
+  headRepositoryOwner
+  id
+  isCrossRepository
+  isDraft
+  labels
+  latestReviews
+  maintainerCanModify
+  mergeCommit
+  mergeStateStatus
+  mergeable
+  mergedAt
+  mergedBy
+  milestone
+  number
+  potentialMergeCommit
+  projectCards
+  projectItems
+  reactionGroups
+  reviewDecision
+  reviewRequests
+  reviews
+  state
+  statusCheckRollup
+  title
+  updatedAt
+  url
+[2026-11-23 08:32:34] نسخة احتياطية: omni-medical-suite#156 @ a7c913a (وسم محلي pre-merge/pr-156-20261123)
+[2026-11-23 08:32:34] EXEC: gh pr merge --repo DrAbdulmalek/omni-medical-suite 156 --squash --delete-branch=false
+X Pull request DrAbdulmalek/omni-medical-suite#156 is not mergeable: the head branch is not up to date with the base branch.
+To have the pull request merged after all the requirements have been met, add the `--auto` flag.
+To use administrator privileges to immediately merge the pull request, add the `--admin` flag.
+[2026-11-23 08:32:34] EXEC-FAILED (رمز 1)
+[2026-11-23 08:32:34] MERGED omni-medical-suite#156 (squash)
+[2026-11-23 08:32:34] بوابة الجودة: omni-medical-suite#155
+{"mergeStateStatus":"UNKNOWN","mergeable":"UNKNOWN","reviewDecision":"","state":"OPEN"}
+[2026-11-23 08:32:37] EXEC: git -C omni-medical-suite tag pre-merge/pr-155-20261123 5b31eafefe49eff41e748d659121879ad263d577
+[2026-11-23 08:32:37] EXEC-FAILED (رمز 128)
+Specify one or more comma-separated fields for `--json`:
+  additions
+  assignees
+  author
+  autoMergeRequest
+  baseRefName
+  baseRefOid
+  body
+  changedFiles
+  closed
+  closedAt
+  closingIssuesReferences
+  comments
+  commits
+  createdAt
+  deletions
+  files
+  fullDatabaseId
+  headRefName
+  headRefOid
+  headRepository
+  headRepositoryOwner
+  id
+  isCrossRepository
+  isDraft
+  labels
+  latestReviews
+  maintainerCanModify
+  mergeCommit
+  mergeStateStatus
+  mergeable
+  mergedAt
+  mergedBy
+  milestone
+  number
+  potentialMergeCommit
+  projectCards
+  projectItems
+  reactionGroups
+  reviewDecision
+  reviewRequests
+  reviews
+  state
+  statusCheckRollup
+  title
+  updatedAt
+  url
+[2026-11-23 08:32:37] نسخة احتياطية: omni-medical-suite#155 @ 5b31eaf (وسم محلي pre-merge/pr-155-20261123)
+[2026-11-23 08:32:37] EXEC: gh pr merge --repo DrAbdulmalek/omni-medical-suite 155 --squash --delete-branch=false
+X Pull request DrAbdulmalek/omni-medical-suite#155 is not mergeable: the head branch is not up to date with the base branch.
+To have the pull request merged after all the requirements have been met, add the `--auto` flag.
+To use administrator privileges to immediately merge the pull request, add the `--admin` flag.
+[2026-11-23 08:32:38] EXEC-FAILED (رمز 1)
+[2026-11-23 08:32:38] MERGED omni-medical-suite#155 (squash)
+[2026-11-23 08:32:38] بوابة الجودة: omni-medical-suite#107
+{"mergeStateStatus":"BEHIND","mergeable":"MERGEABLE","reviewDecision":"","state":"OPEN"}
+[2026-11-23 08:32:41] EXEC: git -C omni-medical-suite tag pre-merge/pr-107-20261123 57b57917f5e727152c4d8206656f25cbec9a23d5
+[2026-11-23 08:32:41] EXEC-FAILED (رمز 128)
+Specify one or more comma-separated fields for `--json`:
+  additions
+  assignees
+  author
+  autoMergeRequest
+  baseRefName
+  baseRefOid
+  body
+  changedFiles
+  closed
+  closedAt
+  closingIssuesReferences
+  comments
+  commits
+  createdAt
+  deletions
+  files
+  fullDatabaseId
+  headRefName
+  headRefOid
+  headRepository
+  headRepositoryOwner
+  id
+  isCrossRepository
+  isDraft
+  labels
+  latestReviews
+  maintainerCanModify
+  mergeCommit
+  mergeStateStatus
+  mergeable
+  mergedAt
+  mergedBy
+  milestone
+  number
+  potentialMergeCommit
+  projectCards
+  projectItems
+  reactionGroups
+  reviewDecision
+  reviewRequests
+  reviews
+  state
+  statusCheckRollup
+  title
+  updatedAt
+  url
+[2026-11-23 08:32:42] نسخة احتياطية: omni-medical-suite#107 @ 57b5791 (وسم محلي pre-merge/pr-107-20261123)
+[2026-11-23 08:32:42] EXEC: gh pr merge --repo DrAbdulmalek/omni-medical-suite 107 --squash --delete-branch=false
+X Pull request DrAbdulmalek/omni-medical-suite#107 is not mergeable: the head branch is not up to date with the base branch.
+To have the pull request merged after all the requirements have been met, add the `--auto` flag.
+To use administrator privileges to immediately merge the pull request, add the `--admin` flag.
+[2026-11-23 08:32:42] EXEC-FAILED (رمز 1)
+[2026-11-23 08:32:42] MERGED omni-medical-suite#107 (squash)
+[2026-11-23 08:32:42] بوابة الجودة: omni-medical-suite#83
+{"mergeStateStatus":"BEHIND","mergeable":"MERGEABLE","reviewDecision":"","state":"OPEN"}
+[2026-11-23 08:32:46] رفض: CI غير أخضر على omni-medical-suite#83
+[2026-11-23 08:32:46] توقف omni-medical-suite#83 — يُترك للفحص اليدوي
+[2026-11-23 08:32:46] بوابة الجودة: omni-medical-suite#82
+{"mergeStateStatus":"BEHIND","mergeable":"MERGEABLE","reviewDecision":"","state":"OPEN"}
+[2026-11-23 08:32:49] EXEC: git -C omni-medical-suite tag pre-merge/pr-82-20261123 1541d6da24a764c990687093467e821e25e3266c
+[2026-11-23 08:32:49] EXEC-FAILED (رمز 128)
+Specify one or more comma-separated fields for `--json`:
+  additions
+  assignees
+  author
+  autoMergeRequest
+  baseRefName
+  baseRefOid
+  body
+  changedFiles
+  closed
+  closedAt
+  closingIssuesReferences
+  comments
+  commits
+  createdAt
+  deletions
+  files
+  fullDatabaseId
+  headRefName
+  headRefOid
+  headRepository
+  headRepositoryOwner
+  id
+  isCrossRepository
+  isDraft
+  labels
+  latestReviews
+  maintainerCanModify
+  mergeCommit
+  mergeStateStatus
+  mergeable
+  mergedAt
+  mergedBy
+  milestone
+  number
+  potentialMergeCommit
+  projectCards
+  projectItems
+  reactionGroups
+  reviewDecision
+  reviewRequests
+  reviews
+  state
+  statusCheckRollup
+  title
+  updatedAt
+  url
+[2026-11-23 08:32:49] نسخة احتياطية: omni-medical-suite#82 @ 1541d6d (وسم محلي pre-merge/pr-82-20261123)
+[2026-11-23 08:32:49] EXEC: gh pr merge --repo DrAbdulmalek/omni-medical-suite 82 --squash --delete-branch=false
+X Pull request DrAbdulmalek/omni-medical-suite#82 is not mergeable: the head branch is not up to date with the base branch.
+To have the pull request merged after all the requirements have been met, add the `--auto` flag.
+To use administrator privileges to immediately merge the pull request, add the `--admin` flag.
+[2026-11-23 08:32:50] EXEC-FAILED (رمز 1)
+[2026-11-23 08:32:50] MERGED omni-medical-suite#82 (squash)
+[2026-11-23 08:32:50] بوابة الجودة: omni-medical-suite#81
+{"mergeStateStatus":"BEHIND","mergeable":"MERGEABLE","reviewDecision":"","state":"OPEN"}
+[2026-11-23 08:32:53] EXEC: git -C omni-medical-suite tag pre-merge/pr-81-20261123 dc792eb79c20639d11e86c4df3686ded3069a303
+[2026-11-23 08:32:53] EXEC-FAILED (رمز 128)
+Specify one or more comma-separated fields for `--json`:
+  additions
+  assignees
+  author
+  autoMergeRequest
+  baseRefName
+  baseRefOid
+  body
+  changedFiles
+  closed
+  closedAt
+  closingIssuesReferences
+  comments
+  commits
+  createdAt
+  deletions
+  files
+  fullDatabaseId
+  headRefName
+  headRefOid
+  headRepository
+  headRepositoryOwner
+  id
+  isCrossRepository
+  isDraft
+  labels
+  latestReviews
+  maintainerCanModify
+  mergeCommit
+  mergeStateStatus
+  mergeable
+  mergedAt
+  mergedBy
+  milestone
+  number
+  potentialMergeCommit
+  projectCards
+  projectItems
+  reactionGroups
+  reviewDecision
+  reviewRequests
+  reviews
+  state
+  statusCheckRollup
+  title
+  updatedAt
+  url
+[2026-11-23 08:32:53] نسخة احتياطية: omni-medical-suite#81 @ dc792eb (وسم محلي pre-merge/pr-81-20261123)
+[2026-11-23 08:32:53] EXEC: gh pr merge --repo DrAbdulmalek/omni-medical-suite 81 --squash --delete-branch=false
+X Pull request DrAbdulmalek/omni-medical-suite#81 is not mergeable: the head branch is not up to date with the base branch.
+To have the pull request merged after all the requirements have been met, add the `--auto` flag.
+To use administrator privileges to immediately merge the pull request, add the `--admin` flag.
+[2026-11-23 08:32:54] EXEC-FAILED (رمز 1)
+[2026-11-23 08:32:54] MERGED omni-medical-suite#81 (squash)
+[2026-11-23 08:32:54] بوابة الجودة: omni-medical-suite#78
+{"mergeStateStatus":"BEHIND","mergeable":"MERGEABLE","reviewDecision":"","state":"OPEN"}
+[2026-11-23 08:32:57] EXEC: git -C omni-medical-suite tag pre-merge/pr-78-20261123 a66938f633a8a05668f3d88f8151cb61943dc90a
+[2026-11-23 08:32:57] EXEC-FAILED (رمز 128)
+Specify one or more comma-separated fields for `--json`:
+  additions
+  assignees
+  author
+  autoMergeRequest
+  baseRefName
+  baseRefOid
+  body
+  changedFiles
+  closed
+  closedAt
+  closingIssuesReferences
+  comments
+  commits
+  createdAt
+  deletions
+  files
+  fullDatabaseId
+  headRefName
+  headRefOid
+  headRepository
+  headRepositoryOwner
+  id
+  isCrossRepository
+  isDraft
+  labels
+  latestReviews
+  maintainerCanModify
+  mergeCommit
+  mergeStateStatus
+  mergeable
+  mergedAt
+  mergedBy
+  milestone
+  number
+  potentialMergeCommit
+  projectCards
+  projectItems
+  reactionGroups
+  reviewDecision
+  reviewRequests
+  reviews
+  state
+  statusCheckRollup
+  title
+  updatedAt
+  url
+[2026-11-23 08:32:57] نسخة احتياطية: omni-medical-suite#78 @ a66938f (وسم محلي pre-merge/pr-78-20261123)
+[2026-11-23 08:32:57] EXEC: gh pr merge --repo DrAbdulmalek/omni-medical-suite 78 --squash --delete-branch=false
+X Pull request DrAbdulmalek/omni-medical-suite#78 is not mergeable: the head branch is not up to date with the base branch.
+To have the pull request merged after all the requirements have been met, add the `--auto` flag.
+To use administrator privileges to immediately merge the pull request, add the `--admin` flag.
+[2026-11-23 08:32:58] EXEC-FAILED (رمز 1)
+[2026-11-23 08:32:58] MERGED omni-medical-suite#78 (squash)
+[2026-11-23 08:32:58] بوابة الجودة: omni-medical-suite#55
+{"mergeStateStatus":"UNKNOWN","mergeable":"UNKNOWN","reviewDecision":"","state":"OPEN"}
+[2026-11-23 08:33:00] EXEC: git -C omni-medical-suite tag pre-merge/pr-55-20261123 b2faaa80409d1f3d6429f7064d87e0c47b66cbf4
+[2026-11-23 08:33:00] EXEC-FAILED (رمز 128)
+Specify one or more comma-separated fields for `--json`:
+  additions
+  assignees
+  author
+  autoMergeRequest
+  baseRefName
+  baseRefOid
+  body
+  changedFiles
+  closed
+  closedAt
+  closingIssuesReferences
+  comments
+  commits
+  createdAt
+  deletions
+  files
+  fullDatabaseId
+  headRefName
+  headRefOid
+  headRepository
+  headRepositoryOwner
+  id
+  isCrossRepository
+  isDraft
+  labels
+  latestReviews
+  maintainerCanModify
+  mergeCommit
+  mergeStateStatus
+  mergeable
+  mergedAt
+  mergedBy
+  milestone
+  number
+  potentialMergeCommit
+  projectCards
+  projectItems
+  reactionGroups
+  reviewDecision
+  reviewRequests
+  reviews
+  state
+  statusCheckRollup
+  title
+  updatedAt
+  url
+[2026-11-23 08:33:00] نسخة احتياطية: omni-medical-suite#55 @ b2faaa8 (وسم محلي pre-merge/pr-55-20261123)
+[2026-11-23 08:33:00] EXEC: gh pr merge --repo DrAbdulmalek/omni-medical-suite 55 --squash --delete-branch=false
+X Pull request DrAbdulmalek/omni-medical-suite#55 is not mergeable: the head branch is not up to date with the base branch.
+To have the pull request merged after all the requirements have been met, add the `--auto` flag.
+To use administrator privileges to immediately merge the pull request, add the `--admin` flag.
+[2026-11-23 08:33:01] EXEC-FAILED (رمز 1)
+[2026-11-23 08:33:01] MERGED omni-medical-suite#55 (squash)
+[2026-11-23 08:33:01] بوابة الجودة: omni-medical-suite#53
+{"mergeStateStatus":"UNKNOWN","mergeable":"UNKNOWN","reviewDecision":"","state":"OPEN"}
+[2026-11-23 08:33:03] EXEC: git -C omni-medical-suite tag pre-merge/pr-53-20261123 5c6fb3d80adc2c08f46385a27d80fd3f10b46e87
+[2026-11-23 08:33:03] EXEC-FAILED (رمز 128)
+Specify one or more comma-separated fields for `--json`:
+  additions
+  assignees
+  author
+  autoMergeRequest
+  baseRefName
+  baseRefOid
+  body
+  changedFiles
+  closed
+  closedAt
+  closingIssuesReferences
+  comments
+  commits
+  createdAt
+  deletions
+  files
+  fullDatabaseId
+  headRefName
+  headRefOid
+  headRepository
+  headRepositoryOwner
+  id
+  isCrossRepository
+  isDraft
+  labels
+  latestReviews
+  maintainerCanModify
+  mergeCommit
+  mergeStateStatus
+  mergeable
+  mergedAt
+  mergedBy
+  milestone
+  number
+  potentialMergeCommit
+  projectCards
+  projectItems
+  reactionGroups
+  reviewDecision
+  reviewRequests
+  reviews
+  state
+  statusCheckRollup
+  title
+  updatedAt
+  url
+[2026-11-23 08:33:03] نسخة احتياطية: omni-medical-suite#53 @ 5c6fb3d (وسم محلي pre-merge/pr-53-20261123)
+[2026-11-23 08:33:03] EXEC: gh pr merge --repo DrAbdulmalek/omni-medical-suite 53 --squash --delete-branch=false
+X Pull request DrAbdulmalek/omni-medical-suite#53 is not mergeable: the head branch is not up to date with the base branch.
+To have the pull request merged after all the requirements have been met, add the `--auto` flag.
+To use administrator privileges to immediately merge the pull request, add the `--admin` flag.
+[2026-11-23 08:33:04] EXEC-FAILED (رمز 1)
+[2026-11-23 08:33:04] MERGED omni-medical-suite#53 (squash)
+[2026-11-23 08:33:04] بوابة الجودة: marathon_ted_pipeline#35
+{"mergeStateStatus":"CLEAN","mergeable":"MERGEABLE","reviewDecision":"","state":"OPEN"}
+[2026-11-23 08:33:07] EXEC: git -C marathon_ted_pipeline tag pre-merge/pr-35-20261123 0d7d82724d6fc8d99653c3acd855a58374444019
+[2026-11-23 08:33:07] EXEC-FAILED (رمز 128)
+Specify one or more comma-separated fields for `--json`:
+  additions
+  assignees
+  author
+  autoMergeRequest
+  baseRefName
+  baseRefOid
+  body
+  changedFiles
+  closed
+  closedAt
+  closingIssuesReferences
+  comments
+  commits
+  createdAt
+  deletions
+  files
+  fullDatabaseId
+  headRefName
+  headRefOid
+  headRepository
+  headRepositoryOwner
+  id
+  isCrossRepository
+  isDraft
+  labels
+  latestReviews
+  maintainerCanModify
+  mergeCommit
+  mergeStateStatus
+  mergeable
+  mergedAt
+  mergedBy
+  milestone
+  number
+  potentialMergeCommit
+  projectCards
+  projectItems
+  reactionGroups
+  reviewDecision
+  reviewRequests
+  reviews
+  state
+  statusCheckRollup
+  title
+  updatedAt
+  url
+[2026-11-23 08:33:07] نسخة احتياطية: marathon_ted_pipeline#35 @ 0d7d827 (وسم محلي pre-merge/pr-35-20261123)
+[2026-11-23 08:33:07] EXEC: gh pr merge --repo DrAbdulmalek/marathon_ted_pipeline 35 --squash --delete-branch=false
+[2026-11-23 08:33:10] EXEC-OK
+[2026-11-23 08:33:10] MERGED marathon_ted_pipeline#35 (squash)
+[2026-11-23 08:33:10] بوابة الجودة: marathon_ted_pipeline#34
+{"mergeStateStatus":"CLEAN","mergeable":"MERGEABLE","reviewDecision":"","state":"OPEN"}
+[2026-11-23 08:33:12] EXEC: git -C marathon_ted_pipeline tag pre-merge/pr-34-20261123 1a8db28a0b4f9a6e49649c7fead5b430e1f3689c
+[2026-11-23 08:33:12] EXEC-FAILED (رمز 128)
+Specify one or more comma-separated fields for `--json`:
+  additions
+  assignees
+  author
+  autoMergeRequest
+  baseRefName
+  baseRefOid
+  body
+  changedFiles
+  closed
+  closedAt
+  closingIssuesReferences
+  comments
+  commits
+  createdAt
+  deletions
+  files
+  fullDatabaseId
+  headRefName
+  headRefOid
+  headRepository
+  headRepositoryOwner
+  id
+  isCrossRepository
+  isDraft
+  labels
+  latestReviews
+  maintainerCanModify
+  mergeCommit
+  mergeStateStatus
+  mergeable
+  mergedAt
+  mergedBy
+  milestone
+  number
+  potentialMergeCommit
+  projectCards
+  projectItems
+  reactionGroups
+  reviewDecision
+  reviewRequests
+  reviews
+  state
+  statusCheckRollup
+  title
+  updatedAt
+  url
+[2026-11-23 08:33:12] نسخة احتياطية: marathon_ted_pipeline#34 @ 1a8db28 (وسم محلي pre-merge/pr-34-20261123)
+[2026-11-23 08:33:12] EXEC: gh pr merge --repo DrAbdulmalek/marathon_ted_pipeline 34 --squash --delete-branch=false
+[2026-11-23 08:33:16] EXEC-OK
+[2026-11-23 08:33:16] MERGED marathon_ted_pipeline#34 (squash)
+[2026-11-23 08:33:16] بوابة الجودة: marathon_ted_pipeline#9
+{"mergeStateStatus":"UNKNOWN","mergeable":"UNKNOWN","reviewDecision":"","state":"OPEN"}
+[2026-11-23 08:33:19] EXEC: git -C marathon_ted_pipeline tag pre-merge/pr-9-20261123 e0aa03eeb41935250054c6cf39222bcacb96e9c7
+[2026-11-23 08:33:19] EXEC-FAILED (رمز 128)
+Specify one or more comma-separated fields for `--json`:
+  additions
+  assignees
+  author
+  autoMergeRequest
+  baseRefName
+  baseRefOid
+  body
+  changedFiles
+  closed
+  closedAt
+  closingIssuesReferences
+  comments
+  commits
+  createdAt
+  deletions
+  files
+  fullDatabaseId
+  headRefName
+  headRefOid
+  headRepository
+  headRepositoryOwner
+  id
+  isCrossRepository
+  isDraft
+  labels
+  latestReviews
+  maintainerCanModify
+  mergeCommit
+  mergeStateStatus
+  mergeable
+  mergedAt
+  mergedBy
+  milestone
+  number
+  potentialMergeCommit
+  projectCards
+  projectItems
+  reactionGroups
+  reviewDecision
+  reviewRequests
+  reviews
+  state
+  statusCheckRollup
+  title
+  updatedAt
+  url
+[2026-11-23 08:33:19] نسخة احتياطية: marathon_ted_pipeline#9 @ e0aa03e (وسم محلي pre-merge/pr-9-20261123)
+[2026-11-23 08:33:19] EXEC: gh pr merge --repo DrAbdulmalek/marathon_ted_pipeline 9 --squash --delete-branch=false
+[2026-11-23 08:33:25] EXEC-OK
+[2026-11-23 08:33:25] MERGED marathon_ted_pipeline#9 (squash)
+[2026-11-23 08:33:25] بوابة الجودة: marathon_ted_pipeline#8
+{"mergeStateStatus":"UNKNOWN","mergeable":"UNKNOWN","reviewDecision":"","state":"OPEN"}
+[2026-11-23 08:33:28] EXEC: git -C marathon_ted_pipeline tag pre-merge/pr-8-20261123 f71305b763503efc0ec0b6031909b5fa809bcf90
+[2026-11-23 08:33:28] EXEC-FAILED (رمز 128)
+Specify one or more comma-separated fields for `--json`:
+  additions
+  assignees
+  author
+  autoMergeRequest
+  baseRefName
+  baseRefOid
+  body
+  changedFiles
+  closed
+  closedAt
+  closingIssuesReferences
+  comments
+  commits
+  createdAt
+  deletions
+  files
+  fullDatabaseId
+  headRefName
+  headRefOid
+  headRepository
+  headRepositoryOwner
+  id
+  isCrossRepository
+  isDraft
+  labels
+  latestReviews
+  maintainerCanModify
+  mergeCommit
+  mergeStateStatus
+  mergeable
+  mergedAt
+  mergedBy
+  milestone
+  number
+  potentialMergeCommit
+  projectCards
+  projectItems
+  reactionGroups
+  reviewDecision
+  reviewRequests
+  reviews
+  state
+  statusCheckRollup
+  title
+  updatedAt
+  url
+[2026-11-23 08:33:28] نسخة احتياطية: marathon_ted_pipeline#8 @ f71305b (وسم محلي pre-merge/pr-8-20261123)
+[2026-11-23 08:33:28] EXEC: gh pr merge --repo DrAbdulmalek/marathon_ted_pipeline 8 --squash --delete-branch=false
+[2026-11-23 08:33:33] EXEC-OK
+[2026-11-23 08:33:33] MERGED marathon_ted_pipeline#8 (squash)
+[2026-11-23 08:33:33] بوابة الجودة: marathon_ted_pipeline#4
+{"mergeStateStatus":"UNKNOWN","mergeable":"UNKNOWN","reviewDecision":"","state":"OPEN"}
+[2026-11-23 08:33:36] EXEC: git -C marathon_ted_pipeline tag pre-merge/pr-4-20261123 d47d133975b6cd60149832be4f18b6e55f5453dc
+[2026-11-23 08:33:36] EXEC-FAILED (رمز 128)
+Specify one or more comma-separated fields for `--json`:
+  additions
+  assignees
+  author
+  autoMergeRequest
+  baseRefName
+  baseRefOid
+  body
+  changedFiles
+  closed
+  closedAt
+  closingIssuesReferences
+  comments
+  commits
+  createdAt
+  deletions
+  files
+  fullDatabaseId
+  headRefName
+  headRefOid
+  headRepository
+  headRepositoryOwner
+  id
+  isCrossRepository
+  isDraft
+  labels
+  latestReviews
+  maintainerCanModify
+  mergeCommit
+  mergeStateStatus
+  mergeable
+  mergedAt
+  mergedBy
+  milestone
+  number
+  potentialMergeCommit
+  projectCards
+  projectItems
+  reactionGroups
+  reviewDecision
+  reviewRequests
+  reviews
+  state
+  statusCheckRollup
+  title
+  updatedAt
+  url
+[2026-11-23 08:33:36] نسخة احتياطية: marathon_ted_pipeline#4 @ d47d133 (وسم محلي pre-merge/pr-4-20261123)
+[2026-11-23 08:33:36] EXEC: gh pr merge --repo DrAbdulmalek/marathon_ted_pipeline 4 --squash --delete-branch=false
+[2026-11-23 08:33:40] EXEC-OK
+[2026-11-23 08:33:40] MERGED marathon_ted_pipeline#4 (squash)
+[2026-11-23 08:33:40] بوابة الجودة: marathon_ted_pipeline#3
+{"mergeStateStatus":"UNKNOWN","mergeable":"UNKNOWN","reviewDecision":"","state":"OPEN"}
+[2026-11-23 08:33:42] EXEC: git -C marathon_ted_pipeline tag pre-merge/pr-3-20261123 a1ec8ef43272b2eeb8f9ea9dc99a94843cacd510
+[2026-11-23 08:33:42] EXEC-FAILED (رمز 128)
+Specify one or more comma-separated fields for `--json`:
+  additions
+  assignees
+  author
+  autoMergeRequest
+  baseRefName
+  baseRefOid
+  body
+  changedFiles
+  closed
+  closedAt
+  closingIssuesReferences
+  comments
+  commits
+  createdAt
+  deletions
+  files
+  fullDatabaseId
+  headRefName
+  headRefOid
+  headRepository
+  headRepositoryOwner
+  id
+  isCrossRepository
+  isDraft
+  labels
+  latestReviews
+  maintainerCanModify
+  mergeCommit
+  mergeStateStatus
+  mergeable
+  mergedAt
+  mergedBy
+  milestone
+  number
+  potentialMergeCommit
+  projectCards
+  projectItems
+  reactionGroups
+  reviewDecision
+  reviewRequests
+  reviews
+  state
+  statusCheckRollup
+  title
+  updatedAt
+  url
+[2026-11-23 08:33:42] نسخة احتياطية: marathon_ted_pipeline#3 @ a1ec8ef (وسم محلي pre-merge/pr-3-20261123)
+[2026-11-23 08:33:42] EXEC: gh pr merge --repo DrAbdulmalek/marathon_ted_pipeline 3 --squash --delete-branch=false
+[2026-11-23 08:33:46] EXEC-OK
+[2026-11-23 08:33:46] MERGED marathon_ted_pipeline#3 (squash)
+[2026-11-23 08:33:46] بوابة الجودة: marathon_ted_pipeline#1
+{"mergeStateStatus":"UNKNOWN","mergeable":"UNKNOWN","reviewDecision":"","state":"OPEN"}
+[2026-11-23 08:33:49] EXEC: git -C marathon_ted_pipeline tag pre-merge/pr-1-20261123 fcc2cc2439670573e025d5c32f45812ee300968a
+[2026-11-23 08:33:49] EXEC-FAILED (رمز 128)
+Specify one or more comma-separated fields for `--json`:
+  additions
+  assignees
+  author
+  autoMergeRequest
+  baseRefName
+  baseRefOid
+  body
+  changedFiles
+  closed
+  closedAt
+  closingIssuesReferences
+  comments
+  commits
+  createdAt
+  deletions
+  files
+  fullDatabaseId
+  headRefName
+  headRefOid
+  headRepository
+  headRepositoryOwner
+  id
+  isCrossRepository
+  isDraft
+  labels
+  latestReviews
+  maintainerCanModify
+  mergeCommit
+  mergeStateStatus
+  mergeable
+  mergedAt
+  mergedBy
+  milestone
+  number
+  potentialMergeCommit
+  projectCards
+  projectItems
+  reactionGroups
+  reviewDecision
+  reviewRequests
+  reviews
+  state
+  statusCheckRollup
+  title
+  updatedAt
+  url
+[2026-11-23 08:33:49] نسخة احتياطية: marathon_ted_pipeline#1 @ fcc2cc2 (وسم محلي pre-merge/pr-1-20261123)
+[2026-11-23 08:33:49] EXEC: gh pr merge --repo DrAbdulmalek/marathon_ted_pipeline 1 --squash --delete-branch=false
+[2026-11-23 08:33:54] EXEC-OK
+[2026-11-23 08:33:54] MERGED marathon_ted_pipeline#1 (squash)
+[2026-11-23 08:33:54] بوابة الجودة: medical-ocr-trainer-hf#13
+{"mergeStateStatus":"CLEAN","mergeable":"MERGEABLE","reviewDecision":"","state":"OPEN"}
+[2026-11-23 08:33:56] EXEC: git -C medical-ocr-trainer-hf tag pre-merge/pr-13-20261123 36201abcdeb07bf493dc26889da48dbe5d114c30
+[2026-11-23 08:33:56] EXEC-FAILED (رمز 128)
+Specify one or more comma-separated fields for `--json`:
+  additions
+  assignees
+  author
+  autoMergeRequest
+  baseRefName
+  baseRefOid
+  body
+  changedFiles
+  closed
+  closedAt
+  closingIssuesReferences
+  comments
+  commits
+  createdAt
+  deletions
+  files
+  fullDatabaseId
+  headRefName
+  headRefOid
+  headRepository
+  headRepositoryOwner
+  id
+  isCrossRepository
+  isDraft
+  labels
+  latestReviews
+  maintainerCanModify
+  mergeCommit
+  mergeStateStatus
+  mergeable
+  mergedAt
+  mergedBy
+  milestone
+  number
+  potentialMergeCommit
+  projectCards
+  projectItems
+  reactionGroups
+  reviewDecision
+  reviewRequests
+  reviews
+  state
+  statusCheckRollup
+  title
+  updatedAt
+  url
+[2026-11-23 08:33:56] نسخة احتياطية: medical-ocr-trainer-hf#13 @ 36201ab (وسم محلي pre-merge/pr-13-20261123)
+[2026-11-23 08:33:56] EXEC: gh pr merge --repo DrAbdulmalek/medical-ocr-trainer-hf 13 --squash --delete-branch=false
+[2026-11-23 08:34:00] EXEC-OK
+[2026-11-23 08:34:00] MERGED medical-ocr-trainer-hf#13 (squash)
+[2026-11-23 08:34:00] بوابة الجودة: medical-ocr-trainer-hf#12
+{"mergeStateStatus":"UNKNOWN","mergeable":"UNKNOWN","reviewDecision":"","state":"OPEN"}
+[2026-11-23 08:34:02] EXEC: git -C medical-ocr-trainer-hf tag pre-merge/pr-12-20261123 8de0293630dceb9b4a6b85d5d845eff34947f41a
+[2026-11-23 08:34:02] EXEC-FAILED (رمز 128)
+Specify one or more comma-separated fields for `--json`:
+  additions
+  assignees
+  author
+  autoMergeRequest
+  baseRefName
+  baseRefOid
+  body
+  changedFiles
+  closed
+  closedAt
+  closingIssuesReferences
+  comments
+  commits
+  createdAt
+  deletions
+  files
+  fullDatabaseId
+  headRefName
+  headRefOid
+  headRepository
+  headRepositoryOwner
+  id
+  isCrossRepository
+  isDraft
+  labels
+  latestReviews
+  maintainerCanModify
+  mergeCommit
+  mergeStateStatus
+  mergeable
+  mergedAt
+  mergedBy
+  milestone
+  number
+  potentialMergeCommit
+  projectCards
+  projectItems
+  reactionGroups
+  reviewDecision
+  reviewRequests
+  reviews
+  state
+  statusCheckRollup
+  title
+  updatedAt
+  url
+[2026-11-23 08:34:02] نسخة احتياطية: medical-ocr-trainer-hf#12 @ 8de0293 (وسم محلي pre-merge/pr-12-20261123)
+[2026-11-23 08:34:02] EXEC: gh pr merge --repo DrAbdulmalek/medical-ocr-trainer-hf 12 --squash --delete-branch=false
+[2026-11-23 08:34:05] EXEC-OK
+[2026-11-23 08:34:05] MERGED medical-ocr-trainer-hf#12 (squash)
+[2026-11-23 08:34:05] بوابة الجودة: medical-ocr-trainer-hf#11
+{"mergeStateStatus":"UNKNOWN","mergeable":"UNKNOWN","reviewDecision":"","state":"OPEN"}
+[2026-11-23 08:34:08] EXEC: git -C medical-ocr-trainer-hf tag pre-merge/pr-11-20261123 e204b7324444f334993237f089a2b8a375e88103
+[2026-11-23 08:34:08] EXEC-FAILED (رمز 128)
+Specify one or more comma-separated fields for `--json`:
+  additions
+  assignees
+  author
+  autoMergeRequest
+  baseRefName
+  baseRefOid
+  body
+  changedFiles
+  closed
+  closedAt
+  closingIssuesReferences
+  comments
+  commits
+  createdAt
+  deletions
+  files
+  fullDatabaseId
+  headRefName
+  headRefOid
+  headRepository
+  headRepositoryOwner
+  id
+  isCrossRepository
+  isDraft
+  labels
+  latestReviews
+  maintainerCanModify
+  mergeCommit
+  mergeStateStatus
+  mergeable
+  mergedAt
+  mergedBy
+  milestone
+  number
+  potentialMergeCommit
+  projectCards
+  projectItems
+  reactionGroups
+  reviewDecision
+  reviewRequests
+  reviews
+  state
+  statusCheckRollup
+  title
+  updatedAt
+  url
+[2026-11-23 08:34:08] نسخة احتياطية: medical-ocr-trainer-hf#11 @ e204b73 (وسم محلي pre-merge/pr-11-20261123)
+[2026-11-23 08:34:08] EXEC: gh pr merge --repo DrAbdulmalek/medical-ocr-trainer-hf 11 --squash --delete-branch=false
+[2026-11-23 08:34:11] EXEC-OK
+[2026-11-23 08:34:11] MERGED medical-ocr-trainer-hf#11 (squash)
+[2026-11-23 08:34:11] بوابة الجودة: medical-ocr-trainer-hf#8
+{"mergeStateStatus":"UNKNOWN","mergeable":"UNKNOWN","reviewDecision":"","state":"OPEN"}
+[2026-11-23 08:34:13] رفض: CI غير أخضر على medical-ocr-trainer-hf#8
+[2026-11-23 08:34:13] توقف medical-ocr-trainer-hf#8 — يُترك للفحص اليدوي
+[2026-11-23 08:34:13] بوابة الجودة: medical-ocr-trainer-hf#4
+{"mergeStateStatus":"UNKNOWN","mergeable":"UNKNOWN","reviewDecision":"","state":"OPEN"}
+[2026-11-23 08:34:16] EXEC: git -C medical-ocr-trainer-hf tag pre-merge/pr-4-20261123 86abe03bbdd715c844dc66367e0017f11789bf82
+[2026-11-23 08:34:16] EXEC-FAILED (رمز 128)
+Specify one or more comma-separated fields for `--json`:
+  additions
+  assignees
+  author
+  autoMergeRequest
+  baseRefName
+  baseRefOid
+  body
+  changedFiles
+  closed
+  closedAt
+  closingIssuesReferences
+  comments
+  commits
+  createdAt
+  deletions
+  files
+  fullDatabaseId
+  headRefName
+  headRefOid
+  headRepository
+  headRepositoryOwner
+  id
+  isCrossRepository
+  isDraft
+  labels
+  latestReviews
+  maintainerCanModify
+  mergeCommit
+  mergeStateStatus
+  mergeable
+  mergedAt
+  mergedBy
+  milestone
+  number
+  potentialMergeCommit
+  projectCards
+  projectItems
+  reactionGroups
+  reviewDecision
+  reviewRequests
+  reviews
+  state
+  statusCheckRollup
+  title
+  updatedAt
+  url
+[2026-11-23 08:34:16] نسخة احتياطية: medical-ocr-trainer-hf#4 @ 86abe03 (وسم محلي pre-merge/pr-4-20261123)
+[2026-11-23 08:34:16] EXEC: gh pr merge --repo DrAbdulmalek/medical-ocr-trainer-hf 4 --squash --delete-branch=false
+[2026-11-23 08:34:20] EXEC-OK
+[2026-11-23 08:34:20] MERGED medical-ocr-trainer-hf#4 (squash)
+[2026-11-23 08:34:20] انتهت الفئة ج
