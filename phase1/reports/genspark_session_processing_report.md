@@ -79,8 +79,28 @@
 2. **التشغيل الكامل للمحاذاة** على جهاز GPU (الأوامر في README) + قرار إعادة استخراج العربي بـocr-core.
 3. **القرارات المعلقة الأربعة** (إعادة كتابة التاريخ، gui/desktop، سقف numpy، proposals AlphaCode) — توثيق فقط دون تنفيذ كما في v4.
 
+## 5) إعادة المعالجة والرفع إلى GitHub (2026-11-23)
+
+بناء على طلب المالك: أُعيدت معالجة الجلسة كاملة ثم رُفع كل ما نتج إلى المستودعات المناسبة وفق قواعد v4 (فرع + PR للمستودعات القائمة).
+
+### إعادة الجلب والتحقق
+- الجلسة الحية جُلبت من جديد: **نفس الجولات الخمس (R1، R3–R6) — لا رسائل أو مخرجات جديدة** بعد المعالجة الأولى.
+- جدول المتابعة أُعيد التحقق منه مقابل API الحي **ثانية**: 131/131 مطابقة، صفر فروق (التحقق الأول 2026-11-22، الثاني 2026-11-23).
+- ملفات النتائج (CSV/QC) استُعيدت من الحزمة المحفوظة بعد تدوير بيئة العمل، وأُعيد تشغيل محلل الجودة: النتائج مطابقة (63/50 عند العتبات، كسر عربي 21.3%).
+
+### ما رُفع وأين
+| المحتوى | المستودع | الطريقة | المرجع |
+|---|---|---|---|
+| اختبارات محمولة: دخاني شامل (استرجاع 100% + مناطق معكوسة + DP) + محلل جودة CSV | [ortho-align](https://github.com/DrAbdulmalek/ortho-align) `tests/` | دفع مباشر — مستودع جديد بلا حماية | commit `00c99a3` |
+| بيانات النتائج: labse_retrieval.csv + aligned_pairs.csv + qc_retrieval.txt + spotcheck50.txt + provenance | [ortho-align-data](https://github.com/DrAbdulmalek/ortho-align-data) — **خاص** | مستودع جديد | مستودع خاص |
+| حزمة المرحلة 1 المصلحة (57 ملفًا: سكربتات + تقرير المرحلة 0 + ذاكرة API) + الجدول + تقرير المعالجة | [repo-sync-toolkit](https://github.com/DrAbdulmalek/repo-sync-toolkit) `phase1/` | **فرع `phase1/bundle-v4` + PR #13** | [PR #13](https://github.com/DrAbdulmalek/repo-sync-toolkit/pull/13) |
+
+**سبب فصل البيانات في مستودع خاص:** محتوى CSV وعينات الفحص مشتقات نصية من كتب محمية بحقوق النشر (Orthobullets 2026 + الترجمة 2021) — تُحفظ لك بلا نشر علني، بينما الكود والخوارزمية عامة.
+
 ## الملفات المسلَّمة
-- [ortho_align_fixed.zip](ortho_align_fixed.zip) — الحزمة المصلحة (15 ملفًا: الأصل 13 + run_align.py + embed_samples.py + الإصلاحات) مع نتائج الـCSV.
+- [ortho_align_fixed.zip](ortho_align_fixed.zip) — الحزمة المصلحة (15 ملفًا) مع نتائج الـCSV.
 - [phase0_execution_bundle_fixed.zip](phase0_execution_bundle_fixed.zip) — حزمة المرحلة 1 بعد إصلاح EXCLUDE.
-- [PR_merge_tracker.xlsx](PR_merge_tracker.xlsx) — جدول المتابعة المحقق 131/131.
-- مستودع الكود: https://github.com/DrAbdulmalek/ortho-align
+- [PR_merge_tracker.xlsx](PR_merge_tracker.xlsx) — جدول المتابعة المحقق 131/131 (مرتين).
+- مستودع الكود + الاختبارات: https://github.com/DrAbdulmalek/ortho-align
+- مستودع البيانات (خاص): https://github.com/DrAbdulmalek/ortho-align-data
+- حزمة المرحلة 1: https://github.com/DrAbdulmalek/repo-sync-toolkit/pull/13
