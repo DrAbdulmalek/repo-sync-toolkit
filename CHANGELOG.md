@@ -3,6 +3,19 @@
 جميع التغييرات الملحوظة في هذا المشروع توثق هنا.
 التنسيق مبني على Keep a Changelog، والإصدارات بتواريخ جولات العمل.
 
+## [2026-11-23] Round 5 — إصلاح تصنيف Dependabot: من العناوين إلى بيانات الإصدار
+
+### Fixed
+- **تصنيف تحديثات Dependabot** (`phase1/ortho-ecosystem-phase0/30_dependabot.sh`): كان يصنف SAFE من العنوان وحده (`ci: bump` / `actions/` / `chore(deps)` / `bump `) فسمح بترقيات Major فعلية لأن عناوينها تبدأ بـ`chore(deps)` — pandas `>=2.0.0→>=3.1.1`، opencv-python-headless `>=4.8.0→>=5.1.0.95`، Pillow `>=10.0.0→>=13.0.0`. الآن: العنوان يحدد المرشحين للتصنيف فقط، وقرار الأمان من بيانات الإصدار القديم/الجديد في جسم الـPR (API) — MAJOR→مراجعة يدوية، MINOR→لا آلي إلا بتفعيل صريح (`DEP_POLICY_ALLOW_MINOR=1`)، PATCH→مرشح آلي بعد بقية البوابات، غير القابل للتحليل/الناقص/المتساوي→UNKNOWN لا يدخل SAFE بلا تخمين، GitHub Actions محافظة (MAJOR/MINOR يدوي)، والمجمّعة تُمنع بترقية Major واحدة غير مستثناة أو UNKNOWN واحدة.
+- **حماية الاستثناءات الخمسة** (marathon_ted_pipeline:32، omni-medical-suite:158، omni-medical-suite:84، medical-ocr-demo:4، medical-ocr-trainer-hf:9): فحصها قبل أي تصنيف — لا يفتحها تصنيف جديد، ولا حتى جسم Patch، ولا تفعيل السياسة.
+
+### Added
+- محلل إصدارات رقمي صارم (v-prefix، عمليات القيود، 1-4 مكونات) ومصنف قابل للاختبار منفصل (`dep_classify` + `dep_safe_extract`) مع مصارع ثانٍ fail-closed يعيد فحص الفئة قبل كتابة قائمة الدمج الآلي، وعدادات موثقة تُستخرج من الملف المصنف نفسه (SAFE/PATCH/MINOR/BIG/UNKNOWN/EXEMPT)، و`inventory/dep_review.json` لقائمة المراجعة اليدوية بالأسباب.
+- اختبارات T29–T35 (39 تأكيدًا): الحالات الاثنتا عشرة المطلوبة + الحالات الحية الثلاث من سجل التنفيذ + حارس T35 (صفر BIG/UNKNOWN/EXEMPT في قائمة الدمج الآلي، وصفر eligible بفئة خارج PATCH/MINOR).
+
+### Changed
+- تسمية خطوة CI إلى العدد الفعلي الجديد "146 تأكيدًا عبر 35 سيناريو" (يحرسها T22/T27 آليًا)؛ `30_dependabot.sh` أصبح قابلاً للسحب (source) في الاختبارات دون تنفيذ التدفق الحي (حارس `BASH_SOURCE`).
+
 ## [2026-11-23] Round 4 — ASKPASS Authentication and Credential Exposure Verification
 
 ### Added
