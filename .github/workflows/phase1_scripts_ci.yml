@@ -1,0 +1,25 @@
+name: phase1-scripts-ci
+
+# CI لحزمة تنفيذ المرحلة 1: ShellCheck + الاختبارات السلبية/الإيجابية لبوابات lib.sh
+# (طلب مراجعة المالك 2026-11-23: لا اعتماد لـPR #14 قبل إثبات البوابتين آليًا)
+on:
+  push:
+    paths: ['phase1/**', '.github/workflows/phase1_scripts_ci.yml']
+  pull_request:
+    paths: ['phase1/**', '.github/workflows/phase1_scripts_ci.yml']
+
+jobs:
+  shellcheck-and-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: تثبيت ShellCheck
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq shellcheck
+
+      - name: ShellCheck — مستوى التحذير فأعلى (صفر تحذيرات مسموح)
+        run: shellcheck -S warning phase1/ortho-ecosystem-phase0/*.sh phase1/ortho-ecosystem-phase0/tests/*.sh
+
+      - name: اختبارات بوابات lib.sh — 35 حالة (تسعة سلبية بمحاكاة gh كاملة، بلا شبكة ولا توكن)
+        run: bash phase1/ortho-ecosystem-phase0/tests/test_lib.sh
