@@ -28,7 +28,7 @@
 #   T22 حرّاس التزامن: تسمية CI تطابق العدد الفعلي آليًا (آخر سيناريو عمدًا
 #       كي يشمل TOTAL كل تأكيدات ما قبله)
 #   T23 خادم Git HTTP محلي حقيقي يتطلب Basic Auth → git يستدعي ASKPASS فعليًا
-#   T24 مراقبة متزامنة لـ/proc/*/cmdline: التوكن غائب عن argv أثناء التنفيذ
+#   T24 مراقبة متزامنة لـ/proc/*/cmdline + أثر GIT_TRACE الحاسم: التوكن غائب عن argv أثناء التنفيذ
 #   T25 تنظيف askpass ومجلد العمل المؤقت بعد نجاح الجلب والتغليف
 #   T26 تنظيف askpass ومجلد العمل المؤقت بعد فشل المصادقة
 #   T27 عدد السيناريوهات مستخرج آليًا من العناوين الفعلية + لا تكرار ولا فجوات
@@ -179,7 +179,7 @@ class Handler(BaseHTTPRequestHandler):
             self.wfile.write(body)
 
     def _handle(self):
-        time.sleep(0.03)  # توسيع نافذة مراقبة argv المتزامنة (T24) — للاختبار فقط
+        time.sleep(0.25)  # توسيع نافذة مراقبة argv لتناسب سرعات العدّاءات المختلفة (T24) — للاختبار فقط
         ok = auth_ok(self.headers.get("Authorization", ""))
         path, _, query = self.path.partition("?")
         with open(LOGF, "a") as f:
@@ -447,27 +447,54 @@ echo "═══ T24: التوكن غائب عن argv لعمليات Git أثنا
 ARGVDUMP="$(mktemp /tmp/libargvdump.XXXXXX)"
 ARGVOBS="$(mktemp /tmp/libargvobs.XXXXXX)"
 STOPF="$(mktemp /tmp/libargvstop.XXXXXX)"
-( # مراقب متزامن: عينات متكررة من /proc/*/cmdline أثناء تنفيذ السيناريو — لا فحص لاحق فقط
-  while [ ! -s "$STOPF" ]; do
-    for p in /proc/[0-9]*/cmdline; do
-      # 2>/dev/null قبل فتح الملف: العمليات القصيرة تختفي بين الجلب والقراءة
-      cl=$(tr '\0' ' ' 2>/dev/null < "$p") || continue
-      case "$cl" in
-        *git*fetch*|*"git -C"*) printf '%s\n' "$cl" >> "$ARGVDUMP" ;;
-      esac
-      case "$cl" in *refs/heads/backup*) printf '%s\n' "$cl" >> "$ARGVOBS" ;; esac
-    done
-  done
-) &
+WPY="$(mktemp /tmp/libwatcher.XXXXXX)"
+cat > "$WPY" <<'PYEOF'
+#!/usr/bin/env python3
+# مراقب /proc المتزامن — قراءة سريعة بلا fork لكل عملية، وبحد زمني صارم من
+# الداخل (40ث) ومن الخارج (timeout 45) كي لا يعلق انتظار المراقب أبدًا؛
+# نسخة bash (فورك/قراءة لكل pid) علقت في بيئة الاختبار فعليًا وعولجت هنا.
+import os, sys, time
+
+DUMP, OBS, STOPF = sys.argv[1:4]
+deadline = time.time() + 40.0
+while time.time() < deadline:
+    try:
+        if os.path.getsize(STOPF) > 0:
+            break
+    except OSError:
+        pass
+    for pid in os.listdir("/proc"):
+        if not pid.isdigit():
+            continue
+        try:
+            with open("/proc/%s/cmdline" % pid, "rb") as f:
+                raw = f.read()
+        except OSError:
+            continue
+        if not raw:
+            continue
+        cl = raw.replace(b"\x00", b" ").decode("utf-8", "replace")
+        if "git" in cl and ("fetch" in cl or "git -C" in cl):
+            with open(DUMP, "a") as f:
+                f.write(cl + "\n")
+        if "refs/heads/backup" in cl:
+            with open(OBS, "a") as f:
+                f.write(cl + "\n")
+    time.sleep(0.005)
+PYEOF
+timeout 45 python3 -I "$WPY" "$ARGVDUMP" "$ARGVOBS" "$STOPF" &
 WATCHER=$!
-run_http_scenario "dummy-token-for-mock-only"
+# GIT_TRACE=1: أثر argv حاسم عند لحظة التنفيذ لكل عملية git — لا يعتمد على العينات
+run_http_scenario "dummy-token-for-mock-only" GIT_TRACE=1
 printf 'stop\n' > "$STOPF"
 wait "$WATCHER" 2>/dev/null
-expect "المراقب التقاط عملية git fetch حية أثناء التنفيذ (إثبات صحة الملاحظة)" "$([ -s "$ARGVOBS" ] && echo 0 || echo 1)"
-expect "لا قيمة التوكن في أي argv ملتقط" "$(grep -q "dummy-token-for-mock-only" "$ARGVDUMP" 2>/dev/null && echo 1 || echo 0)"
-expect "لا نمط user:pass@ في أي argv ملتقط" "$(grep -q "x-access-token:" "$ARGVDUMP" 2>/dev/null && echo 1 || echo 0)"
+expect "المراقب التقاط عملية git fetch حية أثناء التنفيذ (إثبات صحة ملاحظة /proc)" "$([ -s "$ARGVOBS" ] && echo 0 || echo 1)"
+expect "أثر argv حاسم من git نفسه: GIT_TRACE سجل أمر الجلب بلا عينات ولا سباق" "$(grep -q "trace: built-in: git.*fetch" "$SB/out.txt" 2>/dev/null && echo 0 || echo 1)"
+expect "لا قيمة التوكن في أي argv ملتقط من /proc" "$(grep -q "dummy-token-for-mock-only" "$ARGVDUMP" 2>/dev/null && echo 1 || echo 0)"
+expect "لا قيمة التوكن في أثر argv الكامل (GIT_TRACE)" "$(grep -q "dummy-token-for-mock-only" "$SB/out.txt" 2>/dev/null && echo 1 || echo 0)"
+expect "لا نمط user:pass@ في ملاحظة /proc ولا في أثر GIT_TRACE" "$([ "$(grep -l "x-access-token:" "$ARGVDUMP" "$SB/out.txt" 2>/dev/null | wc -l)" -eq 0 ] && echo 0 || echo 1)"
 expect "السيناريو المصادق نجح كاملًا أثناء المراقبة (رمز خروج صفري)" "$([ $RC -eq 0 ] && echo 0 || echo 1)"
-rm -f "$ARGVDUMP" "$ARGVOBS" "$STOPF"
+rm -f "$ARGVDUMP" "$ARGVOBS" "$STOPF" "$WPY"
 
 echo "═══ T25: تنظيف askpass والمستودع المؤقت بعد نجاح الجلب والتغليف ═══"
 run_http_scenario "dummy-token-for-mock-only"
