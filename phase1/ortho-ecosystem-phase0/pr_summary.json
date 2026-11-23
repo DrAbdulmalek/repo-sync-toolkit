@@ -1,0 +1,1249 @@
+{
+ "workspace-scripts-archive": "ERROR",
+ "sync-github": "ERROR",
+ "medical-ocr-training-hub": "ERROR",
+ "medical-ocr-trainer": [
+  {
+   "number": 6,
+   "title": "chore(deps): update python-levenshtein requirement from >=0.21.0 to >=0.27.5",
+   "draft": false,
+   "head": "dependabot/pip/python-levenshtein-gte-0.27.5",
+   "base": "main",
+   "created": "2026-11-22T21:18:33Z",
+   "updated": "2026-11-22T21:18:36Z"
+  },
+  {
+   "number": 5,
+   "title": "chore(deps): bump actions/setup-python from 5 to 7",
+   "draft": false,
+   "head": "dependabot/github_actions/actions/setup-python-7",
+   "base": "main",
+   "created": "2026-11-22T21:18:24Z",
+   "updated": "2026-11-22T21:18:27Z"
+  }
+ ],
+ "medical-ocr-ground-truth": [
+  {
+   "number": 15,
+   "title": "chore(deps): update pandas requirement from >=2.0.0 to >=3.1.1",
+   "draft": false,
+   "head": "dependabot/pip/pandas-gte-3.1.1",
+   "base": "main",
+   "created": "2026-11-22T21:18:48Z",
+   "updated": "2026-11-22T21:18:51Z"
+  },
+  {
+   "number": 14,
+   "title": "chore(deps): update pytesseract requirement from >=0.3.10 to >=0.3.13",
+   "draft": false,
+   "head": "dependabot/pip/pytesseract-gte-0.3.13",
+   "base": "main",
+   "created": "2026-11-22T21:18:41Z",
+   "updated": "2026-11-22T21:18:44Z"
+  },
+  {
+   "number": 13,
+   "title": "chore(deps): update tqdm requirement from >=4.65.0 to >=4.70.1",
+   "draft": false,
+   "head": "dependabot/pip/tqdm-gte-4.70.1",
+   "base": "main",
+   "created": "2026-11-22T21:18:38Z",
+   "updated": "2026-11-22T21:18:41Z"
+  },
+  {
+   "number": 12,
+   "title": "chore(deps): bump actions/setup-python from 5 to 7",
+   "draft": false,
+   "head": "dependabot/github_actions/actions/setup-python-7",
+   "base": "main",
+   "created": "2026-11-22T21:18:20Z",
+   "updated": "2026-11-22T21:18:23Z"
+  }
+ ],
+ "arabic-medical-ocr-baseline": "ERROR",
+ "medical-handwriting-ocr": [
+  {
+   "number": 6,
+   "title": "chore(deps): bump tiktoken from 0.8.0 to 0.14.0",
+   "draft": false,
+   "head": "dependabot/pip/tiktoken-0.14.0",
+   "base": "main",
+   "created": "2026-11-22T21:18:31Z",
+   "updated": "2026-11-22T21:18:34Z"
+  }
+ ],
+ "medical-ocr-benchmarks": [
+  {
+   "number": 1,
+   "title": "بوابة IntelliFile في الفحص الليلي — بند 7 من الخارطة (قياس واحد عبر المشاريع)",
+   "draft": false,
+   "head": "roadmap/intellifile-gate",
+   "base": "main",
+   "created": "2026-11-22T20:36:56Z",
+   "updated": "2026-11-22T20:36:56Z"
+  }
+ ],
+ "scanner-fixer": [
+  {
+   "number": 6,
+   "title": "عقد CLI الموحد: --json و--bypass وتوثيق التكامل — بند 1 من الخارطة",
+   "draft": false,
+   "head": "roadmap/unified-cli-contract",
+   "base": "main",
+   "created": "2026-11-22T20:36:50Z",
+   "updated": "2026-11-22T20:36:50Z"
+  }
+ ],
+ "telegram-tools": [
+  {
+   "number": 16,
+   "title": "chore(deps): update telethon requirement from >=1.36.0 to >=1.46.0",
+   "draft": false,
+   "head": "dependabot/pip/telethon-gte-1.46.0",
+   "base": "main",
+   "created": "2026-11-20T22:41:01Z",
+   "updated": "2026-11-20T23:21:51Z"
+  }
+ ],
+ "OB2": "ERROR",
+ "localsend-manjaro": "ERROR",
+ "sumatrapdf": [
+  {
+   "number": 7,
+   "title": "Fix/reader modes safety followup 2026 11 17",
+   "draft": false,
+   "head": "fix/reader-modes-safety-followup-2026-11-17",
+   "base": "sumatrapdf-ng-manjaro-port",
+   "created": "2026-11-16T21:58:45Z",
+   "updated": "2026-11-16T21:58:45Z"
+  },
+  {
+   "number": 6,
+   "title": "[Draft] Add Arabic/English OCR and in-memory authenticated PDF snapshots",
+   "draft": true,
+   "head": "feat/ocr-language-tessdata-snapshot-2026-11-17",
+   "base": "fix/ocr-writer-finalization-validation-2026-11-17",
+   "created": "2026-11-16T21:44:18Z",
+   "updated": "2026-11-16T21:57:50Z"
+  },
+  {
+   "number": 5,
+   "title": "[Draft] Preserve lifetime reading stats and escape Markdown exports",
+   "draft": true,
+   "head": "fix/reader-stats-lifetime-markdown-2026-11-17",
+   "base": "fix/reader-modes-safety-followup-2026-11-17",
+   "created": "2026-11-16T21:40:32Z",
+   "updated": "2026-11-16T21:57:15Z"
+  },
+  {
+   "number": 4,
+   "title": "[Draft] Finalize and validate OCR/Flatten PDF outputs safely",
+   "draft": true,
+   "head": "fix/ocr-writer-finalization-validation-2026-11-17",
+   "base": "fix/p0-menu-dispatch-ocr-safety-2026-11-16",
+   "created": "2026-11-16T21:23:21Z",
+   "updated": "2026-11-16T21:24:57Z"
+  },
+  {
+   "number": 3,
+   "title": "[Draft] Harden reader stats, notes export, and auto-backup",
+   "draft": true,
+   "head": "fix/reader-modes-safety-followup-2026-11-17",
+   "base": "feat/reader-modes-mobile-inspired",
+   "created": "2026-11-16T21:21:33Z",
+   "updated": "2026-11-16T21:24:39Z"
+  },
+  {
+   "number": 2,
+   "title": "feat(ng): reading stats, notes export MD, settings auto-backup + Linux build fixes",
+   "draft": false,
+   "head": "feat/reader-modes-mobile-inspired",
+   "base": "sumatrapdf-ng-manjaro-port",
+   "created": "2026-11-16T18:24:03Z",
+   "updated": "2026-11-16T18:24:03Z"
+  },
+  {
+   "number": 1,
+   "title": "[Draft] Fix P0 menu definitions and command dispatch",
+   "draft": true,
+   "head": "fix/p0-menu-dispatch-ocr-safety-2026-11-16",
+   "base": "sumatrapdf-ng-manjaro-port",
+   "created": "2026-11-16T10:24:30Z",
+   "updated": "2026-11-16T15:07:56Z"
+  }
+ ],
+ "finereader-ocr-apk-analysis": [
+  {
+   "number": 1,
+   "title": "docs: تحليل هندسي عكسي لمحرك OCR في FineReader Pro (عربي/إنجليزي) — PR مسودة",
+   "draft": true,
+   "head": "feat/apk-ocr-analysis",
+   "base": "main",
+   "created": "2026-10-04T22:54:28Z",
+   "updated": "2026-10-05T06:35:44Z"
+  }
+ ],
+ "orthopaedic-knowledge-system": "ERROR",
+ "orthopaedic-translation-system": "ERROR",
+ "wine-ai-adaptive": "ERROR",
+ "manjaro-care": "ERROR",
+ "ezoo-download": "ERROR",
+ "flathub": "ERROR",
+ "rea": "ERROR",
+ "FLEX-Download-Manager": "ERROR",
+ "indra": "ERROR",
+ "radiology-ai-platform": [
+  {
+   "number": 5,
+   "title": "chore(deps): bump the pip-minor-patch group across 1 directory with 55 updates",
+   "draft": false,
+   "head": "dependabot/pip/pip-minor-patch-872bd2d795",
+   "base": "main",
+   "created": "2026-11-20T22:44:44Z",
+   "updated": "2026-11-20T23:36:58Z"
+  }
+ ],
+ "OmniFile_Processor": [
+  {
+   "number": 4,
+   "title": "حزمة omnifile-core: مصدر واحد للتصحيح والتطبيع والمقاييس — بند 2 من الخارطة",
+   "draft": false,
+   "head": "roadmap/omnifile-core-package",
+   "base": "main",
+   "created": "2026-11-22T20:36:07Z",
+   "updated": "2026-11-22T20:36:07Z"
+  },
+  {
+   "number": 3,
+   "title": "chore: add security policy, Dependabot, and PR template",
+   "draft": false,
+   "head": "chore/repo-governance",
+   "base": "main",
+   "created": "2026-10-22T08:22:46Z",
+   "updated": "2026-10-22T08:22:46Z"
+  }
+ ],
+ "medical-ocr-demo": [
+  {
+   "number": 6,
+   "title": "chore(deps): update opencv-python-headless requirement from >=4.8.0 to >=5.1.0.95",
+   "draft": false,
+   "head": "dependabot/pip/opencv-python-headless-gte-5.1.0.95",
+   "base": "main",
+   "created": "2026-11-20T22:38:22Z",
+   "updated": "2026-11-20T23:43:31Z"
+  },
+  {
+   "number": 5,
+   "title": "chore(deps): update pillow requirement from >=10.0.0 to >=13.0.0",
+   "draft": false,
+   "head": "dependabot/pip/pillow-gte-13.0.0",
+   "base": "main",
+   "created": "2026-11-20T22:38:18Z",
+   "updated": "2026-11-20T23:42:54Z"
+  },
+  {
+   "number": 4,
+   "title": "chore(deps): update paddleocr requirement from >=2.7.0 to >=3.7.0",
+   "draft": false,
+   "head": "dependabot/pip/paddleocr-gte-3.7.0",
+   "base": "main",
+   "created": "2026-11-20T22:38:14Z",
+   "updated": "2026-11-20T23:42:43Z"
+  }
+ ],
+ "reset-net": [
+  {
+   "number": 5,
+   "title": "ci: bump softprops/action-gh-release from 2 to 3",
+   "draft": false,
+   "head": "dependabot/github_actions/softprops/action-gh-release-3",
+   "base": "main",
+   "created": "2026-11-14T23:03:27Z",
+   "updated": "2026-11-14T23:03:30Z"
+  },
+  {
+   "number": 4,
+   "title": "ci: bump actions/checkout from 4 to 7",
+   "draft": false,
+   "head": "dependabot/github_actions/actions/checkout-7",
+   "base": "main",
+   "created": "2026-11-14T23:03:25Z",
+   "updated": "2026-11-14T23:03:28Z"
+  },
+  {
+   "number": 3,
+   "title": "ci: bump actions/setup-python from 5 to 7",
+   "draft": false,
+   "head": "dependabot/github_actions/actions/setup-python-7",
+   "base": "main",
+   "created": "2026-11-14T23:03:21Z",
+   "updated": "2026-11-14T23:03:25Z"
+  }
+ ],
+ "translation-core": [
+  {
+   "number": 6,
+   "title": "ci: bump actions/checkout from 4 to 7",
+   "draft": false,
+   "head": "dependabot/github_actions/actions/checkout-7",
+   "base": "main",
+   "created": "2026-11-20T22:38:45Z",
+   "updated": "2026-11-20T23:43:47Z"
+  },
+  {
+   "number": 5,
+   "title": "feat: عقد «إثبات الأصل» — provenance hash لكل جملة (الفكرة 3)",
+   "draft": false,
+   "head": "feat/provenance-hash",
+   "base": "main",
+   "created": "2026-11-14T23:22:45Z",
+   "updated": "2026-11-14T23:22:45Z"
+  },
+  {
+   "number": 2,
+   "title": "Harness Engineering v2.0 — عقد الوكلاء + بوابات التحقق + الذاكرة (مسودة)",
+   "draft": true,
+   "head": "feat/harness-engineering",
+   "base": "main",
+   "created": "2026-10-04T22:03:35Z",
+   "updated": "2026-10-04T23:21:12Z"
+  }
+ ],
+ "medical-rag-ar": [
+  {
+   "number": 3,
+   "title": "ci: bump actions/setup-python from 5 to 7",
+   "draft": false,
+   "head": "dependabot/github_actions/actions/setup-python-7",
+   "base": "main",
+   "created": "2026-11-20T22:39:17Z",
+   "updated": "2026-11-20T23:42:08Z"
+  },
+  {
+   "number": 2,
+   "title": "docs: define evidence gates for medical RAG implementation",
+   "draft": true,
+   "head": "docs/audit-2026-11-09-implementation-gates",
+   "base": "main",
+   "created": "2026-11-09T14:43:04Z",
+   "updated": "2026-11-09T14:43:04Z"
+  }
+ ],
+ "arabic-medical-handwriting": [
+  {
+   "number": 5,
+   "title": "ci: bump actions/checkout from 4 to 7",
+   "draft": false,
+   "head": "dependabot/github_actions/actions/checkout-7",
+   "base": "main",
+   "created": "2026-11-20T22:41:19Z",
+   "updated": "2026-11-20T23:23:35Z"
+  },
+  {
+   "number": 2,
+   "title": "[P0-4] Finish ocr-core delegation follow-ups",
+   "draft": true,
+   "head": "fix/delegate-to-ocr-core-followups",
+   "base": "main",
+   "created": "2026-10-12T13:17:45Z",
+   "updated": "2026-10-12T13:24:28Z"
+  }
+ ],
+ "omni-medical-dictionaries": [
+  {
+   "number": 9,
+   "title": "chore(deps): update selenium requirement from >=4.15.0 to >=4.53.0",
+   "draft": false,
+   "head": "dependabot/pip/selenium-gte-4.53.0",
+   "base": "main",
+   "created": "2026-11-20T22:39:49Z",
+   "updated": "2026-11-20T23:43:24Z"
+  },
+  {
+   "number": 2,
+   "title": "GDRIVE_POINTER — امتداد البيانات على Drive",
+   "draft": true,
+   "head": "gdrive-extension",
+   "base": "main",
+   "created": "2026-10-12T15:12:58Z",
+   "updated": "2026-10-12T15:12:58Z"
+  },
+  {
+   "number": 1,
+   "title": "fix(ci): make Python quality gates fail closed",
+   "draft": true,
+   "head": "fix/ci-fail-closed",
+   "base": "main",
+   "created": "2026-10-05T17:24:47Z",
+   "updated": "2026-10-05T17:29:17Z"
+  }
+ ],
+ "arabic-medical-glossary": [
+  {
+   "number": 11,
+   "title": "chore(deps): update pydantic requirement from >=2.0.0 to >=2.14.3",
+   "draft": false,
+   "head": "dependabot/pip/pydantic-gte-2.14.3",
+   "base": "main",
+   "created": "2026-11-20T22:47:31Z",
+   "updated": "2026-11-20T23:22:50Z"
+  },
+  {
+   "number": 4,
+   "title": "GDRIVE_POINTER — امتداد البيانات على Drive",
+   "draft": true,
+   "head": "gdrive-extension",
+   "base": "main",
+   "created": "2026-10-12T15:12:54Z",
+   "updated": "2026-10-12T15:12:54Z"
+  }
+ ],
+ "atlas-multi-provider": "ERROR",
+ "DrAbdulmalek": [
+  {
+   "number": 3,
+   "title": "docs(profile): avoid broken links to private projects",
+   "draft": true,
+   "head": "docs/profile-readme-private-links",
+   "base": "main",
+   "created": "2026-10-16T23:46:57Z",
+   "updated": "2026-10-16T23:47:38Z"
+  }
+ ],
+ "marathon-suite": [
+  {
+   "number": 27,
+   "title": "ci: bump actions/checkout from 4 to 7",
+   "draft": false,
+   "head": "dependabot/github_actions/actions/checkout-7",
+   "base": "main",
+   "created": "2026-11-20T22:49:00Z",
+   "updated": "2026-11-20T23:38:35Z"
+  },
+  {
+   "number": 23,
+   "title": "fix: align ocr-core dependency pin to v0.6.0",
+   "draft": true,
+   "head": "fix/align-ocr-core-v0.6.0-pin",
+   "base": "main",
+   "created": "2026-10-12T13:17:48Z",
+   "updated": "2026-10-12T13:23:13Z"
+  },
+  {
+   "number": 3,
+   "title": "Harness Engineering v2.0 — عقد الوكلاء + بوابات التحقق + الذاكرة (مسودة)",
+   "draft": true,
+   "head": "feat/harness-engineering",
+   "base": "main",
+   "created": "2026-10-04T22:03:40Z",
+   "updated": "2026-10-04T23:21:15Z"
+  }
+ ],
+ "ocr-core": [
+  {
+   "number": 71,
+   "title": "مواصفة OCRResult الموحدة (JSON Schema 1.0) — بند 8 من الخارطة",
+   "draft": false,
+   "head": "roadmap/ocr-result-schema",
+   "base": "main",
+   "created": "2026-11-22T20:36:11Z",
+   "updated": "2026-11-22T20:36:11Z"
+  },
+  {
+   "number": 69,
+   "title": "ci: bump actions/setup-python from 5 to 7",
+   "draft": false,
+   "head": "dependabot/github_actions/actions/setup-python-7",
+   "base": "main",
+   "created": "2026-11-20T22:40:13Z",
+   "updated": "2026-11-20T23:41:51Z"
+  },
+  {
+   "number": 68,
+   "title": "docs: document OCR architecture and evidence boundaries",
+   "draft": true,
+   "head": "docs/audit-2026-11-09-architecture-contract",
+   "base": "main",
+   "created": "2026-11-09T14:42:18Z",
+   "updated": "2026-11-09T14:42:18Z"
+  },
+  {
+   "number": 66,
+   "title": "feat(ocr): add optional Chandra OCR adapter",
+   "draft": true,
+   "head": "feat/chandra-ocr-adapter",
+   "base": "main",
+   "created": "2026-10-23T07:49:52Z",
+   "updated": "2026-10-23T15:47:03Z"
+  },
+  {
+   "number": 65,
+   "title": "feat(ocr): add optional Indra OCR CPU engine",
+   "draft": true,
+   "head": "feat/indra-ocr-cpu-engine",
+   "base": "main",
+   "created": "2026-10-22T13:57:37Z",
+   "updated": "2026-10-22T22:11:54Z"
+  },
+  {
+   "number": 62,
+   "title": "feat(engines): add optional ABBYY FineReader source adapter",
+   "draft": true,
+   "head": "feat/abbyy-optional-engine-adapter",
+   "base": "main",
+   "created": "2026-10-17T07:24:45Z",
+   "updated": "2026-10-17T07:32:54Z"
+  },
+  {
+   "number": 60,
+   "title": "test(eval): guard the F-13/F-16 measurement contract (normalize once, then skip_internal_normalize) — draft",
+   "draft": true,
+   "head": "audit/f13-f16-metric-contract-guard",
+   "base": "main",
+   "created": "2026-10-14T02:30:03Z",
+   "updated": "2026-10-14T12:54:40Z"
+  },
+  {
+   "number": 59,
+   "title": "docs(audit): 2026-10-11 ecosystem audit artifacts (draft)",
+   "draft": true,
+   "head": "audit/ecosystem-2026-10-11",
+   "base": "main",
+   "created": "2026-10-11T22:15:49Z",
+   "updated": "2026-10-11T22:32:09Z"
+  },
+  {
+   "number": 58,
+   "title": "fix(rules): scope visual evidence to the answer segment it attaches to (draft)",
+   "draft": true,
+   "head": "audit/evidence-scope-line-attribution",
+   "base": "main",
+   "created": "2026-10-11T22:15:46Z",
+   "updated": "2026-10-17T14:05:24Z"
+  },
+  {
+   "number": 57,
+   "title": "[SPRINT-2][OCR] Enforce visual evidence before correctness/training labels",
+   "draft": true,
+   "head": "fix/visual-evidence-classification-gate",
+   "base": "main",
+   "created": "2026-10-10T20:30:34Z",
+   "updated": "2026-10-14T11:53:26Z"
+  },
+  {
+   "number": 55,
+   "title": "[SPRINT-1][S1-T3] CHANGELOG: قسم v0.7.0 (READY_FOR_TAG) + تسوية الأقسام غير المصدرة بالأدلة — ocr-core",
+   "draft": false,
+   "head": "sprint1/s1-t3-changelog-v070",
+   "base": "main",
+   "created": "2026-10-08T09:51:04Z",
+   "updated": "2026-10-08T09:51:04Z"
+  },
+  {
+   "number": 12,
+   "title": "[DRAFT] feat(resources): نماذج OCR عربية+إنجليزية مفتوحة مضمّنة (Apache-2.0)",
+   "draft": true,
+   "head": "feat/tessdata-resources",
+   "base": "main",
+   "created": "2026-10-04T23:13:09Z",
+   "updated": "2026-10-04T23:13:09Z"
+  },
+  {
+   "number": 11,
+   "title": "[DRAFT] feat(engines): محرك Surya — مُتحقق حيًا من surya-ocr 0.22.1",
+   "draft": true,
+   "head": "feat/add-surya-engine",
+   "base": "main",
+   "created": "2026-10-04T23:09:51Z",
+   "updated": "2026-10-05T00:00:23Z"
+  },
+  {
+   "number": 10,
+   "title": "Harness Engineering v2.0 — عقد الوكلاء + بوابات التحقق + الذاكرة (مسودة)",
+   "draft": true,
+   "head": "feat/harness-engineering",
+   "base": "main",
+   "created": "2026-10-04T22:03:33Z",
+   "updated": "2026-10-04T23:21:10Z"
+  }
+ ],
+ "omni-medical-suite": [
+  {
+   "number": 201,
+   "title": "fix(security): remove unused python-jose (PYSEC-2026-4298)",
+   "draft": false,
+   "head": "security/p3-fixes",
+   "base": "main",
+   "created": "2026-11-18T00:23:15Z",
+   "updated": "2026-11-18T00:23:15Z"
+  },
+  {
+   "number": 200,
+   "title": "chore: add security policy, Dependabot, and PR template",
+   "draft": false,
+   "head": "chore/repo-governance",
+   "base": "main",
+   "created": "2026-10-22T08:21:20Z",
+   "updated": "2026-10-22T08:21:20Z"
+  },
+  {
+   "number": 199,
+   "title": "docs: clarify v1.1.0 release-gate test count",
+   "draft": true,
+   "head": "audit/clarify-v1.1-test-count",
+   "base": "main",
+   "created": "2026-10-20T19:55:05Z",
+   "updated": "2026-10-20T19:55:05Z"
+  },
+  {
+   "number": 198,
+   "title": "feat(ocr): Readiris teacher pipeline (tools/readiris_teacher)",
+   "draft": false,
+   "head": "feat/readiris-teacher-pipeline",
+   "base": "main",
+   "created": "2026-10-14T14:24:14Z",
+   "updated": "2026-10-14T14:24:14Z"
+  },
+  {
+   "number": 197,
+   "title": "[DRAFT][F-13] Add raw metric provenance on current main",
+   "draft": true,
+   "head": "fix/f13-provenance-on-current-main",
+   "base": "main",
+   "created": "2026-10-14T12:55:24Z",
+   "updated": "2026-10-14T12:55:24Z"
+  },
+  {
+   "number": 196,
+   "title": "fix(training): serialize queue recovery across processes",
+   "draft": true,
+   "head": "feat/training-queue-process-lock",
+   "base": "feat/hf-dataset-cas-parent-commit",
+   "created": "2026-10-12T09:16:07Z",
+   "updated": "2026-10-12T10:27:34Z"
+  },
+  {
+   "number": 195,
+   "title": "fix(training): guard HF dataset snapshots with parent-commit CAS",
+   "draft": true,
+   "head": "feat/hf-dataset-cas-parent-commit",
+   "base": "feat/training-delivery-concurrency-followup",
+   "created": "2026-10-12T07:59:24Z",
+   "updated": "2026-10-12T10:26:37Z"
+  },
+  {
+   "number": 194,
+   "title": "feat(training): record append-only export delivery outcomes",
+   "draft": true,
+   "head": "feat/training-delivery-concurrency-followup",
+   "base": "feat/training-integrity-ledger",
+   "created": "2026-10-12T07:48:14Z",
+   "updated": "2026-10-12T10:26:12Z"
+  },
+  {
+   "number": 184,
+   "title": "[SPRINT-2/3][S2-T1/S2-T2/S3-T1] هيكل المسار الذهبي: واجهة Gradio محلية + مشغل E2E + مقاييس benchmark (8 اختبارات خضراء) — omni-medical-suite",
+   "draft": false,
+   "head": "sprint2/golden-path-skeleton",
+   "base": "main",
+   "created": "2026-10-08T10:07:03Z",
+   "updated": "2026-11-20T22:41:31Z"
+  },
+  {
+   "number": 168,
+   "title": "feat(ocr): ABBYY FineReader teacher pipeline (tools/abbyy_teacher)",
+   "draft": false,
+   "head": "feat/abbyy-teacher-pipeline",
+   "base": "main",
+   "created": "2026-10-05T22:31:10Z",
+   "updated": "2026-11-20T22:41:35Z"
+  },
+  {
+   "number": 164,
+   "title": "Harness Engineering v2.0 — عقد الوكلاء + بوابات التحقق + الذاكرة (مسودة)",
+   "draft": true,
+   "head": "feat/harness-engineering",
+   "base": "main",
+   "created": "2026-10-04T22:03:45Z",
+   "updated": "2026-10-04T23:21:22Z"
+  },
+  {
+   "number": 163,
+   "title": "fix: remove nonexistent Dependabot label",
+   "draft": false,
+   "head": "chore/fix-dependabot-labels",
+   "base": "main",
+   "created": "2026-10-04T07:02:53Z",
+   "updated": "2026-11-20T22:41:38Z"
+  },
+  {
+   "number": 162,
+   "title": "refactor: consolidate T3/T4/F16 safely on current main",
+   "draft": false,
+   "head": "feat/consolidated-t3-t4-f16",
+   "base": "main",
+   "created": "2026-10-04T04:17:09Z",
+   "updated": "2026-10-04T08:01:12Z"
+  },
+  {
+   "number": 161,
+   "title": "chore(deps): update sqlalchemy requirement from >=2.0.51 to >=2.0.54",
+   "draft": false,
+   "head": "dependabot/pip/sqlalchemy-gte-2.0.54",
+   "base": "main",
+   "created": "2026-10-01T15:30:20Z",
+   "updated": "2026-11-20T22:41:42Z"
+  },
+  {
+   "number": 160,
+   "title": "chore(deps): update filelock requirement from >=3.31.0 to >=4.0.9",
+   "draft": false,
+   "head": "dependabot/pip/filelock-gte-4.0.5",
+   "base": "main",
+   "created": "2026-10-01T15:29:38Z",
+   "updated": "2026-11-20T22:41:46Z"
+  },
+  {
+   "number": 159,
+   "title": "chore(deps): update huggingface-hub requirement from <1.0.0,>=0.19.0 to >=0.19.0,<3.0.0",
+   "draft": false,
+   "head": "dependabot/pip/huggingface-hub-gte-0.19.0-and-lt-3.0.0",
+   "base": "main",
+   "created": "2026-10-01T15:28:11Z",
+   "updated": "2026-11-20T22:51:43Z"
+  },
+  {
+   "number": 158,
+   "title": "chore(deps): update gradio requirement from <5.0.0,>=4.44.0 to >=4.44.0,<7.0.0",
+   "draft": false,
+   "head": "dependabot/pip/gradio-gte-4.44.0-and-lt-7.0.0",
+   "base": "main",
+   "created": "2026-10-01T15:27:42Z",
+   "updated": "2026-11-20T22:51:42Z"
+  },
+  {
+   "number": 157,
+   "title": "chore(deps): bump actions/cache from 4 to 6",
+   "draft": false,
+   "head": "dependabot/github_actions/actions/cache-6",
+   "base": "main",
+   "created": "2026-10-01T15:27:17Z",
+   "updated": "2026-11-20T22:41:49Z"
+  },
+  {
+   "number": 156,
+   "title": "chore(deps): bump actions/setup-java from 4 to 6",
+   "draft": false,
+   "head": "dependabot/github_actions/actions/setup-java-6",
+   "base": "main",
+   "created": "2026-10-01T15:27:09Z",
+   "updated": "2026-11-20T22:41:53Z"
+  },
+  {
+   "number": 155,
+   "title": "chore(deps): bump actions/setup-python from 5 to 7",
+   "draft": false,
+   "head": "dependabot/github_actions/actions/setup-python-7",
+   "base": "main",
+   "created": "2026-10-01T15:26:48Z",
+   "updated": "2026-11-20T22:41:57Z"
+  },
+  {
+   "number": 144,
+   "title": "fix(evaluation): symmetric normalize_v1 for CER/WER (F-13)",
+   "draft": false,
+   "head": "gs/f13-symmetric-normalization",
+   "base": "main",
+   "created": "2026-09-29T13:43:48Z",
+   "updated": "2026-11-20T22:42:27Z"
+  },
+  {
+   "number": 143,
+   "title": "docs(audit): MISTRAL_REPOSITORY_AUDIT — cross-repo OCR audit for omni-ocr-core planning",
+   "draft": false,
+   "head": "docs/mistral-repo-audit",
+   "base": "main",
+   "created": "2026-09-28T19:39:49Z",
+   "updated": "2026-11-20T22:44:44Z"
+  },
+  {
+   "number": 136,
+   "title": "feat(atr): add advanced TrOCR training pipeline, batch PDF segmentation, and training UI",
+   "draft": false,
+   "head": "feature/atr-trocr-advanced",
+   "base": "main",
+   "created": "2026-09-23T18:20:28Z",
+   "updated": "2026-11-20T22:44:47Z"
+  },
+  {
+   "number": 135,
+   "title": "feat: Xberg extraction package + OLMoCR registry adapter (rebuild after reset #10)",
+   "draft": false,
+   "head": "feat/xberg-olmocr-integration",
+   "base": "main",
+   "created": "2026-09-23T12:28:56Z",
+   "updated": "2026-09-23T12:28:56Z"
+  },
+  {
+   "number": 134,
+   "title": "docs(portfolio): OLMoCR + Xberg official verification report (VERIFICATION ONLY)",
+   "draft": false,
+   "head": "docs/olmocr-xberg-verification",
+   "base": "main",
+   "created": "2026-09-21T23:55:52Z",
+   "updated": "2026-11-20T22:44:51Z"
+  },
+  {
+   "number": 133,
+   "title": "chore: root hygiene — move 22 agent-era reports to docs/ (Wave 2.6)",
+   "draft": false,
+   "head": "chore/root-hygiene",
+   "base": "main",
+   "created": "2026-09-21T23:28:55Z",
+   "updated": "2026-11-20T22:44:55Z"
+  },
+  {
+   "number": 132,
+   "title": "security: HF upload OFF by default + de-identification (Wave 1.3b)",
+   "draft": false,
+   "head": "security/hf-privacy-gate",
+   "base": "main",
+   "created": "2026-09-21T23:22:54Z",
+   "updated": "2026-09-21T23:22:54Z"
+  },
+  {
+   "number": 131,
+   "title": "security: SEC-2 env token-shape guard (Wave 1.2)",
+   "draft": false,
+   "head": "security/sec2-env-token-shapes",
+   "base": "main",
+   "created": "2026-09-21T23:01:43Z",
+   "updated": "2026-11-20T22:44:58Z"
+  },
+  {
+   "number": 130,
+   "title": "security: quarantine Telegram Forwarder (Wave 1.4)",
+   "draft": false,
+   "head": "security/quarantine-telegram-forwarder",
+   "base": "main",
+   "created": "2026-09-21T23:00:17Z",
+   "updated": "2026-11-20T22:45:02Z"
+  },
+  {
+   "number": 125,
+   "title": "PHASE 3 / TASK 012: fix word segmentation (0-words regression)",
+   "draft": false,
+   "head": "feat/task012-word-seg-fix",
+   "base": "main",
+   "created": "2026-09-18T15:31:32Z",
+   "updated": "2026-09-18T15:32:14Z"
+  },
+  {
+   "number": 124,
+   "title": "PHASE 1+2: central OCR foundation + GT588 segmentation validation",
+   "draft": false,
+   "head": "feat/seg-eval-gt588",
+   "base": "main",
+   "created": "2026-09-18T15:26:50Z",
+   "updated": "2026-09-18T15:26:50Z"
+  },
+  {
+   "number": 121,
+   "title": "feat(enrichment): WHO ICD-11 Arabic medical terminology enrichment",
+   "draft": false,
+   "head": "feat/medical-terminology-enrichment",
+   "base": "main",
+   "created": "2026-09-09T09:57:33Z",
+   "updated": "2026-11-20T22:45:05Z"
+  },
+  {
+   "number": 120,
+   "title": "feat(api): integrate verified medical public APIs (openFDA, RxNorm, PubMed)",
+   "draft": false,
+   "head": "feat/p0-public-api-integrations",
+   "base": "main",
+   "created": "2026-09-09T09:30:39Z",
+   "updated": "2026-09-09T09:33:37Z"
+  },
+  {
+   "number": 117,
+   "title": "feat(calibre-ocr): add medical OCR + image processing + Calibre library integration",
+   "draft": true,
+   "head": "feat/calibre-ocr-medical-library",
+   "base": "main",
+   "created": "2026-09-04T16:00:09Z",
+   "updated": "2026-09-05T09:26:09Z"
+  },
+  {
+   "number": 116,
+   "title": "fix(ci): harden entrypoint validation and deployment tests",
+   "draft": false,
+   "head": "fix/ci-release-hardening-followup",
+   "base": "main",
+   "created": "2026-09-03T07:33:23Z",
+   "updated": "2026-09-04T14:34:30Z"
+  },
+  {
+   "number": 115,
+   "title": "fix(audit): harden production deployment and repository integrity",
+   "draft": false,
+   "head": "fix/post-114-production-audit",
+   "base": "main",
+   "created": "2026-09-03T07:07:07Z",
+   "updated": "2026-09-03T07:07:07Z"
+  },
+  {
+   "number": 107,
+   "title": "chore(deps): update click requirement from >=8.0 to >=8.5.0",
+   "draft": false,
+   "head": "dependabot/pip/click-gte-8.5.0",
+   "base": "main",
+   "created": "2026-09-01T15:29:26Z",
+   "updated": "2026-11-20T22:46:14Z"
+  },
+  {
+   "number": 102,
+   "title": "fix(security): harden snapshot exporter against path/symlink/scope escapes",
+   "draft": false,
+   "head": "fix/snapshot-security-hardening",
+   "base": "main",
+   "created": "2026-08-29T10:12:07Z",
+   "updated": "2026-08-31T13:19:09Z"
+  },
+  {
+   "number": 90,
+   "title": "Security fixes: medical OCR separator, admin auth, deployment topology",
+   "draft": false,
+   "head": "security-fixes-clean",
+   "base": "main",
+   "created": "2026-08-25T13:58:10Z",
+   "updated": "2026-08-25T15:59:07Z"
+  },
+  {
+   "number": 86,
+   "title": "fix(security): close post-85 deployment and condition-parser gaps",
+   "draft": false,
+   "head": "hardening/post-85-audit-fixes",
+   "base": "main",
+   "created": "2026-08-25T10:48:25Z",
+   "updated": "2026-11-20T22:46:18Z"
+  },
+  {
+   "number": 84,
+   "title": "chore(deps): update pydantic requirement from <2.11,>=2.0.0 to >=2.0.0,<2.14",
+   "draft": false,
+   "head": "dependabot/pip/pydantic-gte-2.0.0-and-lt-2.14",
+   "base": "main",
+   "created": "2026-08-01T15:29:55Z",
+   "updated": "2026-11-20T22:51:47Z"
+  },
+  {
+   "number": 83,
+   "title": "chore(deps): update pdfplumber requirement from >=0.9.0 to >=0.11.10",
+   "draft": false,
+   "head": "dependabot/pip/pdfplumber-gte-0.11.10",
+   "base": "main",
+   "created": "2026-08-01T15:29:48Z",
+   "updated": "2026-11-20T22:46:21Z"
+  },
+  {
+   "number": 82,
+   "title": "chore(deps): update numpy requirement from <2.0.0,>=1.24.0 to >=1.24.0,<3.0.0",
+   "draft": false,
+   "head": "dependabot/pip/numpy-gte-1.24.0-and-lt-3.0.0",
+   "base": "main",
+   "created": "2026-08-01T15:29:40Z",
+   "updated": "2026-11-20T22:46:25Z"
+  },
+  {
+   "number": 81,
+   "title": "chore(deps): update img2pdf requirement from >=0.4.4 to >=0.6.3",
+   "draft": false,
+   "head": "dependabot/pip/img2pdf-gte-0.6.3",
+   "base": "main",
+   "created": "2026-08-01T15:28:53Z",
+   "updated": "2026-11-20T22:46:28Z"
+  },
+  {
+   "number": 78,
+   "title": "chore(deps): update prometheus-fastapi-instrumentator requirement from >=7.0.0 to >=8.1.0",
+   "draft": false,
+   "head": "dependabot/pip/prometheus-fastapi-instrumentator-gte-8.1.0",
+   "base": "main",
+   "created": "2026-08-01T15:28:07Z",
+   "updated": "2026-11-20T22:46:32Z"
+  },
+  {
+   "number": 70,
+   "title": "docs(v1.2.0): align README badges + add release notes",
+   "draft": false,
+   "head": "docs/v1.2.0-readiness",
+   "base": "main",
+   "created": "2026-07-31T02:02:15Z",
+   "updated": "2026-11-20T22:46:36Z"
+  },
+  {
+   "number": 55,
+   "title": "chore(deps): bump docker/metadata-action from 5 to 6",
+   "draft": false,
+   "head": "dependabot/github_actions/docker/metadata-action-6",
+   "base": "main",
+   "created": "2026-07-18T10:17:22Z",
+   "updated": "2026-11-20T23:51:17Z"
+  },
+  {
+   "number": 53,
+   "title": "chore(deps): bump actions/upload-artifact from 4 to 7",
+   "draft": false,
+   "head": "dependabot/github_actions/actions/upload-artifact-7",
+   "base": "main",
+   "created": "2026-07-18T10:17:12Z",
+   "updated": "2026-11-20T23:50:50Z"
+  }
+ ],
+ "repo-sync-toolkit": [
+  {
+   "number": 12,
+   "title": "تدقيق تراخيص آلي + سياسة مركزية — بند 5 من الخارطة (حاجز التلوث الترخيصي)",
+   "draft": false,
+   "head": "roadmap/license-audit",
+   "base": "main",
+   "created": "2026-11-22T20:36:16Z",
+   "updated": "2026-11-22T20:36:16Z"
+  }
+ ],
+ "marathon_ted_pipeline": [
+  {
+   "number": 35,
+   "title": "chore(deps): update python-bidi requirement from >=0.4.2 to >=0.6.12",
+   "draft": false,
+   "head": "dependabot/pip/python-bidi-gte-0.6.12",
+   "base": "main",
+   "created": "2026-11-14T23:49:08Z",
+   "updated": "2026-11-14T23:49:11Z"
+  },
+  {
+   "number": 34,
+   "title": "chore(deps): update nltk requirement from >=3.8.1 to >=3.10.4",
+   "draft": false,
+   "head": "dependabot/pip/nltk-gte-3.10.4",
+   "base": "main",
+   "created": "2026-11-14T23:47:50Z",
+   "updated": "2026-11-14T23:47:54Z"
+  },
+  {
+   "number": 33,
+   "title": "feat: حصاد الليل — CI يومي كمنتج (سلسلة 30 يوماً + إنذار تدهور)",
+   "draft": false,
+   "head": "chore/night-harvest",
+   "base": "main",
+   "created": "2026-11-14T23:22:39Z",
+   "updated": "2026-11-14T23:22:39Z"
+  },
+  {
+   "number": 32,
+   "title": "chore(deps): bump python from 3.11-slim to 3.15-slim",
+   "draft": false,
+   "head": "dependabot/docker/python-3.15-slim",
+   "base": "main",
+   "created": "2026-11-12T21:44:40Z",
+   "updated": "2026-11-20T22:41:26Z"
+  },
+  {
+   "number": 29,
+   "title": "[DRAFT] upgrade: adopt ocr-core v2 visual-evidence contract (X→uncertain) — final pin pending v0.7.0",
+   "draft": true,
+   "head": "upgrade/ocr-core-visual-evidence-v2",
+   "base": "main",
+   "created": "2026-10-17T15:19:41Z",
+   "updated": "2026-10-17T15:19:41Z"
+  },
+  {
+   "number": 28,
+   "title": "[DRAFT] docs: add gated bilingual orthopaedic Telegram source intake",
+   "draft": true,
+   "head": "feat/ortho-bilingual-telegram-source-catalog",
+   "base": "main",
+   "created": "2026-10-12T22:53:20Z",
+   "updated": "2026-10-12T22:53:35Z"
+  },
+  {
+   "number": 27,
+   "title": "test(charter): ocr-core ↔ charter compatibility tripwire (draft)",
+   "draft": true,
+   "head": "audit/charter-engine-compat",
+   "base": "main",
+   "created": "2026-10-11T22:10:43Z",
+   "updated": "2026-10-11T22:10:43Z"
+  },
+  {
+   "number": 26,
+   "title": "docs: add Agent-Reach medical and translation source catalog",
+   "draft": true,
+   "head": "docs/agent-reach-medical-source-catalog",
+   "base": "main",
+   "created": "2026-10-11T20:59:31Z",
+   "updated": "2026-10-11T20:59:31Z"
+  },
+  {
+   "number": 23,
+   "title": "[SPRINT-2][TED] Fix local subtitle fetching and register bilingual sources",
+   "draft": true,
+   "head": "fix/ted2srt-vtt-and-bilingual-ingestion",
+   "base": "main",
+   "created": "2026-10-10T00:47:46Z",
+   "updated": "2026-10-10T20:45:59Z"
+  },
+  {
+   "number": 20,
+   "title": "[DRAFT] feat(pdf): مستخرج OpenDataLoader اختياري (Apache-2.0 — تحقق حي 2.5.12)",
+   "draft": true,
+   "head": "feat/opendataloader-optional",
+   "base": "main",
+   "created": "2026-10-04T23:15:12Z",
+   "updated": "2026-10-04T23:15:12Z"
+  },
+  {
+   "number": 19,
+   "title": "Harness Engineering v2.0 — عقد الوكلاء + بوابات التحقق + الذاكرة (مسودة)",
+   "draft": true,
+   "head": "feat/harness-engineering",
+   "base": "main",
+   "created": "2026-10-04T22:03:36Z",
+   "updated": "2026-10-04T23:21:30Z"
+  },
+  {
+   "number": 12,
+   "title": "fix: make OCR visual evidence and table preservation enforceable",
+   "draft": true,
+   "head": "audit/visual-evidence-rules",
+   "base": "main",
+   "created": "2026-10-01T13:42:43Z",
+   "updated": "2026-10-01T13:42:43Z"
+  },
+  {
+   "number": 11,
+   "title": "Update scipy requirement from >=1.11.0 to >=1.18.1",
+   "draft": false,
+   "head": "dependabot/pip/scipy-gte-1.18.1",
+   "base": "main",
+   "created": "2026-10-01T13:32:02Z",
+   "updated": "2026-11-20T22:42:01Z"
+  },
+  {
+   "number": 10,
+   "title": "Update tqdm requirement from >=4.66.0 to >=4.70.1",
+   "draft": false,
+   "head": "dependabot/pip/tqdm-gte-4.70.1",
+   "base": "main",
+   "created": "2026-10-01T13:31:55Z",
+   "updated": "2026-11-20T22:42:04Z"
+  },
+  {
+   "number": 9,
+   "title": "Bump codecov/codecov-action from 4 to 7",
+   "draft": false,
+   "head": "dependabot/github_actions/codecov/codecov-action-7",
+   "base": "main",
+   "created": "2026-10-01T13:31:54Z",
+   "updated": "2026-11-20T22:42:08Z"
+  },
+  {
+   "number": 8,
+   "title": "Bump docker/metadata-action from 5 to 6",
+   "draft": false,
+   "head": "dependabot/github_actions/docker/metadata-action-6",
+   "base": "main",
+   "created": "2026-10-01T13:31:51Z",
+   "updated": "2026-11-20T22:42:11Z"
+  },
+  {
+   "number": 5,
+   "title": "Update lxml requirement from >=4.9.0 to >=6.1.3",
+   "draft": false,
+   "head": "dependabot/pip/lxml-gte-6.1.3",
+   "base": "main",
+   "created": "2026-10-01T13:31:44Z",
+   "updated": "2026-11-20T22:42:14Z"
+  },
+  {
+   "number": 4,
+   "title": "Bump docker/login-action from 3 to 4",
+   "draft": false,
+   "head": "dependabot/github_actions/docker/login-action-4",
+   "base": "main",
+   "created": "2026-10-01T13:31:39Z",
+   "updated": "2026-11-20T22:42:16Z"
+  },
+  {
+   "number": 3,
+   "title": "Bump docker/setup-buildx-action from 3 to 4",
+   "draft": false,
+   "head": "dependabot/github_actions/docker/setup-buildx-action-4",
+   "base": "main",
+   "created": "2026-10-01T13:31:32Z",
+   "updated": "2026-11-20T22:42:20Z"
+  },
+  {
+   "number": 1,
+   "title": "Bump appleboy/ssh-action from 1.0.3 to 1.2.5",
+   "draft": false,
+   "head": "dependabot/github_actions/appleboy/ssh-action-1.2.5",
+   "base": "main",
+   "created": "2026-10-01T13:31:26Z",
+   "updated": "2026-11-20T22:42:23Z"
+  }
+ ],
+ "intelli-file-manager": [
+  {
+   "number": 80,
+   "title": "إضافة بوابة PII قبل الفهرسة — بند 3 من خارطة التطوير المتكاملة",
+   "draft": false,
+   "head": "roadmap/pii-gate-plugin",
+   "base": "main",
+   "created": "2026-11-22T20:36:03Z",
+   "updated": "2026-11-22T20:36:03Z"
+  },
+  {
+   "number": 78,
+   "title": "P0+P1: توحيد النطاق + سلامة العمليات (batch undo، تصدير ذري no-clobber، مضاد TOCTOU)",
+   "draft": true,
+   "head": "feat/p0p1-ops-safety-readiness",
+   "base": "main",
+   "created": "2026-11-22T10:25:48Z",
+   "updated": "2026-11-22T21:46:13Z"
+  }
+ ],
+ "glossary-api": "ERROR",
+ "medical-ocr-trainer-hf": [
+  {
+   "number": 9,
+   "title": "chore(deps): update numpy requirement from <2.0.0,>=1.24.0 to >=2.5.5,<3.0.0",
+   "draft": false,
+   "head": "dependabot/pip/numpy-gte-2.5.5-and-lt-3.0.0",
+   "base": "main",
+   "created": "2026-11-20T22:38:32Z",
+   "updated": "2026-11-20T23:44:41Z"
+  },
+  {
+   "number": 8,
+   "title": "chore(deps): update opencv-python-headless requirement from >=4.8.0 to >=5.1.0.95",
+   "draft": false,
+   "head": "dependabot/pip/opencv-python-headless-gte-5.1.0.95",
+   "base": "main",
+   "created": "2026-11-20T22:38:25Z",
+   "updated": "2026-11-20T23:21:48Z"
+  },
+  {
+   "number": 4,
+   "title": "ci: bump actions/setup-python from 5 to 7",
+   "draft": false,
+   "head": "dependabot/github_actions/actions/setup-python-7",
+   "base": "main",
+   "created": "2026-11-20T22:38:03Z",
+   "updated": "2026-11-20T23:39:22Z"
+  }
+ ],
+ "manjaro-doctor": "ERROR"
+}
