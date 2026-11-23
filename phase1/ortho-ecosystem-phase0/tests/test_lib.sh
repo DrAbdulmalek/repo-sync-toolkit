@@ -25,7 +25,14 @@
 #   T20 استقلال النسخة الاحتياطية عن المصدر: إزالة المستودع الأصل كليًا ثم
 #       استعادة الـbundle وحده في مستودع جديد فارغ + تحقق الـsha + محتوى الملفات
 #   T21 عدم تسرب التوكن: لا قيمة التوكن ولا نمط عنوانه في السجلات أو ملفات النسخ
-#   T22 حرّاس التزامن: تسمية CI تطابق العدد الفعلي للتأكيدات والسيناريوهات
+#   T22 حرّاس التزامن: تسمية CI تطابق العدد الفعلي آليًا (آخر سيناريو عمدًا
+#       كي يشمل TOTAL كل تأكيدات ما قبله)
+#   T23 خادم Git HTTP محلي حقيقي يتطلب Basic Auth → git يستدعي ASKPASS فعليًا
+#   T24 مراقبة متزامنة لـ/proc/*/cmdline: التوكن غائب عن argv أثناء التنفيذ
+#   T25 تنظيف askpass ومجلد العمل المؤقت بعد نجاح الجلب والتغليف
+#   T26 تنظيف askpass ومجلد العمل المؤقت بعد فشل المصادقة
+#   T27 عدد السيناريوهات مستخرج آليًا من العناوين الفعلية + لا تكرار ولا فجوات
+#   T28 فشل المصادقة لا يسجل نجاح نسخة احتياطية ولا يواصل الدمج
 # تعطيلات مقصودة: تلوث متغيرات subshells عمدًا للعزل + تصدير ديناميكي لخيارات
 # السيناريو + مصدر lib غير ثابت النسبي — كلها قرار تصميمي في حزمة الاختبار
 # shellcheck disable=SC2030,SC2031,SC2163,SC1090
@@ -112,7 +119,7 @@ run_scenario() {
   ( cd "$SB" \
       && export PATH="$MOCKDIR:$PATH" GH_TOKEN="dummy-token-for-mock-only" \
       && export DRY_RUN=0 MOCK_STATE_FILE="$SB/state" BACKUP_REMOTE_URL="$SB/origin" \
-      && export "$@" \
+      && { [ "$#" -eq 0 ] || export "$@"; } \
       && source "$LIB" \
       && merge_pr "medical-ocr-trainer" 77 "feat/x" merge ) > "$SB/out.txt" 2>&1
   RC=$?
@@ -130,6 +137,133 @@ run_close_scenario() {
       && source "$LIB" \
       && close_pr "medical-ocr-trainer" 77 "سبب تجريبي" ) > "$SB/out.txt" 2>&1
   RC=$?
+  LOG=$(find "$SB/logs" -name '*.log' 2>/dev/null | head -1)
+  LOGTXT=$(cat "$LOG" 2>/dev/null || true)
+}
+
+# ── خادم Git HTTP محلي للمصادقة الحقيقية (جولة 4) ──
+# يقدم git http-backend (بروتوكول ذكي حقيقي) خلف بوابة HTTP Basic:
+# يرفض غير المصادق برمز 401 ويسجل كل طلب (المسار + هل كان مصادقًا) —
+# سجل الرفض-ثم-القبول هو الدليل المباشر على استدعاء askpass من git نفسه.
+# localhost فقط، منفذ يحجزه النظام آمنًا (0)، لا شبكة خارجية ولا خادم خارجي،
+# وكلمة السر تمر عبر البيئة لا argv (لا قيمة سرية في وسائط أي عملية).
+HTTPD_PID="" HTTP_PORT=""
+start_http_server() { # $1=كلمة السر الصحيحة المتوقعة (قيمة اصطناعية لا توكن حقيقي)
+  cat > "$SB/http_git_server.py" <<'PYEOF'
+#!/usr/bin/env python3
+import base64, os, subprocess, sys, time
+from http.server import BaseHTTPRequestHandler, HTTPServer
+
+ROOT, USER, LOGF, PORTF = sys.argv[1:5]
+PASSWORD = os.environ["HTTP_TEST_PASS"]
+
+def auth_ok(header):
+    if not header.startswith("Basic "):
+        return False
+    try:
+        u, _, p = base64.b64decode(header[6:].strip()).decode("utf-8", "replace").partition(":")
+    except Exception:
+        return False
+    return u == USER and p == PASSWORD
+
+class Handler(BaseHTTPRequestHandler):
+    def _reply(self, code, ctype, body, auth_hdr=False):
+        self.send_response(code)
+        if auth_hdr:
+            self.send_header("WWW-Authenticate", 'Basic realm="git-local-test"')
+        self.send_header("Content-Type", ctype)
+        self.send_header("Content-Length", str(len(body)))
+        self.send_header("Cache-Control", "no-cache, max-age=0, must-revalidate")
+        self.end_headers()
+        if body:
+            self.wfile.write(body)
+
+    def _handle(self):
+        time.sleep(0.03)  # توسيع نافذة مراقبة argv المتزامنة (T24) — للاختبار فقط
+        ok = auth_ok(self.headers.get("Authorization", ""))
+        path, _, query = self.path.partition("?")
+        with open(LOGF, "a") as f:
+            f.write("%s %s auth=%s\n" % (self.command, path, "yes" if ok else "no"))
+        if not ok:
+            self._reply(401, "text/plain", b"credential required\n", auth_hdr=True)
+            return
+        length = int(self.headers.get("Content-Length") or 0)
+        body = self.rfile.read(length) if length else b""
+        env = dict(os.environ)
+        env.update({
+            "GIT_PROJECT_ROOT": ROOT, "GIT_HTTP_EXPORT_ALL": "1",
+            "PATH_INFO": path, "QUERY_STRING": query,
+            "REQUEST_METHOD": self.command, "REMOTE_ADDR": "127.0.0.1",
+            "REMOTE_USER": USER, "CONTENT_LENGTH": str(len(body)),
+            "GIT_CONFIG_NOSYSTEM": "1",
+        })
+        gp = self.headers.get("Git-Protocol")
+        if gp:
+            env["GIT_PROTOCOL"] = gp
+        ct = self.headers.get("Content-Type")
+        if ct:
+            env["CONTENT_TYPE"] = ct
+        proc = subprocess.run(["git", "http-backend"], input=body, stdout=subprocess.PIPE,
+                              stderr=subprocess.DEVNULL, env=env)
+        raw = proc.stdout
+        head, sep, payload = raw.partition(b"\r\n\r\n")
+        if not sep:
+            head, sep, payload = raw.partition(b"\n\n")
+        code, ctype = 200, "application/octet-stream"
+        for line in head.splitlines():
+            low = line.decode("latin-1").strip().lower()
+            if low.startswith("status:"):
+                try:
+                    code = int(low.split(":", 1)[1].strip().split()[0])
+                except Exception:
+                    code = 200
+            elif low.startswith("content-type:"):
+                ctype = line.decode("latin-1").split(":", 1)[1].strip()
+        self._reply(code, ctype, payload)
+
+    do_GET = _handle
+    do_POST = _handle
+
+    def log_message(self, *args):  # صمت سجلات stderr القياسية
+        pass
+
+srv = HTTPServer(("127.0.0.1", 0), Handler)
+with open(PORTF, "w") as f:
+    f.write(str(srv.server_address[1]))
+srv.serve_forever()
+PYEOF
+  HTTP_TEST_PASS="$1" python3 -I "$SB/http_git_server.py" "$SB" "x-access-token" \
+    "$SB/http_server.log" "$SB/http_port" &
+  HTTPD_PID=$!
+  local i
+  for i in $(seq 1 50); do [ -s "$SB/http_port" ] && break; sleep 0.1; done
+  HTTP_PORT=$(cat "$SB/http_port" 2>/dev/null || true)
+}
+stop_http_server() {
+  if [ -n "${HTTPD_PID:-}" ]; then
+    kill "$HTTPD_PID" 2>/dev/null
+    wait "$HTTPD_PID" 2>/dev/null
+  fi
+  HTTPD_PID=""   # HTTP_PORT يبقى للتحقق اللاحق؛ يُستبدل عند بدء الخادم التالي
+}
+# يشغّل merge_pr عبر خادم Git HTTP محلي حقيقي (جولة 4)؛
+# $1=كلمة سر الخادم الصحيحة (الخطأ عمدًا في سيناريوهات فشل المصادقة)،
+# والبقية تصديرات إضافية للسيناريو. GIT_CONFIG_* تعزل العميل عن أي
+# credential helper أو إعدادات على الجهاز — askpass هو المصدر الوحيد.
+run_http_scenario() {
+  local correct_pass="$1"; shift
+  setup_sandbox
+  start_http_server "$correct_pass"
+  ( cd "$SB" \
+      && export PATH="$MOCKDIR:$PATH" GH_TOKEN="dummy-token-for-mock-only" \
+      && export DRY_RUN=0 MOCK_STATE_FILE="$SB/state" \
+      && export GIT_CONFIG_NOSYSTEM=1 GIT_CONFIG_GLOBAL=/dev/null \
+      && export BACKUP_REMOTE_URL="http://127.0.0.1:${HTTP_PORT}/origin" \
+      && { [ "$#" -eq 0 ] || export "$@"; } \
+      && source "$LIB" \
+      && merge_pr "medical-ocr-trainer" 77 "feat/x" merge ) > "$SB/out.txt" 2>&1
+  RC=$?
+  stop_http_server
   LOG=$(find "$SB/logs" -name '*.log' 2>/dev/null | head -1)
   LOGTXT=$(cat "$LOG" 2>/dev/null || true)
 }
@@ -299,14 +433,90 @@ LEAKS2=$(grep -r -l "x-access-token" "$SB/logs" "$SB/backups" 2>/dev/null | wc -
 expect "لا نمط توكن-في-العنوان في المخرجات (سكربت المصادقة حُذف مع المستودع المؤقت)" "$([ "$LEAKS2" -eq 0 ] && echo 0 || echo 1)"
 expect "lib.sh بلا توكن داخل أي عنوان Git" "$(grep -q "https://x-access-token:" "$LIB" && echo 1 || echo 0)"
 
-echo "═══ T22: تسمية CI تطابق العدد الفعلي (حارس تزامن) ═══"
-# إن تغيّر عدد التأكيدات أو السيناريوهات لاحقًا يفشل هذا الاختبار ويجبر تحديث
-# تسمية CI في نفس الدفعة — حتى لا تعود الأرقام في وصف CI إلى أن تصبح قديمة.
+echo "═══ T23: خادم Git HTTP محلي حقيقي يتطلب Basic Auth ويستدعي ASKPASS فعليًا ═══"
+run_http_scenario "dummy-token-for-mock-only"
+expect "الخادم جاهز على منفذ يحجزه النظام آمنًا (localhost فقط)" "$([ -n "$HTTP_PORT" ] && echo 0 || echo 1)"
+expect "رمز خروج صفري (المسار الكامل نجح عبر HTTP مصادق)" "$([ $RC -eq 0 ] && echo 0 || echo 1)"
+expect "دليل استدعاء askpass حي: الرفض (auth=no) ثم القبول (auth=yes) — والعميلة بلا مصدر آخر (لا طرفية GIT_TERMINAL_PROMPT=0 ولا credential helper معزول)" "$([ "$(grep -c "auth=no" "$SB/http_server.log" 2>/dev/null)" -ge 1 ] && [ "$(grep -c "auth=yes" "$SB/http_server.log" 2>/dev/null)" -ge 1 ] && echo 0 || echo 1)"
+expect "bundle موجود وغير فارغ عبر مسار HTTP" "$([ -s "$SB/backups/bundles/pr_medical-ocr-trainer_77.bundle" ] && echo 0 || echo 1)"
+expect "manifest يحوي sha الرأس الحقيقي (نجاح التغليف عبر HTTP)" "$(grep -q "$ORIGIN_SHA" "$SB/backups/backup_manifest.tsv" 2>/dev/null && echo 0 || echo 1)"
+expect "العنوان خالٍ من التوكن: لا قيمة اصطناعية في سجل الخادم أو سجلات التشغيل" "$([ "$(grep -l "dummy-token-for-mock-only" "$SB/http_server.log" "$SB/out.txt" "$LOG" 2>/dev/null | wc -l)" -eq 0 ] && echo 0 || echo 1)"
+expect "لا نمط بيانات-اعتماد-داخل-عنوان (user:pass@) في سجل الخادم أو السجلات" "$([ "$(grep -l "x-access-token:" "$SB/http_server.log" "$SB/out.txt" "$LOG" 2>/dev/null | wc -l)" -eq 0 ] && echo 0 || echo 1)"
+
+echo "═══ T24: التوكن غائب عن argv لعمليات Git أثناء التنفيذ (مراقبة /proc متزامنة) ═══"
+ARGVDUMP="$(mktemp /tmp/libargvdump.XXXXXX)"
+ARGVOBS="$(mktemp /tmp/libargvobs.XXXXXX)"
+STOPF="$(mktemp /tmp/libargvstop.XXXXXX)"
+( # مراقب متزامن: عينات متكررة من /proc/*/cmdline أثناء تنفيذ السيناريو — لا فحص لاحق فقط
+  while [ ! -s "$STOPF" ]; do
+    for p in /proc/[0-9]*/cmdline; do
+      # 2>/dev/null قبل فتح الملف: العمليات القصيرة تختفي بين الجلب والقراءة
+      cl=$(tr '\0' ' ' 2>/dev/null < "$p") || continue
+      case "$cl" in
+        *git*fetch*|*"git -C"*) printf '%s\n' "$cl" >> "$ARGVDUMP" ;;
+      esac
+      case "$cl" in *refs/heads/backup*) printf '%s\n' "$cl" >> "$ARGVOBS" ;; esac
+    done
+  done
+) &
+WATCHER=$!
+run_http_scenario "dummy-token-for-mock-only"
+printf 'stop\n' > "$STOPF"
+wait "$WATCHER" 2>/dev/null
+expect "المراقب التقاط عملية git fetch حية أثناء التنفيذ (إثبات صحة الملاحظة)" "$([ -s "$ARGVOBS" ] && echo 0 || echo 1)"
+expect "لا قيمة التوكن في أي argv ملتقط" "$(grep -q "dummy-token-for-mock-only" "$ARGVDUMP" 2>/dev/null && echo 1 || echo 0)"
+expect "لا نمط user:pass@ في أي argv ملتقط" "$(grep -q "x-access-token:" "$ARGVDUMP" 2>/dev/null && echo 1 || echo 0)"
+expect "السيناريو المصادق نجح كاملًا أثناء المراقبة (رمز خروج صفري)" "$([ $RC -eq 0 ] && echo 0 || echo 1)"
+rm -f "$ARGVDUMP" "$ARGVOBS" "$STOPF"
+
+echo "═══ T25: تنظيف askpass والمستودع المؤقت بعد نجاح الجلب والتغليف ═══"
+run_http_scenario "dummy-token-for-mock-only"
+expect "رمز خروج صفري (نجاح)" "$([ $RC -eq 0 ] && echo 0 || echo 1)"
+expect "الـbundle أُنشئ فعلًا" "$([ -s "$SB/backups/bundles/pr_medical-ocr-trainer_77.bundle" ] && echo 0 || echo 1)"
+expect "لا أثر لسكربت askpass بعد النجاح" "$([ "$(find "$SB" -name ".askpass" 2>/dev/null | wc -l)" -eq 0 ] && echo 0 || echo 1)"
+expect "لا مجلدات عمل مؤقتة متبقية (.bk_scratch/.bk_restore/.bk_verify)" "$([ "$(find "$SB" -maxdepth 1 -name ".bk_*" 2>/dev/null | wc -l)" -eq 0 ] && echo 0 || echo 1)"
+
+echo "═══ T26: تنظيف askpass والمستودع المؤقت بعد فشل المصادقة ═══"
+run_http_scenario "wrong-password-on-purpose"
+expect "رمز خروج غير صفري (backup_pr فشل)" "$([ $RC -ne 0 ] && echo 0 || echo 1)"
+expect "الخادم وثّق رفض المصادقة فعليًا (طلبات auth=no)" "$(grep -q "auth=no" "$SB/http_server.log" 2>/dev/null && echo 0 || echo 1)"
+expect "لا أثر لسكربت askpass بعد الفشل" "$([ "$(find "$SB" -name ".askpass" 2>/dev/null | wc -l)" -eq 0 ] && echo 0 || echo 1)"
+expect "لا مجلدات عمل مؤقتة متبقية بعد الفشل" "$([ "$(find "$SB" -maxdepth 1 -name ".bk_*" 2>/dev/null | wc -l)" -eq 0 ] && echo 0 || echo 1)"
+expect "لا bundle أُنشئ عند فشل المصادقة" "$([ ! -e "$SB/backups/bundles/pr_medical-ocr-trainer_77.bundle" ] && echo 0 || echo 1)"
+
+echo "═══ T28: فشل المصادقة لا يسجل نجاح نسخة احتياطية ولا يواصل الدمج ═══"
+run_http_scenario "wrong-password-on-purpose"
+expect "رمز خروج غير صفري" "$([ $RC -ne 0 ] && echo 0 || echo 1)"
+expect "السجل لا يعلن نسخة احتياطية مؤكدة" "$(lacks "نسخة احتياطية مستقلة مؤكدة")"
+expect "لا manifest نسخ احتياطية أصلًا (النسخة لم تكتمل)" "$([ ! -e "$SB/backups/backup_manifest.tsv" ] && echo 0 || echo 1)"
+expect "أمر الدمج لم يُحاول أصلًا (fail-closed)" "$(lacks "gh pr merge")"
+expect "لا MERGED" "$(lacks "MERGED")"
+
+echo "═══ T27: عدد السيناريوهات مستخرج آليًا من العناوين الفعلية + تسلسل سليم ═══"
+# لا اعتماد على تعليق التغطية: الاستخراج من أسطر echo "═══ T<n>:" في جسم الاختبارات نفسه
+SCENS=$(grep -oE '^echo "═══ T[0-9]+:' "$HERE/test_lib.sh" | grep -oE '[0-9]+' | sort -n)
+SCEN_N=$(printf '%s\n' "$SCENS" | wc -l)
+DUPS=$(printf '%s\n' "$SCENS" | uniq -d | wc -l)
+GAP=""
+for i in $(seq 1 "$SCEN_N"); do printf '%s\n' "$SCENS" | grep -qx "$i" || GAP="$i"; done
+expect "لا تكرار في أرقام السيناريوهات" "$([ "$DUPS" -eq 0 ] && echo 0 || echo 1)"
+expect "التسلسل متصل بلا فجوات من T1 حتى آخر سيناريو" "$([ -z "$GAP" ] && echo 0 || echo 1)"
 WF="$HERE/../../../.github/workflows/phase1_scripts_ci.yml"
-TOTAL=$((PASS + FAIL + 2))   # +2: تأكيدا هذا الاختبار نفسه
 if [ -f "$WF" ]; then
-  expect "الوصف يتضمن العدد الكلي الفعلي ($TOTAL تأكيدًا)" "$(grep -q "— $TOTAL تأكيدًا" "$WF" && echo 0 || echo 1)"
-  expect "الوصف يتضمن عدد السيناريوهات الفعلي (22 سيناريو)" "$(grep -q "عبر 22 سيناريو" "$WF" && echo 0 || echo 1)"
+  expect "وصف CI يطابق العدد المستخرج آليًا من عناوين الاختبارات ($SCEN_N سيناريو)" "$(grep -q "عبر $SCEN_N سيناريو" "$WF" && echo 0 || echo 1)"
+else
+  expect "ملف CI غير موجود من هذا المسار — تخطٍّ (الحارس يعمل في مستودع مكتمل)" "0"
+fi
+
+echo "═══ T22: تسمية CI تطابق الأعداد الفعلية آليًا (حارس تزامن — آخر سيناريو عمدًا) ═══"
+# تُنفَّذ أخيرًا كي يشمل TOTAL كل تأكيدات السيناريوهات السابقة؛ إن تغيّر أي عدد
+# (تأكيدات أو سيناريوهات) فشل هذا الاختبار وجبر تحديث تسمية CI في نفس الدفعة.
+WF="$HERE/../../../.github/workflows/phase1_scripts_ci.yml"
+TOTAL=$((PASS + FAIL + 2))   # +2: تأكيدا هذا الاختبار نفسه (آخر سيناريو)
+SCEN2=$(grep -oE '^echo "═══ T[0-9]+:' "$HERE/test_lib.sh" | grep -oE '[0-9]+' | wc -l)
+if [ -f "$WF" ]; then
+  expect "الوصف يتضمن العدد الكلي الفعلي للتأكيدات ($TOTAL تأكيدًا)" "$(grep -q "— $TOTAL تأكيدًا" "$WF" && echo 0 || echo 1)"
+  expect "الوصف يتضمن عدد السيناريوهات المستخرج آليًا ($SCEN2 سيناريو)" "$(grep -q "عبر $SCEN2 سيناريو" "$WF" && echo 0 || echo 1)"
 else
   expect "ملف CI غير موجود من هذا المسار — تخطٍّ عدد التأكيدات (الحارس يعمل في مستودع مكتمل)" "0"
   expect "ملف CI غير موجود من هذا المسار — تخطٍّ عدد السيناريوهات (الحارس يعمل في مستودع مكتمل)" "0"
