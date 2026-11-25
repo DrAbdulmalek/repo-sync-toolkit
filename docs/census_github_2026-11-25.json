@@ -1,0 +1,407 @@
+[
+ {
+  "name": "ocr-core",
+  "archived": false,
+  "fork": false,
+  "size_kb": 3474,
+  "pushed_at": "2026-11-25T00:31:58Z",
+  "visibility": "public",
+  "description": "Shared OCR engine — Visual Evidence Charter (18 rules) + Arabic medical correcti"
+ },
+ {
+  "name": "arabic-handwriting-ocr-toolkit",
+  "archived": false,
+  "fork": false,
+  "size_kb": 124,
+  "pushed_at": "2026-11-24T23:23:23Z",
+  "visibility": "public",
+  "description": "حزمة OCR الخط اليدوي (عربي + إنجليزي + ألماني) — TrOCR + SQLite + محرر مربعات"
+ },
+ {
+  "name": "intelli-file-manager",
+  "archived": false,
+  "fork": false,
+  "size_kb": 19031,
+  "pushed_at": "2026-11-24T23:23:09Z",
+  "visibility": "public",
+  "description": "IntelliFile — Intelligent File Management App"
+ },
+ {
+  "name": "medical-ocr-demo",
+  "archived": false,
+  "fork": false,
+  "size_kb": 65,
+  "pushed_at": "2026-11-23T23:09:55Z",
+  "visibility": "public",
+  "description": "🏥 Omni Medical OCR — Arabic Medical Text Extraction | HF Space"
+ },
+ {
+  "name": "marathon_ted_pipeline",
+  "archived": false,
+  "fork": false,
+  "size_kb": 695,
+  "pushed_at": "2026-11-23T21:47:02Z",
+  "visibility": "public",
+  "description": "منصة استخراج وترجمة ونشر المحتوى — TED/PDF/EPUB/ASR — OCR بـ18 قاعدة، 4 محركات ت"
+ },
+ {
+  "name": "manjaro-care",
+  "archived": false,
+  "fork": false,
+  "size_kb": 907,
+  "pushed_at": "2026-11-23T20:19:22Z",
+  "visibility": "public",
+  "description": "Manjaro system care toolkit - restored from omni-medical-suite history"
+ },
+ {
+  "name": "omni-medical-suite",
+  "archived": false,
+  "fork": false,
+  "size_kb": 1325637,
+  "pushed_at": "2026-11-23T20:19:16Z",
+  "visibility": "public",
+  "description": "Unified Medical OCR Platform — Next.js + FastAPI + Gradio + Qdrant + Redis"
+ },
+ {
+  "name": "omni-medical-dictionaries",
+  "archived": false,
+  "fork": false,
+  "size_kb": 1015142,
+  "pushed_at": "2026-11-23T18:59:01Z",
+  "visibility": "public",
+  "description": "Scanner Fixer v2.1 + Arabic-English Dictionary Collection"
+ },
+ {
+  "name": "repo-sync-toolkit",
+  "archived": false,
+  "fork": false,
+  "size_kb": 792,
+  "pushed_at": "2026-11-23T16:37:15Z",
+  "visibility": "public",
+  "description": "Secure Git Synchronization — 28 repos + 11 HF Spaces, token manager, TUI dashboa"
+ },
+ {
+  "name": "glossary-api",
+  "archived": false,
+  "fork": false,
+  "size_kb": 79,
+  "pushed_at": "2026-11-23T14:57:55Z",
+  "visibility": "public",
+  "description": "REST API for Arabic Medical Glossary - Calibre-inspired management system"
+ },
+ {
+  "name": "arabic-medical-glossary",
+  "archived": false,
+  "fork": false,
+  "size_kb": 5066,
+  "pushed_at": "2026-11-23T09:42:36Z",
+  "visibility": "public",
+  "description": "Arabic-English Medical Glossaries & Terminologies — bilingual phrase lists and t"
+ },
+ {
+  "name": "telegram-tools",
+  "archived": false,
+  "fork": false,
+  "size_kb": 288,
+  "pushed_at": "2026-11-23T08:57:23Z",
+  "visibility": "public",
+  "description": "Unified Telegram toolkit: copy, forward, extract, preprocess, and align bilingua"
+ },
+ {
+  "name": "medical-ocr-trainer-hf",
+  "archived": false,
+  "fork": false,
+  "size_kb": 254,
+  "pushed_at": "2026-11-23T08:37:50Z",
+  "visibility": "public",
+  "description": "🚀 Medical OCR Trainer — Hugging Face Space Deployment | Deployment-Only Repo"
+ },
+ {
+  "name": "marathon-suite",
+  "archived": false,
+  "fork": false,
+  "size_kb": 543,
+  "pushed_at": "2026-11-23T08:32:17Z",
+  "visibility": "public",
+  "description": "Thin coordinator for the marathon suite — pins ocr-core + translation-core, owns"
+ },
+ {
+  "name": "arabic-medical-handwriting",
+  "archived": false,
+  "fork": false,
+  "size_kb": 71,
+  "pushed_at": "2026-11-23T08:31:59Z",
+  "visibility": "public",
+  "description": "Clean-room Arabic medical handwriting OCR — unified OCRResult contract + multi-e"
+ },
+ {
+  "name": "medical-rag-ar",
+  "archived": false,
+  "fork": false,
+  "size_kb": 26,
+  "pushed_at": "2026-11-23T08:31:53Z",
+  "visibility": "public",
+  "description": "Arabic Medical RAG — retrieval-augmented medical Q&A over Arabic documents, buil"
+ },
+ {
+  "name": "translation-core",
+  "archived": false,
+  "fork": false,
+  "size_kb": 106,
+  "pushed_at": "2026-11-23T08:31:47Z",
+  "visibility": "public",
+  "description": "Shared translation engine — language registry, engines, quality metrics, TM/TMX,"
+ },
+ {
+  "name": "ortho-align",
+  "archived": false,
+  "fork": false,
+  "size_kb": 22,
+  "pushed_at": "2026-11-23T05:09:14Z",
+  "visibility": "public",
+  "description": "EN-AR sentence alignment toolkit for Orthobullets (LaBSE retrieval + anchor DP)"
+ },
+ {
+  "name": "medical-ocr-ground-truth",
+  "archived": false,
+  "fork": false,
+  "size_kb": 130,
+  "pushed_at": "2026-11-22T21:18:47Z",
+  "visibility": "public",
+  "description": "Single Source of Truth — Verified Arabic medical OCR reference datasets, auto-di"
+ },
+ {
+  "name": "medical-ocr-trainer",
+  "archived": false,
+  "fork": false,
+  "size_kb": 254,
+  "pushed_at": "2026-11-22T21:18:32Z",
+  "visibility": "public",
+  "description": "Human-in-the-Loop Data Collection — 5 OCR engines, confidence-based triage"
+ },
+ {
+  "name": "medical-handwriting-ocr",
+  "archived": false,
+  "fork": false,
+  "size_kb": 738,
+  "pushed_at": "2026-11-22T21:18:29Z",
+  "visibility": "public",
+  "description": "Flagship Demo — Medical Handwriting OCR powered by Omni Medical Suite"
+ },
+ {
+  "name": "medical-ocr-benchmarks",
+  "archived": false,
+  "fork": false,
+  "size_kb": 202,
+  "pushed_at": "2026-11-22T20:36:55Z",
+  "visibility": "public",
+  "description": "Quality Gate — CER/WER/medical-term accuracy with nightly regression checks"
+ },
+ {
+  "name": "scanner-fixer",
+  "archived": false,
+  "fork": false,
+  "size_kb": 15051,
+  "pushed_at": "2026-11-22T20:36:49Z",
+  "visibility": "public",
+  "description": "Pre-OCR Image Normalization — perspective correction, deskew, denoise for medica"
+ },
+ {
+  "name": "OmniFile_Processor",
+  "archived": false,
+  "fork": false,
+  "size_kb": 722,
+  "pushed_at": "2026-11-22T20:36:06Z",
+  "visibility": "public",
+  "description": "Arabic-optimized OCR & document processing suite — multi-engine ensemble, RTL su"
+ },
+ {
+  "name": "DrAbdulmalek",
+  "archived": false,
+  "fork": false,
+  "size_kb": 39,
+  "pushed_at": "2026-11-22T16:29:15Z",
+  "visibility": "public",
+  "description": "GitHub Profile README"
+ },
+ {
+  "name": "radiology-ai-platform",
+  "archived": false,
+  "fork": false,
+  "size_kb": 180,
+  "pushed_at": "2026-11-20T23:36:56Z",
+  "visibility": "public",
+  "description": "Radiology AI Platform — منصة ذكاء اصطناعي لتوليد التقارير الإشعاعية باللغة العرب"
+ },
+ {
+  "name": "atlas-multi-provider",
+  "archived": false,
+  "fork": false,
+  "size_kb": 40,
+  "pushed_at": "2026-11-20T22:51:28Z",
+  "visibility": "public",
+  "description": ""
+ },
+ {
+  "name": "rea",
+  "archived": false,
+  "fork": true,
+  "size_kb": 87341,
+  "pushed_at": "2026-11-20T22:38:58Z",
+  "visibility": "public",
+  "description": "Reverse engineer anything with agents, from app behavior down to native binaries"
+ },
+ {
+  "name": "OB2",
+  "archived": false,
+  "fork": true,
+  "size_kb": 1126,
+  "pushed_at": "2026-11-20T22:38:45Z",
+  "visibility": "public",
+  "description": "A fast download manager for Windows. Splits files into multiple connections for "
+ },
+ {
+  "name": "wine-ai-adaptive",
+  "archived": false,
+  "fork": false,
+  "size_kb": 609,
+  "pushed_at": "2026-11-20T21:59:04Z",
+  "visibility": "public",
+  "description": "Adaptive Wine diagnostic knowledge store with hardened SQLite backend"
+ },
+ {
+  "name": "localsend-manjaro",
+  "archived": false,
+  "fork": false,
+  "size_kb": 4,
+  "pushed_at": "2026-11-16T22:18:14Z",
+  "visibility": "public",
+  "description": "LocalSend on Manjaro — auto-installing launcher for open-source wireless file tr"
+ },
+ {
+  "name": "sumatrapdf",
+  "archived": false,
+  "fork": false,
+  "size_kb": 77110,
+  "pushed_at": "2026-11-16T21:57:44Z",
+  "visibility": "public",
+  "description": ""
+ },
+ {
+  "name": "sync-github",
+  "archived": false,
+  "fork": false,
+  "size_kb": 27,
+  "pushed_at": "2026-11-14T23:45:37Z",
+  "visibility": "public",
+  "description": "One-command sync for all local GitHub repos"
+ },
+ {
+  "name": "manjaro-doctor",
+  "archived": false,
+  "fork": false,
+  "size_kb": 19,
+  "pushed_at": "2026-11-14T23:45:19Z",
+  "visibility": "public",
+  "description": "🩺 مرجع عملي مفتوح المصدر لمشاكل Manjaro Linux الحقيقية وحلولها — كل مشكلة موثّقة"
+ },
+ {
+  "name": "workspace-scripts-archive",
+  "archived": false,
+  "fork": false,
+  "size_kb": 395,
+  "pushed_at": "2026-11-14T23:04:05Z",
+  "visibility": "public",
+  "description": "Full snapshot of workspace scripts (dependency-audit forensics, probes) + redact"
+ },
+ {
+  "name": "arabic-medical-ocr-baseline",
+  "archived": false,
+  "fork": false,
+  "size_kb": 16,
+  "pushed_at": "2026-11-14T23:03:42Z",
+  "visibility": "public",
+  "description": "Reference Model Card — Multi-engine OCR ensemble architecture for Arabic medical"
+ },
+ {
+  "name": "finereader-ocr-apk-analysis",
+  "archived": false,
+  "fork": false,
+  "size_kb": 62,
+  "pushed_at": "2026-11-14T23:03:35Z",
+  "visibility": "public",
+  "description": "تحليل هندسي عكسي ساكن لمحرك OCR (عربي/إنجليزي) في ABBYY FineReader Pro لأندرويد "
+ },
+ {
+  "name": "reset-net",
+  "archived": false,
+  "fork": false,
+  "size_kb": 70,
+  "pushed_at": "2026-11-14T23:03:25Z",
+  "visibility": "public",
+  "description": "Network reset utility - restored from omni-medical-suite history"
+ },
+ {
+  "name": "medical-ocr-training-hub",
+  "archived": false,
+  "fork": false,
+  "size_kb": 87,
+  "pushed_at": "2026-11-14T22:51:36Z",
+  "visibility": "public",
+  "description": "Continuous Improvement Loop — ingest, validate, deduplicate, and feed ground tru"
+ },
+ {
+  "name": "orthopaedic-knowledge-system",
+  "archived": false,
+  "fork": false,
+  "size_kb": 204,
+  "pushed_at": "2026-11-14T17:09:35Z",
+  "visibility": "public",
+  "description": "منظومة المعرفة والترجمة العظمية — Orthopaedic Knowledge & Translation System: Lo"
+ },
+ {
+  "name": "orthopaedic-translation-system",
+  "archived": false,
+  "fork": false,
+  "size_kb": 58,
+  "pushed_at": "2026-11-13T12:02:51Z",
+  "visibility": "public",
+  "description": "Orthopaedic Knowledge & Translation System — منظومة المعرفة والترجمة العظمية: Lo"
+ },
+ {
+  "name": "ezoo-download",
+  "archived": false,
+  "fork": true,
+  "size_kb": 781,
+  "pushed_at": "2026-10-26T22:34:49Z",
+  "visibility": "public",
+  "description": ""
+ },
+ {
+  "name": "flathub",
+  "archived": false,
+  "fork": true,
+  "size_kb": 602,
+  "pushed_at": "2026-10-26T22:19:00Z",
+  "visibility": "public",
+  "description": "Issue tracker and new submissions"
+ },
+ {
+  "name": "FLEX-Download-Manager",
+  "archived": false,
+  "fork": true,
+  "size_kb": 208,
+  "pushed_at": "2026-10-25T09:22:54Z",
+  "visibility": "public",
+  "description": "A modern download manager built with C++ and Qt Widgets"
+ },
+ {
+  "name": "indra",
+  "archived": false,
+  "fork": true,
+  "size_kb": 6725,
+  "pushed_at": "2026-10-22T10:14:08Z",
+  "visibility": "public",
+  "description": "1M param OCR model - runs on CPU, 15x faster than tesseract, close to 1B+ param "
+ }
+]
